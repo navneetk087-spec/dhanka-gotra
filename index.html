@@ -286,33 +286,60 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:var(--pd);}
 ::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px;}
+
+/* ══ LOCK SCREEN ANIMATIONS ══ */
+@keyframes floatTree{0%,100%{transform:translateY(0) rotate(-.5deg);}50%{transform:translateY(-12px) rotate(.5deg);}}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 18px rgba(184,134,11,.3),0 0 0 2px var(--sd);}50%{box-shadow:0 0 45px rgba(184,134,11,.8),0 0 0 2px var(--g);}}
+@keyframes fadeSlide{0%{opacity:0;transform:translateY(14px);}100%{opacity:1;transform:translateY(0);}}
+@keyframes typeText{from{width:0;}to{width:100%;}}
+.lock-left img,.lock-left-ph{animation:floatTree 5s ease-in-out infinite;}
+.spl-logo{animation:pulseGlow 3s ease-in-out infinite!important;}
+.lock-right-texts{animation:fadeSlide 1s ease forwards;}
+.lock-right-texts .spl-title,.lock-right-texts .spl-sub,.lock-right-texts .spl-desc{animation:fadeSlide .8s ease forwards;}
+.lock-right-texts .spl-sub{animation-delay:.2s;opacity:0;animation-fill-mode:forwards;}
+.lock-right-texts .spl-desc{animation-delay:.4s;opacity:0;animation-fill-mode:forwards;}
+
+/* ══ LOCK SCREEN CENTER ALIGNMENT (DESKTOP) ══ */
 @media(min-width:601px){
+  .lock-right{align-items:center;text-align:center;}
+  .spl-title,.spl-sub,.spl-desc{text-align:center;}
+  .lock-wrap{justify-content:center;align-items:center;}
+}
+
+/* ══ IMAGE SLIDER ══ */
+.img-slider-wrap{overflow:hidden;background:#0d0702;border-bottom:1px solid var(--bd);position:relative;height:72px;}
+.img-slider-track{display:flex;gap:10px;align-items:center;padding:8px 0;animation:slideLeft 30s linear infinite;width:max-content;}
+@keyframes slideLeft{0%{transform:translateX(0);}100%{transform:translateX(-50%)}}
+.img-slider-track img{height:56px;width:90px;object-fit:cover;border-radius:4px;border:1px solid var(--bd);flex-shrink:0;}
+.img-slider-wrap:hover .img-slider-track{animation-play-state:paused;}
+
+/* ══ BLOG SECTION ══ */
+.blog-sec{background:var(--p);border-bottom:1px solid var(--b);padding:18px;}
+.blog-heading{font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--im);margin-bottom:14px;text-align:center;}
+.blog-card{background:#fff;border-radius:5px;border:1px solid var(--b);box-shadow:var(--sh);padding:16px;margin-bottom:12px;}
+.blog-card-title{font-family:'Tiro Devanagari Hindi',serif;font-size:1.08rem;color:var(--sd);margin-bottom:7px;}
+.blog-card-content{font-size:.92rem;color:var(--is);line-height:1.7;white-space:pre-wrap;}
+.blog-card-date{font-size:.7rem;color:var(--im);font-family:'DM Mono',monospace;margin-top:8px;}
+.blog-empty{text-align:center;color:var(--im);font-style:italic;padding:20px;}
+
+/* ══ ADMIN CORNER (DESKTOP) ══ */
+@media(min-width:601px){
+  #adm-corner-btn{position:fixed;top:14px;right:14px;z-index:9999;background:linear-gradient(135deg,var(--sd),var(--s));color:#fdf5e4;border:none;border-radius:4px;padding:8px 16px;cursor:pointer;font-family:'Tiro Devanagari Hindi',serif;font-size:.9rem;box-shadow:0 4px 18px rgba(0,0,0,.5);transition:all .2s;}
+  #adm-corner-btn:hover{filter:brightness(1.15);transform:translateY(-1px);}
+  #adm-corner-box{position:fixed;top:54px;right:14px;z-index:9998;background:var(--p);border-radius:6px;box-shadow:0 8px 40px rgba(26,18,8,.35),0 0 0 1px var(--bd);width:290px;padding:18px;display:none;}
   .lock-right .lp{display:none;}
-  .admin-corner{position:fixed;top:14px;right:14px;z-index:999;background:var(--p);border-radius:5px;box-shadow:var(--shl);border:1px solid var(--bd);width:280px;padding:16px;}
-  .admin-corner-toggle{position:fixed;top:14px;right:14px;z-index:1000;background:linear-gradient(135deg,var(--sd),var(--s));color:#fdf5e4;border:none;border-radius:4px;padding:8px 14px;cursor:pointer;font-family:'Tiro Devanagari Hindi',serif;font-size:.88rem;box-shadow:0 4px 14px rgba(0,0,0,.4);}
 }
 @media(max-width:600px){
-  .admin-corner{display:none!important;}
-  .admin-corner-toggle{display:none!important;}
+  #adm-corner-btn{display:none;}
+  #adm-corner-box{display:none!important;}
+  .lock-right .lp{display:block;}
 }
-फिर </body> से पहले यह HTML add करो:
-<button class="admin-corner-toggle" id="adm-toggle" onclick="document.getElementById('adm-corner-box').style.display=document.getElementById('adm-corner-box').style.display==='block'?'none':'block'">🔑 Admin Login</button>
-<div class="admin-corner" id="adm-corner-box" style="display:none;">
-  <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:.95rem;color:var(--sd);margin-bottom:12px;text-align:center;">🔐 Admin Login</div>
-  <label class="fl">Admin Email</label>
-  <input type="text" class="fi" id="au2" placeholder="admin@dhanka.com"/>
-  <label class="fl">Admin Password</label>
-  <input type="password" class="fi" id="ap2" placeholder="••••••" onkeydown="if(event.key==='Enter')loginAdmCorner()"/>
-  <div class="em" id="ae2"></div>
-  <button class="bf" onclick="loginAdmCorner()">🔑 Login →</button>
-</div>
-<script>
-function loginAdmCorner(){
-  document.getElementById('au').value=document.getElementById('au2').value;
-  document.getElementById('ap').value=document.getElementById('ap2').value;
-  loginAdm();
-}
-</script>
+
+/* ══ COLOR PICKER ADMIN ══ */
+.color-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--pd);}
+.color-row:last-child{border-bottom:none;}
+.color-lbl{font-size:.88rem;color:var(--is);}
+.color-inp{width:44px;height:30px;border:none;border-radius:3px;cursor:pointer;padding:0;background:none;}
 </style>
 </head>
 <body>
@@ -331,7 +358,7 @@ function loginAdmCorner(){
         <p id="banner-cap-txt" style="color:rgba(253,245,228,.7);font-size:.82rem;font-style:italic;text-align:center;line-height:1.5;"></p>
       </div>
     </div>
-    <div class="lock-right">
+    <div class="lock-right lock-right-texts">
       <div class="spl-logo" id="spl-logo"><span id="spl-ph">🪔</span></div>
       <div class="spl-title">52 धानका गोत्र</div>
       <div style="font-family:'Crimson Pro',serif;font-size:1.05rem;color:var(--g);text-align:center;letter-spacing:.03em;margin-bottom:3px;">52 Dhanaka Gotra</div>
@@ -419,6 +446,17 @@ function loginAdmCorner(){
       <div id="gallery-sec" style="display:none;background:var(--p);border-bottom:1px solid var(--b);padding:14px 18px;">
         <div style="font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--im);margin-bottom:10px;text-align:center;">🖼️ समाज की झलकियाँ — Gallery</div>
         <div id="gallery-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:600px;margin:0 auto;"></div>
+      </div>
+
+      <!-- IMAGE SLIDER -->
+      <div class="img-slider-wrap" id="slider-wrap" style="display:none;">
+        <div class="img-slider-track" id="slider-track"></div>
+      </div>
+
+      <!-- BLOG SECTION -->
+      <div class="blog-sec" id="blog-sec" style="display:none;">
+        <div class="blog-heading">📖 गोत्र — लेख व जानकारी</div>
+        <div id="blog-list"></div>
       </div>
 
       <div class="sbar">
@@ -623,6 +661,43 @@ function loginAdmCorner(){
           </div>
         </div>
 
+        <div class="ac2"><div class="ach">🎨 Text Color बदलें</div>
+          <div class="acb">
+            <div class="color-row"><span class="color-lbl">Main Title Color</span><input type="color" class="color-inp" id="col-title" value="#fdf5e4" oninput="applyColors()"/></div>
+            <div class="color-row"><span class="color-lbl">Subtitle Color</span><input type="color" class="color-inp" id="col-sub" value="#b8860b" oninput="applyColors()"/></div>
+            <div class="color-row"><span class="color-lbl">Description Color</span><input type="color" class="color-inp" id="col-desc" value="#6b5a3e" oninput="applyColors()"/></div>
+            <div class="color-row"><span class="color-lbl">Hero Title Color</span><input type="color" class="color-inp" id="col-htitle" value="#fdf5e4" oninput="applyColors()"/></div>
+            <div class="color-row"><span class="color-lbl">Table Text Color</span><input type="color" class="color-inp" id="col-tbl" value="#2d1a08" oninput="applyColors()"/></div>
+            <button class="bss" onclick="saveColors()" style="margin-top:10px;">💾 Colors Save करें</button>
+          </div>
+        </div>
+
+        <div class="ac2"><div class="ach">🖼️ Image Slider (10 Photos)</div>
+          <div class="acb">
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:7px;">
+              ${[1,2,3,4,5,6,7,8,9,10].map(n=>`
+              <div class="lua" onclick="document.getElementById('sl-fi-${n}').click()" style="padding:6px;text-align:center;">
+                <div style="font-size:.6rem;color:var(--im);font-family:'DM Mono',monospace;">IMG ${n}</div>
+                <img id="sl-prev-${n}" style="width:100%;height:38px;object-fit:cover;border-radius:3px;display:none;" src="" alt=""/>
+                <div id="sl-ph-${n}" style="font-size:1.2rem;opacity:.4;">📷</div>
+                <input type="file" id="sl-fi-${n}" accept="image/*" style="display:none;" onchange="handleSlider(event,${n})"/>
+              </div>`).join('')}
+            </div>
+            <div style="font-size:.75rem;color:var(--im);font-style:italic;margin-top:7px;">ये images right से left scroll होंगी</div>
+          </div>
+        </div>
+
+        <div class="ac2"><div class="ach">✍️ Blog / लेख लिखें</div>
+          <div class="acb" style="display:flex;flex-direction:column;gap:9px;">
+            <div><label class="fl">Article Title / शीर्षक</label>
+              <input type="text" class="fim" id="blog-title-inp" style="width:100%;" placeholder="जैसे: भारद्वाज गोत्र का इतिहास..."/></div>
+            <div><label class="fl">Content / लेख लिखें</label>
+              <textarea class="fim" id="blog-content-inp" style="width:100%;min-height:120px;resize:vertical;" placeholder="यहाँ गोत्र के बारे में लिखें..."></textarea></div>
+            <button class="bss" onclick="saveBlogPost()">📝 Post करें</button>
+            <div id="blog-admin-list" style="margin-top:10px;"></div>
+          </div>
+        </div>
+
         <div style="padding:14px;">
           <button onclick="saveAll()" style="width:100%;padding:16px;background:linear-gradient(135deg,#1a4a2a,#2d6a3f);color:#fff;border:none;border-radius:5px;font-family:'Tiro Devanagari Hindi',serif;font-size:1.1rem;cursor:pointer;box-shadow:0 4px 20px rgba(45,106,63,.4);letter-spacing:.03em;">
             ✅ सब कुछ Save करें
@@ -680,6 +755,18 @@ function loginAdmCorner(){
     <div class="cmb" id="del-txt"></div>
     <div class="cmf"><button class="bca" onclick="closeM('delm')">रद्द करें</button><button class="bdc" onclick="confirmDel()">🗑️ हाँ, हटाएं</button></div>
   </div>
+</div>
+
+<!-- ADMIN CORNER (DESKTOP ONLY) -->
+<button id="adm-corner-btn" onclick="toggleAdmCorner()">🔑 Admin Login</button>
+<div id="adm-corner-box">
+  <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:1rem;color:var(--sd);margin-bottom:13px;text-align:center;border-bottom:1px solid var(--b);padding-bottom:9px;">🔐 Admin Login</div>
+  <label class="fl">Admin Email</label>
+  <input type="text" class="fi" id="au2" placeholder="admin@dhanka.com" style="margin-bottom:9px;"/>
+  <label class="fl">Admin Password</label>
+  <input type="password" class="fi" id="ap2" placeholder="••••••" onkeydown="if(event.key==='Enter')loginAdmCorner()" style="margin-bottom:6px;"/>
+  <div class="em" id="ae2"></div>
+  <button class="bf" onclick="loginAdmCorner()" style="margin-top:4px;">🔑 Login →</button>
 </div>
 
 <input type="file" id="cp-fi" accept="image/*" style="display:none;" onchange="handleCPhoto(event)"/>
@@ -765,7 +852,7 @@ const K={rec:'gkv52_rec',ae:'gkv52_ae',ap2:'gkv52_ap',pe:'gkv52_pe',pp:'gkv52_pp
   logo:'gkv52_logo',con:'gkv52_con',banner:'gkv52_banner',banner2:'gkv52_b2',banner3:'gkv52_b3',bcap:'gkv52_bcap',
   desc:'gkv52_desc',fhi:'gkv52_fhi',fen:'gkv52_fen',yn:'gkv52_yn',yl:'gkv52_yl',ylo:'gkv52_ylo',
   ce:'gkv52_ce',cp:'gkv52_cp',otpOn:'gkv52_otp',otpU:'gkv52_otpu',guestOn:'gkv52_guest',
-  gal1:'gkv52_g1',gal2:'gkv52_g2',gal3:'gkv52_g3'};
+  gal1:'gkv52_g1',gal2:'gkv52_g2',gal3:'gkv52_g3',blogs:'gkv52_blogs'};
 const DEF={ae:'admin@dhanka.com',ap:'Admin@1234',pe:'user',pp:'dhanka123'};
 let records=[],isAdmin=false,delId=null,cpIdx=null,otpStore={};
 const g=k=>localStorage.getItem(k);
@@ -787,6 +874,9 @@ function init(){
   applyBranding();
   applyOTPMode();
   applyGuestMode();
+  renderSlider();
+  renderBlog();
+  loadColors();
   // Background में Firebase load करो
   fbLoadRecords();
   fbLoadSettingsAndRefresh();
@@ -800,6 +890,9 @@ async function fbLoadSettingsAndRefresh(){
     applyBranding();
     applyOTPMode();
     applyGuestMode();
+    renderSlider();
+    renderBlog();
+    loadColors();
   } catch(e){ console.warn('Firebase settings load failed:', e); }
 }
 
@@ -1021,6 +1114,9 @@ function enterApp(){
   applyBranding();
   renderContribs();
   renderGallery();
+  renderSlider();
+  renderBlog();
+  loadColors();
   loadAdminPanel();
   fbStartRealtime(); // Real-time data
 }
@@ -1114,10 +1210,124 @@ function closeM(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.mb').forEach(bg=>bg.addEventListener('click',e=>{if(e.target===bg)bg.classList.remove('open');}));
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 
+// ══ ADMIN CORNER ══
+function toggleAdmCorner(){
+  const box=document.getElementById('adm-corner-box');
+  box.style.display=box.style.display==='block'?'none':'block';
+}
+function loginAdmCorner(){
+  document.getElementById('au').value=document.getElementById('au2').value;
+  document.getElementById('ap').value=document.getElementById('ap2').value;
+  loginAdm();
+  if(document.getElementById('adm-corner-box'))document.getElementById('adm-corner-box').style.display='none';
+}
+
+// ══ COLOR FUNCTIONS ══
+function applyColors(){
+  const ct=document.getElementById('col-title');
+  const cs=document.getElementById('col-sub');
+  const cd=document.getElementById('col-desc');
+  const ch=document.getElementById('col-htitle');
+  const ctb=document.getElementById('col-tbl');
+  if(ct){document.querySelectorAll('.spl-title').forEach(e=>e.style.color=ct.value);}
+  if(cs){document.querySelectorAll('.spl-sub,.h-sub,.tb-sub').forEach(e=>e.style.color=cs.value);}
+  if(cd){document.querySelectorAll('.spl-desc,.h-desc').forEach(e=>e.style.color=cd.value);}
+  if(ch){document.querySelectorAll('.h-title').forEach(e=>e.style.color=ch.value);}
+  if(ctb){document.querySelectorAll('.tdm,.tds').forEach(e=>e.style.color=ctb.value);}
+}
+function saveColors(){
+  const keys=['col-title','col-sub','col-desc','col-htitle','col-tbl'];
+  keys.forEach(k=>{const el=document.getElementById(k);if(el){s('gkv52_'+k,el.value);fbSaveSettings('gkv52_'+k,el.value);}});
+  applyColors();toast('✅ Colors save हो गए!');
+}
+function loadColors(){
+  const keys=['col-title','col-sub','col-desc','col-htitle','col-tbl'];
+  keys.forEach(k=>{const v=g('gkv52_'+k);const el=document.getElementById(k);if(v&&el)el.value=v;});
+  applyColors();
+}
+
+// ══ SLIDER FUNCTIONS ══
+function handleSlider(e,n){
+  const f=e.target.files[0];if(!f)return;
+  compressImage(f,600,0.7,data=>{
+    s('gkv52_sl'+n,data);fbSaveSettings('gkv52_sl'+n,data);
+    const p=document.getElementById('sl-prev-'+n);const ph=document.getElementById('sl-ph-'+n);
+    if(p){p.src=data;p.style.display='block';}if(ph)ph.style.display='none';
+    renderSlider();toast('✅ Slider Image '+n+' upload हो गई!');
+  });e.target.value='';
+}
+function renderSlider(){
+  const imgs=[];
+  for(let i=1;i<=10;i++){const v=g('gkv52_sl'+i);if(v)imgs.push(v);}
+  const wrap=document.getElementById('slider-wrap');
+  const track=document.getElementById('slider-track');
+  if(!wrap||!track)return;
+  if(imgs.length){
+    wrap.style.display='block';
+    // Double for infinite loop
+    const all=[...imgs,...imgs];
+    track.innerHTML=all.map(src=>`<img src="${src}" alt=""/>`).join('');
+    // Adjust speed based on count
+    track.style.animationDuration=(imgs.length*4)+'s';
+  } else wrap.style.display='none';
+  // Admin previews
+  for(let i=1;i<=10;i++){const v=g('gkv52_sl'+i);if(v){const p=document.getElementById('sl-prev-'+i);const ph=document.getElementById('sl-ph-'+i);if(p){p.src=v;p.style.display='block';}if(ph)ph.style.display='none';}}
+}
+
+// ══ BLOG FUNCTIONS ══
+function saveBlogPost(){
+  if(!isAdmin){toast('❌ केवल Admin post कर सकता है!');return;}
+  const title=document.getElementById('blog-title-inp').value.trim();
+  const content=document.getElementById('blog-content-inp').value.trim();
+  if(!title||!content){toast('❌ Title और Content दोनों जरूरी हैं!');return;}
+  const posts=JSON.parse(g('gkv52_blogs')||'[]');
+  posts.unshift({id:uid(),title,content,date:new Date().toLocaleDateString('hi-IN'),ts:Date.now()});
+  s('gkv52_blogs',JSON.stringify(posts));
+  fbSaveSettings('gkv52_blogs',JSON.stringify(posts));
+  document.getElementById('blog-title-inp').value='';
+  document.getElementById('blog-content-inp').value='';
+  renderBlog();toast('✅ Post हो गया!');
+}
+function deleteBlogPost(id){
+  const posts=JSON.parse(g('gkv52_blogs')||'[]').filter(p=>p.id!==id);
+  s('gkv52_blogs',JSON.stringify(posts));
+  fbSaveSettings('gkv52_blogs',JSON.stringify(posts));
+  renderBlog();toast('✅ Post delete हो गया!');
+}
+function renderBlog(){
+  const posts=JSON.parse(g('gkv52_blogs')||'[]');
+  const sec=document.getElementById('blog-sec');
+  const list=document.getElementById('blog-list');
+  const adminList=document.getElementById('blog-admin-list');
+  if(sec)sec.style.display=posts.length?'block':'none';
+  if(list){
+    if(posts.length){
+      list.innerHTML=posts.map(p=>`
+        <div class="blog-card">
+          <div class="blog-card-title">📖 ${p.title}</div>
+          <div class="blog-card-content">${p.content}</div>
+          <div class="blog-card-date">📅 ${p.date}</div>
+        </div>`).join('');
+    } else list.innerHTML='<div class="blog-empty">अभी कोई लेख नहीं।</div>';
+  }
+  if(adminList&&isAdmin){
+    adminList.innerHTML=posts.length?`<div style="font-family:'DM Mono',monospace;font-size:.64rem;color:var(--im);text-transform:uppercase;margin-bottom:8px;">Published Posts</div>`+
+      posts.map(p=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--pd);">
+        <span style="font-size:.88rem;color:var(--is);">${p.title}</span>
+        <button onclick="deleteBlogPost('${p.id}')" style="background:#f0e0e0;color:#8b1a1a;border:1px solid #d4b0b0;border-radius:3px;padding:3px 8px;font-size:.72rem;cursor:pointer;">🗑️ Delete</button>
+      </div>`).join('')
+    :'<p style="color:var(--im);font-style:italic;font-size:.84rem;">अभी कोई post नहीं।</p>';
+  }
+}
+
 init();
 
 // Make functions available globally for onclick handlers
-window.loginAdm=loginAdm;window.loginGuest=loginGuest;window.loginPub=loginPub;window.switchLTab=switchLTab;window.logout=logout;window.switchPg=switchPg;window.openAdd=openAdd;window.openEdit=openEdit;window.openDel=openDel;window.saveRec=saveRec;window.confirmDel=confirmDel;window.closeM=closeM;window.viewRec=viewRec;window.renderTbl=renderTbl;window.exportPDF=exportPDF;window.exportJSON=exportJSON;window.importData=importData;window.triggerLogo=triggerLogo;window.handleLogo=handleLogo;window.handleBanner=handleBanner;window.handleYtLogo=handleYtLogo;window.saveDesc=saveDesc;window.saveYt=saveYt;window.saveCon=saveCon;window.saveCreds=saveCreds;window.saveContribs=saveContribs;window.cpPick=cpPick;window.handleCPhoto=handleCPhoto;window.autoSC=autoSC;window.toggleOTP=toggleOTP;window.toggleGuest=toggleGuest;window.loginGuest=loginGuest;window.handleBannerN=handleBannerN;window.saveBannerCap=saveBannerCap;window.handleGallery=handleGallery;window.saveGallery=saveGallery;window.saveAll=saveAll;
+window.loginAdm=loginAdm;window.loginGuest=loginGuest;window.loginPub=loginPub;window.switchLTab=switchLTab;window.logout=logout;window.switchPg=switchPg;window.openAdd=openAdd;window.openEdit=openEdit;window.openDel=openDel;window.saveRec=saveRec;window.confirmDel=confirmDel;window.closeM=closeM;window.viewRec=viewRec;window.renderTbl=renderTbl;window.exportPDF=exportPDF;window.exportJSON=exportJSON;window.importData=importData;window.triggerLogo=triggerLogo;window.handleLogo=handleLogo;window.handleBanner=handleBanner;window.handleYtLogo=handleYtLogo;window.saveDesc=saveDesc;window.saveYt=saveYt;window.saveCon=saveCon;window.saveCreds=saveCreds;window.saveContribs=saveContribs;window.cpPick=cpPick;window.handleCPhoto=handleCPhoto;window.autoSC=autoSC;window.saveDesc=saveDesc;window.saveYt=saveYt;window.saveCon=saveCon;window.saveCreds=saveCreds;window.saveContribs=saveContribs;window.cpPick=cpPick;window.handleCPhoto=handleCPhoto;window.autoSC=autoSC;window.toggleOTP=toggleOTP;window.toggleGuest=toggleGuest;window.loginGuest=loginGuest;window.handleBannerN=handleBannerN;window.saveBannerCap=saveBannerCap;window.handleGallery=handleGallery;window.saveGallery=saveGallery;window.saveAll=saveAll;
+window.toggleAdmCorner=toggleAdmCorner;window.loginAdmCorner=loginAdmCorner;
+window.applyColors=applyColors;window.saveColors=saveColors;window.loadColors=loadColors;
+window.handleSlider=handleSlider;window.renderSlider=renderSlider;
+window.saveBlogPost=saveBlogPost;window.deleteBlogPost=deleteBlogPost;window.renderBlog=renderBlog;
 
 // ══ GALLERY FUNCTIONS ══
 function handleGallery(e,n){
@@ -1168,7 +1378,7 @@ function renderGallery(){
 
 // ══ SAVE ALL ══
 function saveAll(){
-  saveDesc();saveYt();saveCon();saveCreds();saveContribs();saveGallery();
+  saveDesc();saveYt();saveCon();saveCreds();saveContribs();saveGallery();saveColors();
   toast('✅ सब कुछ Save हो गया! 🎉');
 }window.sendOTP=sendOTP;window.verifyOTP=verifyOTP;window.exportOTPUsers=exportOTPUsers;window.adminLogoClick=()=>{if(isAdmin)triggerLogo();};
 </script>
