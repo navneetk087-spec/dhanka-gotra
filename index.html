@@ -409,7 +409,7 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
       <span class="badm" id="adm-badge" style="display:none;">ADMIN</span>
       <button class="bico hm aow" onclick="exportPDF()">📄 PDF</button>
       <button class="bico hm aow" onclick="switchPg('admin')">⚙️ Admin</button>
-      <button class="bico" onclick="logout()">🚪 <span class="hm">Logout</span></button>
+      <button class="bico aow" onclick="logout()">🚪 <span class="hm">Logout</span></button>
     </div>
   </div>
 
@@ -868,8 +868,7 @@ function init(){
     {name:'सदस्य 7',role:'',photo:''},{name:'सदस्य 8',role:'',photo:''},
     {name:'सदस्य 9',role:'',photo:''},{name:'सदस्य 10',role:'',photo:''}
   ]));
-  // तुरंत Lock screen दिखाओ
-  // Guest Mode हमेशा ON
+  // तुरंत Lock screen हटाओ — directly app खोलो
   s(K.guestOn,'1');
   applyBranding();
   applyOTPMode();
@@ -880,6 +879,12 @@ function init(){
   // Background में Firebase load करो
   fbLoadRecords();
   fbLoadSettingsAndRefresh();
+  // directly main screen खोलो
+  isAdmin=false;
+  showSc('screen-main');
+  applyAdminUI();
+  renderContribs();
+  renderGallery();
 }
 
 async function fbLoadSettingsAndRefresh(){
@@ -1124,7 +1129,15 @@ function applyAdminUI(){
   const b=document.getElementById('screen-main');if(isAdmin)b.classList.add('is-admin');else b.classList.remove('is-admin');
   document.getElementById('adm-badge').style.display=isAdmin?'':'none';
 }
-function logout(){isAdmin=false;document.getElementById('screen-main').classList.remove('is-admin');showSc('screen-lock');['au','ap','ae'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});}
+function logout(){
+  isAdmin=false;
+  document.getElementById('screen-main').classList.remove('is-admin');
+  // Lock screen नहीं — directly main screen पर guest mode में
+  showSc('screen-main');
+  applyAdminUI();
+  switchPg('records');
+  toast('✅ Admin logout हो गया!');
+}
 function loadAdminPanel(){
   if(!isAdmin)return;
   document.getElementById('set-ae').value=g(K.ae)||'';document.getElementById('set-pe').value=g(K.pe)||'';
