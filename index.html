@@ -286,6 +286,33 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:var(--pd);}
 ::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px;}
+@media(min-width:601px){
+  .lock-right .lp{display:none;}
+  .admin-corner{position:fixed;top:14px;right:14px;z-index:999;background:var(--p);border-radius:5px;box-shadow:var(--shl);border:1px solid var(--bd);width:280px;padding:16px;}
+  .admin-corner-toggle{position:fixed;top:14px;right:14px;z-index:1000;background:linear-gradient(135deg,var(--sd),var(--s));color:#fdf5e4;border:none;border-radius:4px;padding:8px 14px;cursor:pointer;font-family:'Tiro Devanagari Hindi',serif;font-size:.88rem;box-shadow:0 4px 14px rgba(0,0,0,.4);}
+}
+@media(max-width:600px){
+  .admin-corner{display:none!important;}
+  .admin-corner-toggle{display:none!important;}
+}
+फिर </body> से पहले यह HTML add करो:
+<button class="admin-corner-toggle" id="adm-toggle" onclick="document.getElementById('adm-corner-box').style.display=document.getElementById('adm-corner-box').style.display==='block'?'none':'block'">🔑 Admin Login</button>
+<div class="admin-corner" id="adm-corner-box" style="display:none;">
+  <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:.95rem;color:var(--sd);margin-bottom:12px;text-align:center;">🔐 Admin Login</div>
+  <label class="fl">Admin Email</label>
+  <input type="text" class="fi" id="au2" placeholder="admin@dhanka.com"/>
+  <label class="fl">Admin Password</label>
+  <input type="password" class="fi" id="ap2" placeholder="••••••" onkeydown="if(event.key==='Enter')loginAdmCorner()"/>
+  <div class="em" id="ae2"></div>
+  <button class="bf" onclick="loginAdmCorner()">🔑 Login →</button>
+</div>
+<script>
+function loginAdmCorner(){
+  document.getElementById('au').value=document.getElementById('au2').value;
+  document.getElementById('ap').value=document.getElementById('ap2').value;
+  loginAdm();
+}
+</script>
 </style>
 </head>
 <body>
