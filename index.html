@@ -384,9 +384,19 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
         <div id="gallery-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:600px;margin:0 auto;"></div>
       </div>
 
+      <!-- AD BANNER -->
+      <div id="ad-banner-sec" style="display:none;background:#f5f0e8;border-bottom:1px solid var(--b);padding:10px 16px;">
+        <div style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--im);margin-bottom:8px;text-align:center;">📢 Notice / Advertisement</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;" id="ad-grid"></div>
+      </div>
+
       <!-- IMAGE SLIDER -->
       <div class="img-slider-wrap" id="slider-wrap" style="display:none;">
         <div class="img-slider-track" id="slider-track"></div>
+        <div style="position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;gap:5px;z-index:10;">
+          <button id="slider-play-btn" onclick="sliderPlay()" style="background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:3px;padding:4px 9px;cursor:pointer;font-size:.8rem;">▶</button>
+          <button id="slider-pause-btn" onclick="sliderPause()" style="background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:3px;padding:4px 9px;cursor:pointer;font-size:.8rem;">⏸</button>
+        </div>
       </div>
 
       <!-- BLOG SECTION -->
@@ -424,6 +434,64 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
         <div class="aqe" id="fq-en">Preserving the heritage of the Dhanaka community is our duty.</div>
         <div class="ad"></div>
         <div class="ac">52 Dhanaka Gotra · Heritage Database · © 2025</div>
+      </div>
+
+      <!-- FOOTER -->
+      <footer style="background:#0d0f1a;color:#ccc;padding:30px 20px 20px;">
+        <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;">
+          <div>
+            <div style="font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#f0c060;margin-bottom:14px;">INFORMATION</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+              <li><a href="#" style="color:#aaa;text-decoration:none;font-size:.88rem;" onmouseover="this.style.color='#f0c060'" onmouseout="this.style.color='#aaa'">› Home</a></li>
+              <li><a href="#" style="color:#aaa;text-decoration:none;font-size:.88rem;" onmouseover="this.style.color='#f0c060'" onmouseout="this.style.color='#aaa'">› Help</a></li>
+              <li><a href="#" style="color:#aaa;text-decoration:none;font-size:.88rem;" onmouseover="this.style.color='#f0c060'" onmouseout="this.style.color='#aaa'" id="footer-sitemap">› Sitemap</a></li>
+              <li><a href="#" id="footer-feedback-link" style="color:#aaa;text-decoration:none;font-size:.88rem;" onmouseover="this.style.color='#f0c060'" onmouseout="this.style.color='#aaa'" onclick="openM('feedback-modal');return false;">› Feedback</a></li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#f0c060;margin-bottom:14px;">POLICIES</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+              <li><a href="#" style="color:#aaa;text-decoration:none;font-size:.88rem;" onmouseover="this.style.color='#f0c060'" onmouseout="this.style.color='#aaa'" onclick="showPolicy('hyperlinking');return false;">› Hyperlinking Policy</a></li>
+              <li><a href="#" style="color:#aaa;text-decoration:none;font-size:.88rem;" onmouseover="this.style.color='#f0c060'" onmouseout="this.style.color='#aaa'" onclick="showPolicy('privacy');return false;">› Privacy Policy</a></li>
+              <li><a href="#" style="color:#aaa;text-decoration:none;font-size:.88rem;" onmouseover="this.style.color='#f0c060'" onmouseout="this.style.color='#aaa'" onclick="showPolicy('copyright');return false;">› Copyright Policy</a></li>
+              <li><a href="#" style="color:#aaa;text-decoration:none;font-size:.88rem;" onmouseover="this.style.color='#f0c060'" onmouseout="this.style.color='#aaa'" onclick="showPolicy('terms');return false;">› Terms & Conditions</a></li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#f0c060;margin-bottom:14px;">CONTACT US</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+              <li id="footer-email-li" style="display:none;"><a id="footer-email-a" href="#" style="color:#aaa;text-decoration:none;font-size:.88rem;" onmouseover="this.style.color='#f0c060'" onmouseout="this.style.color='#aaa'">› Email Us</a></li>
+              <li id="footer-phone-li" style="display:none;"><a id="footer-phone-a" href="#" style="color:#aaa;text-decoration:none;font-size:.88rem;" onmouseover="this.style.color='#f0c060'" onmouseout="this.style.color='#aaa'">› Call Us</a></li>
+              <li id="footer-wa-li" style="display:none;"><a id="footer-wa-a" href="#" target="_blank" style="color:#aaa;text-decoration:none;font-size:.88rem;" onmouseover="this.style.color='#f0c060'" onmouseout="this.style.color='#aaa'">› WhatsApp</a></li>
+              <li><a href="https://youtube.com/@Dhanka52Gotra" target="_blank" style="color:#aaa;text-decoration:none;font-size:.88rem;" onmouseover="this.style.color='#f0c060'" onmouseout="this.style.color='#aaa'">› YouTube Channel</a></li>
+            </ul>
+          </div>
+        </div>
+        <div style="border-top:1px solid #2a2a3a;margin-top:20px;padding-top:14px;text-align:center;font-size:.72rem;color:#666;font-family:'DM Mono',monospace;">
+          52 Dhanaka Gotra · Heritage Database · © 2025 · All Rights Reserved
+        </div>
+      </footer>
+
+      <!-- POLICY MODAL -->
+      <div class="mb" id="policy-modal">
+        <div class="mo" style="max-width:600px;">
+          <div class="mh"><span class="mt" id="policy-title">Policy</span><button class="mc" onclick="closeM('policy-modal')">✕</button></div>
+          <div class="mbod" id="policy-body" style="font-size:.92rem;line-height:1.7;color:var(--is);"></div>
+          <div class="mf"><button class="bca" onclick="closeM('policy-modal')">बंद करें</button></div>
+        </div>
+      </div>
+
+      <!-- FEEDBACK MODAL -->
+      <div class="mb" id="feedback-modal">
+        <div class="mo" style="max-width:500px;">
+          <div class="mh"><span class="mt">💬 Feedback</span><button class="mc" onclick="closeM('feedback-modal')">✕</button></div>
+          <div class="mbod">
+            <div><label class="fl">आपका नाम</label><input type="text" class="fim" id="fb-name" style="width:100%;" placeholder="नाम लिखें..."/></div>
+            <div><label class="fl">Feedback / सुझाव</label><textarea class="fim" id="fb-text" style="width:100%;min-height:100px;resize:vertical;" placeholder="अपना सुझाव यहाँ लिखें..."></textarea></div>
+            <button class="bss" onclick="submitFeedback()" style="width:100%;">📨 Submit करें</button>
+            <div id="fb-list" style="margin-top:14px;"></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -594,6 +662,32 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
             <button class="bss" onclick="exportJSON()">💾 JSON Export</button>
             <label style="cursor:pointer;"><span class="bss" style="display:inline-block;">📂 Import JSON</span>
               <input type="file" accept=".json" style="display:none;" onchange="importData(event)"/></label>
+          </div>
+        </div>
+
+        <div class="ac2"><div class="ach">📢 Ad Banner / Notice (5 Images)</div>
+          <div class="acb">
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:7px;">
+              ${[1,2,3,4,5].map(n=>`
+              <div class="lua" onclick="document.getElementById('ad-fi-${n}').click()" style="padding:6px;text-align:center;">
+                <div style="font-size:.6rem;color:var(--im);font-family:'DM Mono',monospace;">AD ${n}</div>
+                <img id="ad-prev-${n}" style="width:100%;height:38px;object-fit:cover;border-radius:3px;display:none;" src="" alt=""/>
+                <div id="ad-ph-${n}" style="font-size:1.2rem;opacity:.4;">📷</div>
+                <input type="file" id="ad-fi-${n}" accept="image/*" style="display:none;" onchange="handleAd(event,${n})"/>
+              </div>`).join('')}
+            </div>
+            <div style="font-size:.75rem;color:var(--im);font-style:italic;margin-top:7px;">ये images Notice/Ad section में दिखेंगी</div>
+          </div>
+        </div>
+
+        <div class="ac2"><div class="ach">💬 Feedback — Public को दिखाएं?</div>
+          <div class="acb">
+            <div class="tr-row">
+              <div><div class="tr-lbl">Feedback Public को दिखाएं</div>
+                <div class="tr-sub">ON = सभी feedback public को दिखेगा</div></div>
+              <label class="tsw"><input type="checkbox" id="fb-show-tog" onchange="toggleFeedbackShow(this.checked)"/><span class="tsl"></span></label>
+            </div>
+            <div id="fb-admin-list" style="margin-top:12px;"></div>
           </div>
         </div>
 
@@ -811,7 +905,10 @@ function init(){
   applyGuestMode();
   renderSlider();
   renderBlog();
+  renderAds();
+  renderFeedback();
   loadColors();
+  updateFooterContact();
   // Background में Firebase load करो
   fbLoadRecords();
   fbLoadSettingsAndRefresh();
@@ -945,7 +1042,7 @@ function handleYtLogo(e){const f=e.target.files[0];if(!f)return;const r=new File
 
 function saveDesc(){s(K.desc,document.getElementById('set-desc').value);s(K.fhi,document.getElementById('set-fhi').value);s(K.fen,document.getElementById('set-fen').value);applyBranding();toast('✅ Description save हो गया!');}
 function saveYt(){s(K.yn,document.getElementById('set-yn').value.trim());s(K.yl,document.getElementById('set-yl').value.trim());applyBranding();toast('✅ YouTube info save हो गया!');}
-function saveCon(){s(K.ce,document.getElementById('set-cemail').value.trim());s(K.cp,document.getElementById('set-cphone').value.trim());applyBranding();toast('✅ Contact info save हो गया!');}
+function saveCon(){s(K.ce,document.getElementById('set-cemail').value.trim());s(K.cp,document.getElementById('set-cphone').value.trim());applyBranding();updateFooterContact();toast('✅ Contact info save हो गया!');}
 function saveCreds(){
   const ae=document.getElementById('set-ae').value.trim();const ap2=document.getElementById('set-ap').value;
   const pe=document.getElementById('set-pe').value.trim();const pp=document.getElementById('set-pp').value;
@@ -1061,9 +1158,12 @@ function enterApp(){
   renderGallery();
   renderSlider();
   renderBlog();
+  renderAds();
+  renderFeedback();
   loadColors();
+  updateFooterContact();
   loadAdminPanel();
-  fbStartRealtime(); // Real-time data
+  fbStartRealtime();
 }
 function applyAdminUI(){
   const b=document.getElementById('screen-main');
@@ -1168,6 +1268,111 @@ function openM(id){document.getElementById(id).classList.add('open');}
 function closeM(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.mb').forEach(bg=>bg.addEventListener('click',e=>{if(e.target===bg)bg.classList.remove('open');}));
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+
+// ══ POLICY MODAL ══
+const policies={
+  hyperlinking:{title:'Hyperlinking Policy',text:'इस वेबसाइट पर दिए गए links केवल जानकारी के उद्देश्य से हैं। किसी भी बाहरी link पर जाने पर हम जिम्मेदार नहीं हैं।'},
+  privacy:{title:'Privacy Policy',text:'हम आपकी व्यक्तिगत जानकारी को सुरक्षित रखते हैं। आपका data किसी तीसरे पक्ष को नहीं दिया जाता।\n\nयह website केवल धानका समाज की जानकारी के लिए बनाई गई है।'},
+  copyright:{title:'Copyright Policy',text:'इस website की सभी सामग्री 52 धानका गोत्र की संपत्ति है। बिना अनुमति के copy करना मना है।'},
+  terms:{title:'Terms & Conditions',text:'इस website का उपयोग करके आप हमारी सभी शर्तों से सहमत होते हैं।\n\n1. यह website केवल जानकारी के लिए है।\n2. गलत जानकारी देने पर हम जिम्मेदार नहीं।\n3. Admin की अनुमति के बिना data copy न करें।'}
+};
+function showPolicy(type){
+  const p=policies[type];if(!p)return;
+  document.getElementById('policy-title').textContent=p.title;
+  document.getElementById('policy-body').innerHTML=`<p style="white-space:pre-wrap;">${p.text}</p>`;
+  openM('policy-modal');
+}
+
+// ══ FEEDBACK ══
+function submitFeedback(){
+  const name=document.getElementById('fb-name').value.trim();
+  const text=document.getElementById('fb-text').value.trim();
+  if(!text){toast('❌ Feedback लिखें!');return;}
+  const fbs=JSON.parse(g('gkv52_fbs')||'[]');
+  fbs.unshift({id:uid(),name:name||'Anonymous',text,date:new Date().toLocaleDateString('hi-IN'),ts:Date.now()});
+  s('gkv52_fbs',JSON.stringify(fbs));
+  fbSaveSettings('gkv52_fbs',JSON.stringify(fbs));
+  document.getElementById('fb-name').value='';
+  document.getElementById('fb-text').value='';
+  renderFeedback();toast('✅ Feedback submit हो गया! धन्यवाद 🙏');
+}
+function toggleFeedbackShow(on){
+  s('gkv52_fbshow',on?'1':'0');
+  fbSaveSettings('gkv52_fbshow',on?'1':'0');
+  toast(on?'✅ Feedback public को दिखेगा':'✅ Feedback hidden है');
+}
+function renderFeedback(){
+  const fbs=JSON.parse(g('gkv52_fbs')||'[]');
+  const show=g('gkv52_fbshow')==='1';
+  const fbList=document.getElementById('fb-list');
+  const fbAdminList=document.getElementById('fb-admin-list');
+  const tog=document.getElementById('fb-show-tog');if(tog)tog.checked=show;
+  if(fbList){
+    if(show&&fbs.length){
+      fbList.innerHTML='<div style="font-size:.8rem;color:var(--im);margin-bottom:8px;">💬 अन्य लोगों के सुझाव:</div>'+
+        fbs.slice(0,5).map(f=>`<div style="background:var(--pd);border-radius:4px;padding:9px;margin-bottom:7px;border-left:3px solid var(--s);">
+          <div style="font-size:.82rem;color:var(--is);">${f.text}</div>
+          <div style="font-size:.7rem;color:var(--im);margin-top:4px;">— ${f.name} · ${f.date}</div>
+        </div>`).join('');
+    } else fbList.innerHTML='';
+  }
+  if(fbAdminList&&isAdmin){
+    fbAdminList.innerHTML=fbs.length?fbs.map(f=>`
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--pd);gap:10px;">
+        <div><div style="font-size:.85rem;color:var(--is);">${f.text}</div>
+        <div style="font-size:.7rem;color:var(--im);">— ${f.name} · ${f.date}</div></div>
+        <button onclick="deleteFeedback('${f.id}')" style="background:#f0e0e0;color:#8b1a1a;border:1px solid #d4b0b0;border-radius:3px;padding:3px 8px;font-size:.7rem;cursor:pointer;flex-shrink:0;">🗑️</button>
+      </div>`).join('')
+    :'<p style="color:var(--im);font-style:italic;font-size:.84rem;">अभी कोई feedback नहीं।</p>';
+  }
+}
+function deleteFeedback(id){
+  const fbs=JSON.parse(g('gkv52_fbs')||'[]').filter(f=>f.id!==id);
+  s('gkv52_fbs',JSON.stringify(fbs));fbSaveSettings('gkv52_fbs',JSON.stringify(fbs));
+  renderFeedback();toast('✅ Feedback delete हो गया!');
+}
+
+// ══ AD BANNER ══
+function handleAd(e,n){
+  const f=e.target.files[0];if(!f)return;
+  compressImage(f,400,0.7,data=>{
+    s('gkv52_ad'+n,data);fbSaveSettings('gkv52_ad'+n,data);
+    const p=document.getElementById('ad-prev-'+n);const ph=document.getElementById('ad-ph-'+n);
+    if(p){p.src=data;p.style.display='block';}if(ph)ph.style.display='none';
+    renderAds();toast('✅ Ad Image '+n+' upload हो गई!');
+  });e.target.value='';
+}
+function renderAds(){
+  const imgs=[];
+  for(let i=1;i<=5;i++){const v=g('gkv52_ad'+i);if(v)imgs.push(v);}
+  const sec=document.getElementById('ad-banner-sec');
+  const grid=document.getElementById('ad-grid');
+  if(!sec||!grid)return;
+  if(imgs.length){
+    sec.style.display='block';
+    grid.innerHTML=imgs.map(src=>`<img src="${src}" style="width:100%;height:80px;object-fit:cover;border-radius:4px;border:1px solid var(--b);"/>`).join('');
+  } else sec.style.display='none';
+  for(let i=1;i<=5;i++){const v=g('gkv52_ad'+i);if(v){const p=document.getElementById('ad-prev-'+i);const ph=document.getElementById('ad-ph-'+i);if(p){p.src=v;p.style.display='block';}if(ph)ph.style.display='none';}}
+}
+
+// ══ SLIDER PLAY/PAUSE ══
+function sliderPause(){
+  const t=document.getElementById('slider-track');if(t)t.style.animationPlayState='paused';
+}
+function sliderPlay(){
+  const t=document.getElementById('slider-track');if(t)t.style.animationPlayState='running';
+}
+
+// ══ FOOTER CONTACT UPDATE ══
+function updateFooterContact(){
+  const ce=g(K.ce);const cp2=g(K.cp);
+  const eli=document.getElementById('footer-email-li');const ea=document.getElementById('footer-email-a');
+  const pli=document.getElementById('footer-phone-li');const pa=document.getElementById('footer-phone-a');
+  const wli=document.getElementById('footer-wa-li');const wa=document.getElementById('footer-wa-a');
+  if(eli&&ce){eli.style.display='';if(ea){ea.textContent='› '+ce;ea.href='mailto:'+ce;}}
+  if(pli&&cp2){pli.style.display='';if(pa){pa.textContent='› '+cp2;pa.href='tel:'+cp2;}}
+  if(wli&&cp2){wli.style.display='';if(wa)wa.href='https://wa.me/'+cp2.replace(/[^0-9]/g,'');}
+}
 
 // ══ ADMIN CORNER ══
 function toggleAdmCorner(){
@@ -1282,11 +1487,14 @@ function renderBlog(){
 init();
 
 // Make functions available globally for onclick handlers
-window.loginAdm=loginAdm;window.loginGuest=loginGuest;window.loginPub=loginPub;window.switchLTab=switchLTab;window.logout=logout;window.switchPg=switchPg;window.openAdd=openAdd;window.openEdit=openEdit;window.openDel=openDel;window.saveRec=saveRec;window.confirmDel=confirmDel;window.closeM=closeM;window.viewRec=viewRec;window.renderTbl=renderTbl;window.exportPDF=exportPDF;window.exportJSON=exportJSON;window.importData=importData;window.triggerLogo=triggerLogo;window.handleLogo=handleLogo;window.handleBanner=handleBanner;window.handleYtLogo=handleYtLogo;window.saveDesc=saveDesc;window.saveYt=saveYt;window.saveCon=saveCon;window.saveCreds=saveCreds;window.saveContribs=saveContribs;window.cpPick=cpPick;window.handleCPhoto=handleCPhoto;window.autoSC=autoSC;window.saveDesc=saveDesc;window.saveYt=saveYt;window.saveCon=saveCon;window.saveCreds=saveCreds;window.saveContribs=saveContribs;window.cpPick=cpPick;window.handleCPhoto=handleCPhoto;window.autoSC=autoSC;window.toggleOTP=toggleOTP;window.toggleGuest=toggleGuest;window.loginGuest=loginGuest;window.handleBannerN=handleBannerN;window.saveBannerCap=saveBannerCap;window.handleGallery=handleGallery;window.saveGallery=saveGallery;window.saveAll=saveAll;
+window.loginAdm=loginAdm;window.loginGuest=loginGuest;window.loginPub=loginPub;window.switchLTab=switchLTab;window.logout=logout;window.switchPg=switchPg;window.openAdd=openAdd;window.openEdit=openEdit;window.openDel=openDel;window.saveRec=saveRec;window.confirmDel=confirmDel;window.closeM=closeM;window.viewRec=viewRec;window.renderTbl=renderTbl;window.exportPDF=exportPDF;window.exportJSON=exportJSON;window.importData=importData;window.triggerLogo=triggerLogo;window.handleLogo=handleLogo;window.handleBanner=handleBanner;window.handleYtLogo=handleYtLogo;window.saveDesc=saveDesc;window.saveYt=saveYt;window.saveCon=saveCon;window.saveCreds=saveCreds;window.saveContribs=saveContribs;window.cpPick=cpPick;window.handleCPhoto=handleCPhoto;window.autoSC=autoSC;window.toggleOTP=toggleOTP;window.toggleGuest=toggleGuest;window.loginGuest=loginGuest;window.handleBannerN=handleBannerN;window.saveBannerCap=saveBannerCap;window.handleGallery=handleGallery;window.saveGallery=saveGallery;window.saveAll=saveAll;
 window.toggleAdmCorner=toggleAdmCorner;window.loginAdmCorner=loginAdmCorner;
 window.applyColors=applyColors;window.saveColors=saveColors;window.loadColors=loadColors;
-window.handleSlider=handleSlider;window.renderSlider=renderSlider;
+window.handleSlider=handleSlider;window.renderSlider=renderSlider;window.sliderPlay=sliderPlay;window.sliderPause=sliderPause;
 window.saveBlogPost=saveBlogPost;window.deleteBlogPost=deleteBlogPost;window.renderBlog=renderBlog;
+window.handleAd=handleAd;window.renderAds=renderAds;
+window.submitFeedback=submitFeedback;window.deleteFeedback=deleteFeedback;window.toggleFeedbackShow=toggleFeedbackShow;
+window.showPolicy=showPolicy;window.updateFooterContact=updateFooterContact;
 
 // ══ GALLERY FUNCTIONS ══
 function handleGallery(e,n){
