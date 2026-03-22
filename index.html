@@ -344,62 +344,8 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
 </head>
 <body>
 
-<!-- LOCK -->
-<div id="screen-lock" class="screen active">
-  <div class="lock-wrap">
-    <div style="flex:1;min-width:240px;max-width:400px;display:flex;flex-direction:column;gap:0;">
-      <div class="lock-left" id="lleft" style="flex:1;">
-        <div class="lock-left-ph" id="lleft-ph">
-          <div class="ico">🏛️</div>
-          <p style="font-size:.82rem;font-style:italic;">Admin Panel से<br>Banner Image<br>यहाँ Upload करें</p>
-        </div>
-      </div>
-      <div id="banner-cap" style="display:none;background:#1a0f05;padding:10px 14px;border:2px solid var(--bd);border-top:none;border-radius:0 0 8px 8px;">
-        <p id="banner-cap-txt" style="color:rgba(253,245,228,.7);font-size:.82rem;font-style:italic;text-align:center;line-height:1.5;"></p>
-      </div>
-    </div>
-    <div class="lock-right lock-right-texts">
-      <div class="spl-logo" id="spl-logo"><span id="spl-ph">🪔</span></div>
-      <div class="spl-title">52 धानका गोत्र</div>
-      <div style="font-family:'Crimson Pro',serif;font-size:1.05rem;color:var(--g);text-align:center;letter-spacing:.03em;margin-bottom:3px;">52 Dhanaka Gotra</div>
-      <div class="spl-sub">कुल · वंश · गोत्र — विरासत डेटाबेस</div>
-      <div class="spl-desc" id="spl-desc"></div>
-      <div class="spl-div"></div>
-      <a class="yt-strip" id="yt-strip-l" href="#" target="_blank" style="display:none;">
-        <div class="yt-logo-sm" id="yt-logo-l"><span>▶</span></div>
-        <div class="yt-info"><div class="yn" id="yt-name-l">YouTube</div><div class="yl">हमारा YouTube चैनल</div></div>
-        <span style="color:rgba(253,245,228,.45);font-size:.78rem;margin-left:auto;">→</span>
-      </a>
-      <div class="con-strip" id="con-strip-l" style="display:none;">
-        <div class="con-item" id="email-l">📧 <span></span></div>
-        <div class="con-item" id="phone-l" style="display:none;">📞 <span></span></div>
-      </div>
-      <div class="lp">
-        <div class="lbody" style="padding:20px;">
-          <div style="text-align:center;margin-bottom:18px;">
-            <div style="font-size:2.2rem;margin-bottom:6px;">🙏</div>
-            <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:1rem;color:var(--is);">धानका समाज में आपका स्वागत है</div>
-            <div style="font-size:.78rem;color:var(--im);font-style:italic;margin-top:3px;">52 गोत्र की पूरी जानकारी यहाँ देखें</div>
-          </div>
-          <button class="bf" style="background:linear-gradient(135deg,#2d6a3f,#3a8f52);font-size:1.05rem;padding:14px;margin-bottom:10px;" onclick="loginGuest()">
-            👁 Data देखें →
-          </button>
-          <div style="text-align:center;margin:10px 0;color:var(--im);font-size:.78rem;">── या ──</div>
-          <label class="fl">Admin Email</label>
-          <input type="text" class="fi" id="au" placeholder="admin@dhanka.com"/>
-          <label class="fl">Admin Password</label>
-          <input type="password" class="fi" id="ap" placeholder="••••••" onkeydown="if(event.key==='Enter')loginAdm()"/>
-          <div class="em" id="ae"></div>
-          <button class="bf" onclick="loginAdm()" style="background:linear-gradient(135deg,var(--sd),var(--s));">🔑 Admin Login →</button>
-          <div class="lhint" style="margin-top:8px;">⚠️ Admin Panel केवल Admin के लिए</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- MAIN APP -->
-<div id="screen-main" class="screen">
+<div id="screen-main" class="screen active">
   <div class="tb">
     <div class="tb-l">
       <div class="tb-logo" id="tb-logo" onclick="if(isAdmin)triggerLogo()"><span id="tb-ph">🪔</span></div>
@@ -409,7 +355,8 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
       <span class="badm" id="adm-badge" style="display:none;">ADMIN</span>
       <button class="bico hm aow" onclick="exportPDF()">📄 PDF</button>
       <button class="bico hm aow" onclick="switchPg('admin')">⚙️ Admin</button>
-      <button class="bico aow" onclick="logout()">🚪 <span class="hm">Logout</span></button>
+      <button class="bico aow" onclick="logout()" id="tb-logout">🚪 <span class="hm">Logout</span></button>
+      <button class="bico" id="tb-adminbtn" onclick="toggleAdmCorner()" style="display:flex;">🔑 <span class="hm">Admin Login</span></button>
     </div>
   </div>
 
@@ -474,8 +421,8 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
       <div class="tw">
         <table class="rt" id="rt">
           <thead><tr>
-            <th style="width:28px;">#</th><th>गोत्र / Gotra</th><th>कुल / Kul</th><th>वंश / Vansh</th>
-            <th class="hm">प्रवर</th><th class="hm">देवता</th><th class="hm">मूल स्थान</th><th>Actions</th>
+            <th style="width:28px;">#</th><th>गोत्र / Gotra</th><th>Kul / कुल</th><th>वंश / Vansh</th>
+            <th class="hm">मूल स्थान / Origin</th><th>Actions</th>
           </tr></thead>
           <tbody id="rt-body"></tbody>
         </table>
@@ -762,11 +709,11 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
 <div id="adm-corner-box">
   <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:1rem;color:var(--sd);margin-bottom:13px;text-align:center;border-bottom:1px solid var(--b);padding-bottom:9px;">🔐 Admin Login</div>
   <label class="fl">Admin Email</label>
-  <input type="text" class="fi" id="au2" placeholder="admin@dhanka.com" style="margin-bottom:9px;"/>
+  <input type="text" class="fi" id="au" placeholder="admin@dhanka.com" style="margin-bottom:9px;"/>
   <label class="fl">Admin Password</label>
-  <input type="password" class="fi" id="ap2" placeholder="••••••" onkeydown="if(event.key==='Enter')loginAdmCorner()" style="margin-bottom:6px;"/>
-  <div class="em" id="ae2"></div>
-  <button class="bf" onclick="loginAdmCorner()" style="margin-top:4px;">🔑 Login →</button>
+  <input type="password" class="fi" id="ap" placeholder="••••••" onkeydown="if(event.key==='Enter')loginAdm()" style="margin-bottom:6px;"/>
+  <div class="em" id="ae"></div>
+  <button class="bf" onclick="loginAdm()" style="margin-top:4px;">🔑 Login →</button>
 </div>
 
 <input type="file" id="cp-fi" accept="image/*" style="display:none;" onchange="handleCPhoto(event)"/>
@@ -1110,7 +1057,11 @@ function loginPub(){
 }
 function loginAdm(){
   const u=document.getElementById('au').value.trim();const p=document.getElementById('ap').value;const err=document.getElementById('ae');
-  if(u===(g(K.ae)||DEF.ae)&&p===(g(K.ap2)||DEF.ap)){isAdmin=true;enterApp();}
+  if(u===(g(K.ae)||DEF.ae)&&p===(g(K.ap2)||DEF.ap)){
+    isAdmin=true;
+    const box=document.getElementById('adm-corner-box');if(box)box.style.display='none';
+    enterApp();
+  }
   else{err.textContent='❌ गलत Admin Email या Password!';setTimeout(()=>err.textContent='',2500);}
 }
 function enterApp(){
@@ -1126,8 +1077,16 @@ function enterApp(){
   fbStartRealtime(); // Real-time data
 }
 function applyAdminUI(){
-  const b=document.getElementById('screen-main');if(isAdmin)b.classList.add('is-admin');else b.classList.remove('is-admin');
+  const b=document.getElementById('screen-main');
+  if(isAdmin)b.classList.add('is-admin');else b.classList.remove('is-admin');
   document.getElementById('adm-badge').style.display=isAdmin?'':'none';
+  const loginBtn=document.getElementById('tb-adminbtn');
+  const logoutBtn=document.getElementById('tb-logout');
+  if(loginBtn)loginBtn.style.display=isAdmin?'none':'flex';
+  if(logoutBtn)logoutBtn.style.display=isAdmin?'flex':'none';
+  // Corner button भी hide करो अगर admin है
+  const cb=document.getElementById('adm-corner-btn');
+  if(cb)cb.style.display=isAdmin?'none':'block';
 }
 function logout(){
   isAdmin=false;
@@ -1160,8 +1119,6 @@ function renderTbl(){
       <td><div class="tdm">${r.gotra||'—'}</div>${r.jati?`<div class="tds">${r.jati}</div>`:''}</td>
       <td>${r.kul?`<span class="tdb">${r.kul}</span>`:'—'}</td>
       <td>${r.vansh||'—'}</td>
-      <td class="hm" style="font-size:.81rem;">${r.pravar||'—'}</td>
-      <td class="hm">${r.devta||'—'}</td>
       <td class="hm">${r.origin||'—'}</td>
       <td><button class="bv" onclick="viewRec('${r.id}')">👁</button><button class="be" onclick="openEdit('${r.id}')">✏️</button><button class="bd" onclick="openDel('${r.id}')">🗑️</button></td>`;
     tb.appendChild(tr);
