@@ -379,12 +379,12 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
       <div class="cs">
         <div class="ct">📚 Data संकलनकर्ता — जिन्होंने यह जानकारी एकत्र की</div>
         <div style="position:relative;">
-          <div id="cl-wrap" style="overflow-x:hidden;width:100%;">
-            <div class="cl" id="cl" style="display:flex;gap:18px;padding:10px 4px;transition:transform 0.3s ease;will-change:transform;"></div>
+          <div style="overflow:hidden;width:100%;">
+            <div class="cl" id="cl" style="display:flex;gap:18px;padding:10px 4px;animation:slideLeft 20s linear infinite;width:max-content;"></div>
           </div>
           <div style="display:flex;justify-content:center;gap:8px;margin-top:10px;">
-            <button onclick="contribScroll(-1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">◀</button>
-            <button onclick="contribScroll(1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">▶</button>
+            <button onclick="contribPlay()" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">▶ Play</button>
+            <button onclick="contribPause()" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">⏸ Pause</button>
           </div>
         </div>
       </div>
@@ -393,12 +393,12 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
       <div id="gallery-sec" style="display:none;background:var(--p);border-bottom:1px solid var(--b);padding:14px 18px;">
         <div style="font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--im);margin-bottom:10px;text-align:center;">🖼️ समाज की झलकियाँ — Gallery</div>
         <div style="position:relative;">
-          <div id="gallery-wrap" style="overflow-x:hidden;width:100%;">
-            <div id="gallery-grid" style="display:flex;gap:10px;padding:4px;transition:transform 0.3s ease;"></div>
+          <div style="overflow:hidden;width:100%;">
+            <div id="gallery-grid" style="display:flex;gap:10px;padding:4px;animation:slideLeft 15s linear infinite;width:max-content;"></div>
           </div>
           <div style="display:flex;justify-content:center;gap:8px;margin-top:10px;">
-            <button onclick="galleryScroll(-1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">◀</button>
-            <button onclick="galleryScroll(1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">▶</button>
+            <button onclick="galleryPlay()" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">▶ Play</button>
+            <button onclick="galleryPause()" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">⏸ Pause</button>
           </div>
         </div>
       </div>
@@ -1169,16 +1169,20 @@ function renderContribs(){
   const con=JSON.parse(g(K.con)||'[]');
   const cl=document.getElementById('cl');cl.innerHTML='';
   const hidden=JSON.parse(g('gkv52_con_hidden')||'[]');
-  con.forEach((c,i)=>{
-    if(!isAdmin && hidden.includes(i)) return;
+  const visible=con.filter((_,i)=>isAdmin||!hidden.includes(i));
+  // Double for infinite loop
+  [...visible,...visible].forEach((c,i)=>{
+    const orig=i%visible.length;
     const div=document.createElement('div');
     div.className='cc';
     div.style.cssText='flex-shrink:0;min-width:80px;';
-    div.onclick=()=>{if(isAdmin){cpIdx=i;document.getElementById('cp-fi').click();}};
+    div.onclick=()=>{if(isAdmin){cpIdx=orig;document.getElementById('cp-fi').click();}};
     div.innerHTML=`<div class="cp" style="width:65px;height:65px;font-size:1.6rem;">${c.photo?`<img src="${c.photo}" alt=""/>`:'👤'}<div class="cp-hint">📷</div></div>
       <div class="cn" style="font-size:.9rem;">${c.name||'—'}</div>${c.role?`<div class="cr">${c.role}</div>`:''}`;
     cl.appendChild(div);
   });
+  // Set animation duration based on count
+  if(cl)cl.style.animationDuration=(visible.length*2)+'s';
   const ea=document.getElementById('contrib-ea');if(!ea)return;
   ea.innerHTML='';
   con.forEach((c,i)=>{
@@ -1641,7 +1645,7 @@ window.handleSlider=handleSlider;window.renderSlider=renderSlider;window.sliderP
 window.saveBlogPost=saveBlogPost;window.deleteBlogPost=deleteBlogPost;window.renderBlog=renderBlog;
 window.handleAd=handleAd;window.renderAds=renderAds;
 window.submitFeedback=submitFeedback;window.deleteFeedback=deleteFeedback;window.toggleFeedbackShow=toggleFeedbackShow;
-window.toggleContribShow=toggleContribShow;window.contribScroll=contribScroll;window.galleryScroll=galleryScroll;window.adScroll=adScroll;
+window.toggleContribShow=toggleContribShow;window.contribPlay=contribPlay;window.contribPause=contribPause;window.galleryPlay=galleryPlay;window.galleryPause=galleryPause;window.adScroll=adScroll;
 
 // ══ GALLERY FUNCTIONS ══
 function handleGallery(e,n){
@@ -1674,11 +1678,13 @@ function renderGallery(){
   if(!sec||!grid)return;
   if(items.length){
     sec.style.display='block';
-    grid.innerHTML=items.map(it=>`
+    const doubled=[...items,...items];
+    grid.innerHTML=doubled.map(it=>`
       <div style="flex-shrink:0;width:200px;border-radius:5px;overflow:hidden;text-align:center;">
         <img src="${it.src}" style="width:200px;height:150px;object-fit:cover;border-radius:5px 5px 0 0;"/>
         ${it.cap?`<div style="font-size:.72rem;padding:4px 3px;color:var(--is);font-family:'Tiro Devanagari Hindi',serif;background:var(--pd);">${it.cap}</div>`:''}
       </div>`).join('');
+    grid.style.animationDuration=(items.length*4)+'s';
   } else sec.style.display='none';
   // Admin previews
   ['gkv52_g1','gkv52_g2','gkv52_g3','gkv52_g4','gkv52_g5'].forEach((k,i)=>{
@@ -1687,17 +1693,10 @@ function renderGallery(){
     const ci=document.getElementById('gal-cap-'+n);if(ci)ci.value=g('gkv52_gc'+n)||'';
   });
 }
-let galleryPos=0;
-function galleryScroll(dir){
-  const el=document.getElementById('gallery-grid');
-  const wrap=document.getElementById('gallery-wrap');
-  if(!el||!wrap)return;
-  const maxScroll=el.offsetWidth-wrap.offsetWidth;
-  galleryPos+=dir*220;
-  if(galleryPos>0)galleryPos=0;
-  if(maxScroll>0&&galleryPos<-maxScroll)galleryPos=-maxScroll;
-  el.style.transform=`translateX(${galleryPos}px)`;
-}
+function contribPlay(){const el=document.getElementById('cl');if(el)el.style.animationPlayState='running';}
+function contribPause(){const el=document.getElementById('cl');if(el)el.style.animationPlayState='paused';}
+function galleryPlay(){const el=document.getElementById('gallery-grid');if(el)el.style.animationPlayState='running';}
+function galleryPause(){const el=document.getElementById('gallery-grid');if(el)el.style.animationPlayState='paused';}
 let adPos=0;
 function adScroll(dir){
   const el=document.getElementById('ad-grid');
