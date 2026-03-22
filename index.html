@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="hi" translate="no">
 <head>
   <!-- Favicon -->
 <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -16,7 +16,9 @@
   "logo": "https://navneetk087-spec.github.io/dhanka-gotra/android-chrome-512x512.png"
 }
 </script>
-<meta charset="UTF-8">
+<meta name="google" content="notranslate">
+<meta http-equiv="Content-Language" content="hi">
+<html lang="hi" translate="no">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -351,12 +353,12 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
       <div class="tb-logo" id="tb-logo" onclick="if(isAdmin)triggerLogo()"><span id="tb-ph">🪔</span></div>
       <div><div class="tb-title">52 धानका गोत्र <span style="font-size:.75em;opacity:.7;">/ Dhanaka Gotra</span></div><div class="tb-sub">Kul · Vansh · Gotra — Heritage Database</div></div>
     </div>
-    <div class="tb-r">
+    <div class="tb-r" style="gap:10px;">
       <span class="badm" id="adm-badge" style="display:none;">ADMIN</span>
       <!-- भाषा Selector -->
-      <div style="position:relative;">
-        <button onclick="toggleLangMenu()" class="bico" style="gap:4px;">🌐 <span class="hm" id="cur-lang-txt">हिंदी</span></button>
-        <div id="lang-menu" style="display:none;position:absolute;top:38px;right:0;background:#fff;border:1px solid var(--b);border-radius:4px;box-shadow:var(--shl);z-index:999;min-width:130px;overflow:hidden;">
+      <div style="position:relative;margin-right:6px;">
+        <button onclick="toggleLangMenu()" class="bico" style="gap:4px;background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.4);">🌐 <span id="cur-lang-txt">हिंदी</span> ▾</button>
+        <div id="lang-menu" style="display:none;position:absolute;top:42px;right:0;background:#fff;border:1px solid var(--b);border-radius:4px;box-shadow:var(--shl);z-index:9999;min-width:140px;overflow:hidden;">
           <div onclick="setLang('hi')" style="padding:9px 14px;cursor:pointer;font-size:.88rem;color:var(--is);border-bottom:1px solid var(--pd);" onmouseover="this.style.background='var(--sl)'" onmouseout="this.style.background='#fff'">🇮🇳 हिंदी</div>
           <div onclick="setLang('en')" style="padding:9px 14px;cursor:pointer;font-size:.88rem;color:var(--is);border-bottom:1px solid var(--pd);" onmouseover="this.style.background='var(--sl)'" onmouseout="this.style.background='#fff'">🇬🇧 English</div>
           <div onclick="setLang('pa')" style="padding:9px 14px;cursor:pointer;font-size:.88rem;color:var(--is);border-bottom:1px solid var(--pd);" onmouseover="this.style.background='var(--sl)'" onmouseout="this.style.background='#fff'">🟠 ਪੰਜਾਬੀ</div>
@@ -388,6 +390,17 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
 
       <!-- DATA संकलनकर्ता SLIDER -->
       <div class="cs">
+        <!-- Logo + Title -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:14px;padding:14px 18px 6px;border-bottom:1px solid var(--b);margin-bottom:10px;">
+          <div style="width:55px;height:55px;border-radius:50%;border:3px solid var(--g);box-shadow:0 0 0 2px var(--sd);background:#2d1a08;display:flex;align-items:center;justify-content:center;overflow:hidden;animation:pulseGlow 3s ease-in-out infinite;">
+            <span id="cs-logo-ph" style="font-size:1.6rem;">🪔</span>
+            <img id="cs-logo-img" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%;"/>
+          </div>
+          <div style="text-align:left;">
+            <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:1.15rem;color:var(--sd);font-weight:600;">52 धानका गोत्र</div>
+            <div style="font-size:.78rem;color:var(--im);font-style:italic;">Dhanaka Community · Heritage Database</div>
+          </div>
+        </div>
         <div class="ct">📚 Data संकलनकर्ता — जिन्होंने यह जानकारी एकत्र की</div>
         <div style="position:relative;">
           <div style="overflow:hidden;width:100%;">
@@ -1093,6 +1106,10 @@ function applyBranding(){
     const el=document.getElementById(id);if(!el)return;
     if(logo)el.innerHTML=`<img src="${logo}" alt="logo" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>`;
   });
+  // Contributors section logo
+  const csImg=document.getElementById('cs-logo-img');
+  const csPh=document.getElementById('cs-logo-ph');
+  if(csImg&&csPh){if(logo){csImg.src=logo;csImg.style.display='block';csPh.style.display='none';}else{csImg.style.display='none';csPh.style.display='';}}
   ['spl-ph','tb-ph','h-ph'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=logo?'none':'';});
 
   const banner=g(K.banner);
