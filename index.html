@@ -379,7 +379,7 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
       <div class="cs">
         <div class="ct">📚 Data संकलनकर्ता — जिन्होंने यह जानकारी एकत्र की</div>
         <div style="position:relative;overflow:hidden;">
-          <div class="cl" id="cl" style="display:flex;gap:18px;overflow-x:auto;scroll-behavior:smooth;padding:10px 4px;scrollbar-width:none;-ms-overflow-style:none;"></div>
+          <div class="cl" id="cl" style="display:flex;gap:18px;overflow-x:scroll;scroll-behavior:smooth;padding:10px 4px;scrollbar-width:thin;-webkit-overflow-scrolling:touch;"></div>
           <div style="display:flex;justify-content:center;gap:8px;margin-top:10px;">
             <button onclick="contribScroll(-1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">◀</button>
             <button onclick="contribScroll(1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">▶</button>
@@ -1205,7 +1205,9 @@ function toggleContribShow(i,show){
 }
 function contribScroll(dir){
   const el=document.getElementById('cl');
-  if(el)el.scrollLeft+=dir*200;
+  if(el){
+    el.scrollLeft+=dir*300;
+  }
 }
 function cpPick(i){cpIdx=i;document.getElementById('cp-fi').click();}
 function handleCPhoto(e){const f=e.target.files[0];if(!f||cpIdx===null)return;const r=new FileReader();r.onload=ev=>{const c=JSON.parse(g(K.con)||'[]');c[cpIdx].photo=ev.target.result;s(K.con,JSON.stringify(c));renderContribs();toast('✅ Photo upload हो गई!');};r.readAsDataURL(f);e.target.value='';}
