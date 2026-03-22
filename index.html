@@ -425,7 +425,7 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
       </div>
       <div class="sr-bar">
         <div class="sr-w"><span class="sr-ico">🔍</span>
-          <input type="text" class="sr-i" id="sr-in" placeholder="खोजें... गोत्र, कुल, वंश" oninput="renderTbl()"/></div>
+          <input type="search" class="sr-i" id="sr-in" placeholder="खोजें... गोत्र, कुल, वंश" oninput="renderTbl()" autocomplete="off" autocorrect="off" autocapitalize="off"/></div>
         <select class="fsel" id="fsel" onchange="renderTbl()"><option value="">— सभी गोत्र —</option></select>
         <button class="btn-add" onclick="openAdd()">＋ नया Record</button>
       </div>
