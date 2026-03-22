@@ -375,27 +375,36 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
         <a class="con-bar-item" id="wa-bar" style="display:none;cursor:pointer;text-decoration:none;color:inherit;background:#25d366;color:#fff;">💬 WhatsApp</a>
       </div>
 
+      <!-- DATA संकलनकर्ता SLIDER -->
       <div class="cs">
         <div class="ct">📚 Data संकलनकर्ता — जिन्होंने यह जानकारी एकत्र की</div>
-        <div class="cl" id="cl"></div>
-      </div>
-      <div id="gallery-sec" style="display:none;background:var(--p);border-bottom:1px solid var(--b);padding:14px 18px;">
-        <div style="font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--im);margin-bottom:10px;text-align:center;">🖼️ समाज की झलकियाँ — Gallery</div>
-        <div id="gallery-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:600px;margin:0 auto;"></div>
+        <div style="position:relative;overflow:hidden;">
+          <div class="cl" id="cl" style="display:flex;gap:18px;overflow-x:auto;scroll-behavior:smooth;padding:10px 4px;scrollbar-width:none;-ms-overflow-style:none;"></div>
+          <div style="display:flex;justify-content:center;gap:8px;margin-top:10px;">
+            <button onclick="contribScroll(-1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">◀</button>
+            <button onclick="contribScroll(1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">▶</button>
+          </div>
+        </div>
       </div>
 
-      <!-- AD BANNER -->
-      <div id="ad-banner-sec" style="display:none;background:#f5f0e8;border-bottom:1px solid var(--b);padding:10px 16px;">
-        <div style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--im);margin-bottom:8px;text-align:center;">📢 Notice / Advertisement</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;" id="ad-grid"></div>
+      <!-- समाज की झलकियाँ SLIDER -->
+      <div id="gallery-sec" style="display:none;background:var(--p);border-bottom:1px solid var(--b);padding:14px 18px;">
+        <div style="font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--im);margin-bottom:10px;text-align:center;">🖼️ समाज की झलकियाँ — Gallery</div>
+        <div style="position:relative;overflow:hidden;">
+          <div id="gallery-grid" style="display:flex;gap:10px;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none;padding:4px;"></div>
+          <div style="display:flex;justify-content:center;gap:8px;margin-top:10px;">
+            <button onclick="galleryScroll(-1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">◀</button>
+            <button onclick="galleryScroll(1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">▶</button>
+          </div>
+        </div>
       </div>
 
       <!-- IMAGE SLIDER -->
       <div class="img-slider-wrap" id="slider-wrap" style="display:none;">
         <div class="img-slider-track" id="slider-track"></div>
         <div style="position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;gap:5px;z-index:10;">
-          <button id="slider-play-btn" onclick="sliderPlay()" style="background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:3px;padding:4px 9px;cursor:pointer;font-size:.8rem;">▶</button>
-          <button id="slider-pause-btn" onclick="sliderPause()" style="background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:3px;padding:4px 9px;cursor:pointer;font-size:.8rem;">⏸</button>
+          <button onclick="sliderPlay()" style="background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:3px;padding:4px 9px;cursor:pointer;font-size:.8rem;">▶</button>
+          <button onclick="sliderPause()" style="background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:3px;padding:4px 9px;cursor:pointer;font-size:.8rem;">⏸</button>
         </div>
       </div>
 
@@ -426,6 +435,18 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
           <tbody id="rt-body"></tbody>
         </table>
         <div class="es" id="es" style="display:none;"><div class="ei">🪔</div><p>कोई record नहीं मिला।</p></div>
+      </div>
+
+      <!-- AD BANNER — गोत्र list के बाद -->
+      <div id="ad-banner-sec" style="display:none;background:#f5f0e8;border-bottom:1px solid var(--b);padding:14px 18px;">
+        <div style="font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--im);margin-bottom:10px;text-align:center;">📢 Notice / Advertisement</div>
+        <div style="position:relative;overflow:hidden;">
+          <div id="ad-grid" style="display:flex;gap:10px;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;padding:4px;"></div>
+          <div style="display:flex;justify-content:center;gap:8px;margin-top:8px;">
+            <button onclick="adScroll(-1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:4px 12px;cursor:pointer;font-size:.82rem;">◀</button>
+            <button onclick="adScroll(1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:4px 12px;cursor:pointer;font-size:.82rem;">▶</button>
+          </div>
+        </div>
       </div>
 
       <div class="af">
@@ -625,9 +646,9 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
           </div>
         </div>
 
-        <div class="ac2"><div class="ach">🖼️ Gallery — समाज की फोटो (3 Images)</div>
+        <div class="ac2"><div class="ach">🖼️ Gallery — समाज की फोटो (5 Images)</div>
           <div class="acb" style="display:flex;flex-direction:column;gap:9px;">
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;">
               <div class="lua" onclick="document.getElementById('gal-fi-1').click()" style="padding:8px;">
                 <div style="font-size:.68rem;color:var(--im);margin-bottom:3px;font-family:'DM Mono',monospace;">PHOTO 1</div>
                 <img id="gal-prev-1" style="width:100%;max-height:70px;object-fit:cover;border-radius:3px;display:none;" src="" alt=""/>
@@ -646,11 +667,25 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
                 <div id="gal-ph-3" style="font-size:1.5rem;opacity:.4;">📷</div>
                 <input type="file" id="gal-fi-3" accept="image/*" style="display:none;" onchange="handleGallery(event,3)"/>
               </div>
+              <div class="lua" onclick="document.getElementById('gal-fi-4').click()" style="padding:8px;">
+                <div style="font-size:.68rem;color:var(--im);margin-bottom:3px;font-family:'DM Mono',monospace;">PHOTO 4</div>
+                <img id="gal-prev-4" style="width:100%;max-height:70px;object-fit:cover;border-radius:3px;display:none;" src="" alt=""/>
+                <div id="gal-ph-4" style="font-size:1.5rem;opacity:.4;">📷</div>
+                <input type="file" id="gal-fi-4" accept="image/*" style="display:none;" onchange="handleGallery(event,4)"/>
+              </div>
+              <div class="lua" onclick="document.getElementById('gal-fi-5').click()" style="padding:8px;">
+                <div style="font-size:.68rem;color:var(--im);margin-bottom:3px;font-family:'DM Mono',monospace;">PHOTO 5</div>
+                <img id="gal-prev-5" style="width:100%;max-height:70px;object-fit:cover;border-radius:3px;display:none;" src="" alt=""/>
+                <div id="gal-ph-5" style="font-size:1.5rem;opacity:.4;">📷</div>
+                <input type="file" id="gal-fi-5" accept="image/*" style="display:none;" onchange="handleGallery(event,5)"/>
+              </div>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;">
-              <input type="text" class="fim" id="gal-cap-1" placeholder="Photo 1 नाम..." style="font-size:.78rem;"/>
-              <input type="text" class="fim" id="gal-cap-2" placeholder="Photo 2 नाम..." style="font-size:.78rem;"/>
-              <input type="text" class="fim" id="gal-cap-3" placeholder="Photo 3 नाम..." style="font-size:.78rem;"/>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px;">
+              <input type="text" class="fim" id="gal-cap-1" placeholder="Caption 1..." style="font-size:.78rem;"/>
+              <input type="text" class="fim" id="gal-cap-2" placeholder="Caption 2..." style="font-size:.78rem;"/>
+              <input type="text" class="fim" id="gal-cap-3" placeholder="Caption 3..." style="font-size:.78rem;"/>
+              <input type="text" class="fim" id="gal-cap-4" placeholder="Caption 4..." style="font-size:.78rem;"/>
+              <input type="text" class="fim" id="gal-cap-5" placeholder="Caption 5..." style="font-size:.78rem;"/>
             </div>
             <button class="bss" onclick="saveGallery()">💾 Save Gallery</button>
           </div>
@@ -967,13 +1002,9 @@ const s=(k,v)=>localStorage.setItem(k,v);
 function init(){
   if(!g(K.ae))s(K.ae,DEF.ae);if(!g(K.ap2))s(K.ap2,DEF.ap);
   if(!g(K.pe))s(K.pe,DEF.pe);if(!g(K.pp))s(K.pp,DEF.pp);
-  if(!g(K.con))s(K.con,JSON.stringify([
-    {name:'सदस्य 1',role:'',photo:''},{name:'सदस्य 2',role:'',photo:''},
-    {name:'सदस्य 3',role:'',photo:''},{name:'सदस्य 4',role:'',photo:''},
-    {name:'सदस्य 5',role:'',photo:''},{name:'सदस्य 6',role:'',photo:''},
-    {name:'सदस्य 7',role:'',photo:''},{name:'सदस्य 8',role:'',photo:''},
-    {name:'सदस्य 9',role:'',photo:''},{name:'सदस्य 10',role:'',photo:''}
-  ]));
+  if(!g(K.con))s(K.con,JSON.stringify(
+    Array.from({length:52},(_,i)=>({name:`सदस्य ${i+1}`,role:'',photo:''}))
+  ));
   // तुरंत Lock screen हटाओ — directly app खोलो
   s(K.guestOn,'1');
   applyBranding();
@@ -1131,25 +1162,50 @@ function saveCreds(){
 function renderContribs(){
   const con=JSON.parse(g(K.con)||'[]');
   const cl=document.getElementById('cl');cl.innerHTML='';
+  const hidden=JSON.parse(g('gkv52_con_hidden')||'[]');
   con.forEach((c,i)=>{
-    const div=document.createElement('div');div.className='cc';
+    if(!isAdmin && hidden.includes(i)) return;
+    const div=document.createElement('div');
+    div.className='cc';
+    div.style.cssText='flex-shrink:0;min-width:80px;';
     div.onclick=()=>{if(isAdmin){cpIdx=i;document.getElementById('cp-fi').click();}};
-    div.innerHTML=`<div class="cp">${c.photo?`<img src="${c.photo}" alt=""/>`:'👤'}<div class="cp-hint">📷</div></div>
-      <div class="cn">${c.name||'—'}</div>${c.role?`<div class="cr">${c.role}</div>`:''}`;
+    div.innerHTML=`<div class="cp" style="width:65px;height:65px;font-size:1.6rem;">${c.photo?`<img src="${c.photo}" alt=""/>`:'👤'}<div class="cp-hint">📷</div></div>
+      <div class="cn" style="font-size:.9rem;">${c.name||'—'}</div>${c.role?`<div class="cr">${c.role}</div>`:''}`;
     cl.appendChild(div);
   });
   const ea=document.getElementById('contrib-ea');if(!ea)return;
   ea.innerHTML='';
   con.forEach((c,i)=>{
+    const isHidden=hidden.includes(i);
     const row=document.createElement('div');row.className='cer';
     row.innerHTML=`<div class="cep" onclick="cpPick(${i})">${c.photo?`<img src="${c.photo}" alt=""/>`:'👤'}</div>
       <div class="cei">
         <input type="text" id="cn-${i}" value="${c.name||''}" placeholder="व्यक्ति का नाम..." oninput="autoSC(${i},'name',this.value)"/>
         <textarea id="cr-${i}" placeholder="इन्होंने क्या काम किया..." oninput="autoSC(${i},'role',this.value)">${c.role||''}</textarea>
-        <button class="pu" onclick="cpPick(${i})">📷 Photo Upload</button>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:4px;">
+          <button class="pu" onclick="cpPick(${i})">📷 Photo</button>
+          <label style="display:flex;align-items:center;gap:5px;font-size:.78rem;cursor:pointer;">
+            <input type="checkbox" ${isHidden?'':'checked'} onchange="toggleContribShow(${i},this.checked)" style="cursor:pointer;"/>
+            Website पर दिखाएं
+          </label>
+        </div>
       </div>`;
     ea.appendChild(row);
   });
+}
+function toggleContribShow(i,show){
+  const hidden=JSON.parse(g('gkv52_con_hidden')||'[]');
+  const idx=hidden.indexOf(i);
+  if(!show&&idx===-1)hidden.push(i);
+  else if(show&&idx>-1)hidden.splice(idx,1);
+  s('gkv52_con_hidden',JSON.stringify(hidden));
+  fbSaveSettings('gkv52_con_hidden',JSON.stringify(hidden));
+  renderContribs();
+  toast(show?`✅ सदस्य ${i+1} दिखेगा`:`✅ सदस्य ${i+1} छुपाया`);
+}
+function contribScroll(dir){
+  const el=document.getElementById('cl');
+  if(el)el.scrollLeft+=dir*200;
 }
 function cpPick(i){cpIdx=i;document.getElementById('cp-fi').click();}
 function handleCPhoto(e){const f=e.target.files[0];if(!f||cpIdx===null)return;const r=new FileReader();r.onload=ev=>{const c=JSON.parse(g(K.con)||'[]');c[cpIdx].photo=ev.target.result;s(K.con,JSON.stringify(c));renderContribs();toast('✅ Photo upload हो गई!');};r.readAsDataURL(f);e.target.value='';}
@@ -1572,13 +1628,13 @@ window.handleSlider=handleSlider;window.renderSlider=renderSlider;window.sliderP
 window.saveBlogPost=saveBlogPost;window.deleteBlogPost=deleteBlogPost;window.renderBlog=renderBlog;
 window.handleAd=handleAd;window.renderAds=renderAds;
 window.submitFeedback=submitFeedback;window.deleteFeedback=deleteFeedback;window.toggleFeedbackShow=toggleFeedbackShow;
-window.showPolicy=showPolicy;window.updateFooterContact=updateFooterContact;
+window.toggleContribShow=toggleContribShow;window.contribScroll=contribScroll;window.galleryScroll=galleryScroll;window.adScroll=adScroll;
 
 // ══ GALLERY FUNCTIONS ══
 function handleGallery(e,n){
   const f=e.target.files[0];if(!f)return;
   compressImage(f, 400, 0.7, data=>{
-    const key=n===1?K.gal1:(n===2?K.gal2:K.gal3);
+    const key='gkv52_g'+n;
     s(key,data);fbSaveSettings(key,data);
     const prev=document.getElementById('gal-prev-'+n);
     const ph=document.getElementById('gal-ph-'+n);
@@ -1589,8 +1645,7 @@ function handleGallery(e,n){
   });e.target.value='';
 }
 function saveGallery(){
-  // Captions save करो
-  [1,2,3].forEach(n=>{
+  [1,2,3,4,5].forEach(n=>{
     const ci=document.getElementById('gal-cap-'+n);
     if(ci){const k='gkv52_gc'+n;s(k,ci.value);fbSaveSettings(k,ci.value);}
   });
@@ -1598,7 +1653,7 @@ function saveGallery(){
 }
 function renderGallery(){
   const items=[];
-  [K.gal1,K.gal2,K.gal3].forEach((k,i)=>{
+  ['gkv52_g1','gkv52_g2','gkv52_g3','gkv52_g4','gkv52_g5'].forEach((k,i)=>{
     const src=g(k);if(src)items.push({src,cap:g('gkv52_gc'+(i+1))||''});
   });
   const sec=document.getElementById('gallery-sec');
@@ -1607,18 +1662,25 @@ function renderGallery(){
   if(items.length){
     sec.style.display='block';
     grid.innerHTML=items.map(it=>`
-      <div style="border-radius:5px;overflow:hidden;text-align:center;">
-        <img src="${it.src}" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:5px 5px 0 0;"/>
+      <div style="flex-shrink:0;width:200px;border-radius:5px;overflow:hidden;text-align:center;">
+        <img src="${it.src}" style="width:200px;height:150px;object-fit:cover;border-radius:5px 5px 0 0;"/>
         ${it.cap?`<div style="font-size:.72rem;padding:4px 3px;color:var(--is);font-family:'Tiro Devanagari Hindi',serif;background:var(--pd);">${it.cap}</div>`:''}
       </div>`).join('');
   } else sec.style.display='none';
-  // Admin previews + captions
-  [1,2,3].forEach(n=>{
-    const k=n===1?K.gal1:(n===2?K.gal2:K.gal3);
-    const v=g(k);if(v){const p=document.getElementById('gal-prev-'+n);const ph=document.getElementById('gal-ph-'+n);if(p){p.src=v;p.style.display='block';}if(ph)ph.style.display='none';}
-    const ci=document.getElementById('gal-cap-'+n);
-    if(ci)ci.value=g('gkv52_gc'+n)||'';
+  // Admin previews
+  ['gkv52_g1','gkv52_g2','gkv52_g3','gkv52_g4','gkv52_g5'].forEach((k,i)=>{
+    const n=i+1;const v=g(k);
+    if(v){const p=document.getElementById('gal-prev-'+n);const ph=document.getElementById('gal-ph-'+n);if(p){p.src=v;p.style.display='block';}if(ph)ph.style.display='none';}
+    const ci=document.getElementById('gal-cap-'+n);if(ci)ci.value=g('gkv52_gc'+n)||'';
   });
+}
+function galleryScroll(dir){
+  const el=document.getElementById('gallery-grid');
+  if(el)el.scrollLeft+=dir*220;
+}
+function adScroll(dir){
+  const el=document.getElementById('ad-grid');
+  if(el)el.scrollLeft+=dir*200;
 }
 
 // ══ SAVE ALL ══
