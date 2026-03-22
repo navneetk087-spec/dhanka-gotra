@@ -378,8 +378,10 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
       <!-- DATA संकलनकर्ता SLIDER -->
       <div class="cs">
         <div class="ct">📚 Data संकलनकर्ता — जिन्होंने यह जानकारी एकत्र की</div>
-        <div style="position:relative;overflow:hidden;">
-          <div class="cl" id="cl" style="display:flex;gap:18px;overflow-x:scroll;scroll-behavior:smooth;padding:10px 4px;scrollbar-width:thin;-webkit-overflow-scrolling:touch;"></div>
+        <div style="position:relative;">
+          <div id="cl-wrap" style="overflow-x:hidden;width:100%;">
+            <div class="cl" id="cl" style="display:flex;gap:18px;padding:10px 4px;transition:transform 0.3s ease;will-change:transform;"></div>
+          </div>
           <div style="display:flex;justify-content:center;gap:8px;margin-top:10px;">
             <button onclick="contribScroll(-1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">◀</button>
             <button onclick="contribScroll(1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">▶</button>
@@ -390,8 +392,10 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
       <!-- समाज की झलकियाँ SLIDER -->
       <div id="gallery-sec" style="display:none;background:var(--p);border-bottom:1px solid var(--b);padding:14px 18px;">
         <div style="font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--im);margin-bottom:10px;text-align:center;">🖼️ समाज की झलकियाँ — Gallery</div>
-        <div style="position:relative;overflow:hidden;">
-          <div id="gallery-grid" style="display:flex;gap:10px;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none;padding:4px;"></div>
+        <div style="position:relative;">
+          <div id="gallery-wrap" style="overflow-x:hidden;width:100%;">
+            <div id="gallery-grid" style="display:flex;gap:10px;padding:4px;transition:transform 0.3s ease;"></div>
+          </div>
           <div style="display:flex;justify-content:center;gap:8px;margin-top:10px;">
             <button onclick="galleryScroll(-1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">◀</button>
             <button onclick="galleryScroll(1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">▶</button>
@@ -440,8 +444,10 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
       <!-- AD BANNER — गोत्र list के बाद -->
       <div id="ad-banner-sec" style="display:none;background:#f5f0e8;border-bottom:1px solid var(--b);padding:14px 18px;">
         <div style="font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--im);margin-bottom:10px;text-align:center;">📢 Notice / Advertisement</div>
-        <div style="position:relative;overflow:hidden;">
-          <div id="ad-grid" style="display:flex;gap:10px;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;padding:4px;"></div>
+        <div style="position:relative;">
+          <div id="ad-wrap" style="overflow-x:hidden;width:100%;">
+            <div id="ad-grid" style="display:flex;gap:10px;padding:4px;transition:transform 0.3s ease;"></div>
+          </div>
           <div style="display:flex;justify-content:center;gap:8px;margin-top:8px;">
             <button onclick="adScroll(-1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:4px 12px;cursor:pointer;font-size:.82rem;">◀</button>
             <button onclick="adScroll(1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:4px 12px;cursor:pointer;font-size:.82rem;">▶</button>
@@ -1203,11 +1209,16 @@ function toggleContribShow(i,show){
   renderContribs();
   toast(show?`✅ सदस्य ${i+1} दिखेगा`:`✅ सदस्य ${i+1} छुपाया`);
 }
+let contribPos=0;
 function contribScroll(dir){
   const el=document.getElementById('cl');
-  if(el){
-    el.scrollLeft+=dir*300;
-  }
+  const wrap=document.getElementById('cl-wrap');
+  if(!el||!wrap)return;
+  const maxScroll=el.offsetWidth-wrap.offsetWidth;
+  contribPos+=dir*250;
+  if(contribPos>0)contribPos=0;
+  if(maxScroll>0&&contribPos<-maxScroll)contribPos=-maxScroll;
+  el.style.transform=`translateX(${contribPos}px)`;
 }
 function cpPick(i){cpIdx=i;document.getElementById('cp-fi').click();}
 function handleCPhoto(e){const f=e.target.files[0];if(!f||cpIdx===null)return;const r=new FileReader();r.onload=ev=>{const c=JSON.parse(g(K.con)||'[]');c[cpIdx].photo=ev.target.result;s(K.con,JSON.stringify(c));renderContribs();toast('✅ Photo upload हो गई!');};r.readAsDataURL(f);e.target.value='';}
@@ -1676,13 +1687,27 @@ function renderGallery(){
     const ci=document.getElementById('gal-cap-'+n);if(ci)ci.value=g('gkv52_gc'+n)||'';
   });
 }
+let galleryPos=0;
 function galleryScroll(dir){
   const el=document.getElementById('gallery-grid');
-  if(el)el.scrollLeft+=dir*220;
+  const wrap=document.getElementById('gallery-wrap');
+  if(!el||!wrap)return;
+  const maxScroll=el.offsetWidth-wrap.offsetWidth;
+  galleryPos+=dir*220;
+  if(galleryPos>0)galleryPos=0;
+  if(maxScroll>0&&galleryPos<-maxScroll)galleryPos=-maxScroll;
+  el.style.transform=`translateX(${galleryPos}px)`;
 }
+let adPos=0;
 function adScroll(dir){
   const el=document.getElementById('ad-grid');
-  if(el)el.scrollLeft+=dir*200;
+  const wrap=document.getElementById('ad-wrap');
+  if(!el||!wrap)return;
+  const maxScroll=el.offsetWidth-wrap.offsetWidth;
+  adPos+=dir*200;
+  if(adPos>0)adPos=0;
+  if(maxScroll>0&&adPos<-maxScroll)adPos=-maxScroll;
+  el.style.transform=`translateX(${adPos}px)`;
 }
 
 // ══ SAVE ALL ══
