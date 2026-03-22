@@ -352,13 +352,10 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
     <div class="tb-l">
       <div class="tb-logo" id="tb-logo" onclick="if(isAdmin)triggerLogo()"><span id="tb-ph">🪔</span></div>
       <div><div class="tb-title">52 धानका गोत्र <span style="font-size:.75em;opacity:.7;">/ Dhanaka Gotra</span></div><div class="tb-sub">Kul · Vansh · Gotra — Heritage Database</div></div>
-    </div>
-    <div class="tb-r" style="gap:10px;">
-      <span class="badm" id="adm-badge" style="display:none;">ADMIN</span>
-      <!-- भाषा Selector -->
-      <div style="position:relative;margin-right:8px;">
-        <button onclick="toggleLangMenu()" style="background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.5);color:#fdf5e4;border-radius:4px;padding:6px 12px;cursor:pointer;font-family:'Crimson Pro',serif;font-size:.85rem;display:flex;align-items:center;gap:5px;">🌐 <span id="cur-lang-txt">हिंदी</span> ▾</button>
-        <div id="lang-menu" style="display:none;position:absolute;top:42px;right:0;background:#fff;border:1px solid var(--b);border-radius:4px;box-shadow:0 8px 30px rgba(0,0,0,.2);z-index:9999;min-width:140px;overflow:hidden;">
+      <!-- भाषा Selector — Left side में -->
+      <div style="position:relative;margin-left:12px;">
+        <button onclick="toggleLangMenu()" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:#fdf5e4;border-radius:4px;padding:5px 11px;cursor:pointer;font-size:.82rem;display:flex;align-items:center;gap:4px;">🌐 <span id="cur-lang-txt">हिंदी</span> ▾</button>
+        <div id="lang-menu" style="display:none;position:absolute;top:40px;left:0;background:#fff;border:1px solid var(--b);border-radius:4px;box-shadow:0 8px 30px rgba(0,0,0,.2);z-index:9999;min-width:140px;overflow:hidden;">
           <div onclick="setLang('hi')" style="padding:9px 14px;cursor:pointer;font-size:.88rem;color:var(--is);border-bottom:1px solid var(--pd);" onmouseover="this.style.background='var(--sl)'" onmouseout="this.style.background='#fff'">🇮🇳 हिंदी</div>
           <div onclick="setLang('en')" style="padding:9px 14px;cursor:pointer;font-size:.88rem;color:var(--is);border-bottom:1px solid var(--pd);" onmouseover="this.style.background='var(--sl)'" onmouseout="this.style.background='#fff'">🇬🇧 English</div>
           <div onclick="setLang('pa')" style="padding:9px 14px;cursor:pointer;font-size:.88rem;color:var(--is);border-bottom:1px solid var(--pd);" onmouseover="this.style.background='var(--sl)'" onmouseout="this.style.background='#fff'">🟠 ਪੰਜਾਬੀ</div>
@@ -366,6 +363,9 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
           <div onclick="setLang('mr')" style="padding:9px 14px;cursor:pointer;font-size:.88rem;color:var(--is);" onmouseover="this.style.background='var(--sl)'" onmouseout="this.style.background='#fff'">🟤 मराठी</div>
         </div>
       </div>
+    </div>
+    <div class="tb-r" style="gap:10px;">
+      <span class="badm" id="adm-badge" style="display:none;">ADMIN</span>
       <button class="bico hm aow" onclick="exportPDF()">📄 PDF</button>
       <button class="bico hm aow" onclick="switchPg('admin')">⚙️ Admin</button>
       <button class="bico aow" onclick="logout()" id="tb-logout">🚪 <span class="hm">Logout</span></button>
