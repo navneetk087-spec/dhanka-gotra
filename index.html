@@ -353,6 +353,17 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
     </div>
     <div class="tb-r">
       <span class="badm" id="adm-badge" style="display:none;">ADMIN</span>
+      <!-- भाषा Selector -->
+      <div style="position:relative;">
+        <button onclick="toggleLangMenu()" class="bico" style="gap:4px;">🌐 <span class="hm" id="cur-lang-txt">हिंदी</span></button>
+        <div id="lang-menu" style="display:none;position:absolute;top:38px;right:0;background:#fff;border:1px solid var(--b);border-radius:4px;box-shadow:var(--shl);z-index:999;min-width:130px;overflow:hidden;">
+          <div onclick="setLang('hi')" style="padding:9px 14px;cursor:pointer;font-size:.88rem;color:var(--is);border-bottom:1px solid var(--pd);" onmouseover="this.style.background='var(--sl)'" onmouseout="this.style.background='#fff'">🇮🇳 हिंदी</div>
+          <div onclick="setLang('en')" style="padding:9px 14px;cursor:pointer;font-size:.88rem;color:var(--is);border-bottom:1px solid var(--pd);" onmouseover="this.style.background='var(--sl)'" onmouseout="this.style.background='#fff'">🇬🇧 English</div>
+          <div onclick="setLang('pa')" style="padding:9px 14px;cursor:pointer;font-size:.88rem;color:var(--is);border-bottom:1px solid var(--pd);" onmouseover="this.style.background='var(--sl)'" onmouseout="this.style.background='#fff'">🟠 ਪੰਜਾਬੀ</div>
+          <div onclick="setLang('gu')" style="padding:9px 14px;cursor:pointer;font-size:.88rem;color:var(--is);border-bottom:1px solid var(--pd);" onmouseover="this.style.background='var(--sl)'" onmouseout="this.style.background='#fff'">🟣 ગુજરાતી</div>
+          <div onclick="setLang('mr')" style="padding:9px 14px;cursor:pointer;font-size:.88rem;color:var(--is);" onmouseover="this.style.background='var(--sl)'" onmouseout="this.style.background='#fff'">🟤 मराठी</div>
+        </div>
+      </div>
       <button class="bico hm aow" onclick="exportPDF()">📄 PDF</button>
       <button class="bico hm aow" onclick="switchPg('admin')">⚙️ Admin</button>
       <button class="bico aow" onclick="logout()" id="tb-logout">🚪 <span class="hm">Logout</span></button>
@@ -1527,7 +1538,104 @@ function updateFooterContact(){
   if(wli&&cp2){wli.style.display='';if(wa)wa.href='https://wa.me/'+cp2.replace(/[^0-9]/g,'');}
 }
 
-// ══ ADMIN CORNER ══
+// ══ LANGUAGE SYSTEM ══
+const LANGS={
+  hi:{
+    title:'52 धानका गोत्र',sub:'Kul · Vansh · Gotra — विरासत डेटाबेस',
+    search:'खोजें... गोत्र, कुल, वंश',
+    colGotra:'गोत्र / Gotra',colKul:'Kul / कुल',colVansh:'वंश / Vansh',colOrigin:'मूल स्थान',
+    total:'कुल:',shown:'दिख रहे:',noRecord:'कोई record नहीं मिला।',
+    addBtn:'＋ नया Record',contribTitle:'📚 Data संकलनकर्ता — जिन्होंने यह जानकारी एकत्र की',
+    galleryTitle:'🖼️ समाज की झलकियाँ — Gallery',blogTitle:'📖 गोत्र — लेख व जानकारी',
+    adTitle:'📢 Notice / Advertisement',adminLogin:'Admin Login',logout:'Logout',
+    langName:'हिंदी'
+  },
+  en:{
+    title:'52 Dhanaka Gotra',sub:'Kul · Vansh · Gotra — Heritage Database',
+    search:'Search... Gotra, Kul, Vansh',
+    colGotra:'Gotra',colKul:'Kul',colVansh:'Vansh',colOrigin:'Origin',
+    total:'Total:',shown:'Showing:',noRecord:'No record found.',
+    addBtn:'＋ Add Record',contribTitle:'📚 Data Contributors — Who collected this information',
+    galleryTitle:'🖼️ Community Gallery',blogTitle:'📖 Gotra — Articles & Information',
+    adTitle:'📢 Notice / Advertisement',adminLogin:'Admin Login',logout:'Logout',
+    langName:'English'
+  },
+  pa:{
+    title:'52 ਧਾਨਕਾ ਗੋਤਰ',sub:'ਕੁਲ · ਵੰਸ਼ · ਗੋਤਰ — ਵਿਰਾਸਤ ਡੇਟਾਬੇਸ',
+    search:'ਖੋਜੋ... ਗੋਤਰ, ਕੁਲ, ਵੰਸ਼',
+    colGotra:'ਗੋਤਰ',colKul:'ਕੁਲ',colVansh:'ਵੰਸ਼',colOrigin:'ਮੂਲ ਸਥਾਨ',
+    total:'ਕੁੱਲ:',shown:'ਦਿਖ ਰਹੇ:',noRecord:'ਕੋਈ ਰਿਕਾਰਡ ਨਹੀਂ ਮਿਲਿਆ।',
+    addBtn:'＋ ਨਵਾਂ Record',contribTitle:'📚 Data ਸੰਕਲਨਕਰਤਾ',
+    galleryTitle:'🖼️ ਸਮਾਜ ਦੀਆਂ ਝਲਕੀਆਂ — Gallery',blogTitle:'📖 ਗੋਤਰ — ਲੇਖ',
+    adTitle:'📢 ਸੂਚਨਾ / ਇਸ਼ਤਿਹਾਰ',adminLogin:'Admin Login',logout:'Logout',
+    langName:'ਪੰਜਾਬੀ'
+  },
+  gu:{
+    title:'52 ધાનકા ગોત્ર',sub:'કુળ · વંશ · ગોત્ર — વારસો ડેટાબેઝ',
+    search:'શોધો... ગોત્ર, કુળ, વંશ',
+    colGotra:'ગોત્ર',colKul:'કુળ',colVansh:'વંશ',colOrigin:'મૂળ સ્થળ',
+    total:'કુળ:',shown:'દેખાઈ રહ્યા:',noRecord:'કોઈ રેકોર્ડ મળ્યો નહીં।',
+    addBtn:'＋ નવો Record',contribTitle:'📚 Data સંકલનકર્તા',
+    galleryTitle:'🖼️ સમાજની ઝલક — Gallery',blogTitle:'📖 ગોત્ર — લેખ',
+    adTitle:'📢 સૂચના / જાહેરાત',adminLogin:'Admin Login',logout:'Logout',
+    langName:'ગુજરાતી'
+  },
+  mr:{
+    title:'52 धानका गोत्र',sub:'कुळ · वंश · गोत्र — वारसा डेटाबेस',
+    search:'शोधा... गोत्र, कुळ, वंश',
+    colGotra:'गोत्र',colKul:'कुळ',colVansh:'वंश',colOrigin:'मूळ स्थान',
+    total:'एकूण:',shown:'दिसत आहे:',noRecord:'कोणताही रेकॉर्ड सापडला नाही।',
+    addBtn:'＋ नवीन Record',contribTitle:'📚 Data संकलनकर्ते',
+    galleryTitle:'🖼️ समाजाच्या झलकी — Gallery',blogTitle:'📖 गोत्र — लेख',
+    adTitle:'📢 सूचना / जाहिरात',adminLogin:'Admin Login',logout:'Logout',
+    langName:'मराठी'
+  }
+};
+let curLang='hi';
+function toggleLangMenu(){
+  const m=document.getElementById('lang-menu');
+  m.style.display=m.style.display==='block'?'none':'block';
+}
+function setLang(lang){
+  curLang=lang;
+  const L=LANGS[lang];
+  document.getElementById('lang-menu').style.display='none';
+  document.getElementById('cur-lang-txt').textContent=L.langName;
+  // Title
+  const tt=document.querySelector('.tb-title');if(tt)tt.innerHTML=L.title;
+  const ts=document.querySelector('.tb-sub');if(ts)ts.textContent=L.sub;
+  // Search
+  const sr=document.getElementById('sr-in');if(sr)sr.placeholder=L.search;
+  // Table headers
+  const ths=document.querySelectorAll('.rt thead th');
+  if(ths.length>=5){ths[1].textContent=L.colGotra;ths[2].textContent=L.colKul;ths[3].textContent=L.colVansh;ths[4].textContent=L.colOrigin;}
+  // Stats
+  const stTotal=document.querySelector('#st-total')?.parentElement;
+  const stShown=document.querySelector('#st-shown')?.parentElement;
+  if(stTotal)stTotal.innerHTML=L.total+' <span class="sn" id="st-total">'+document.getElementById('st-total').textContent+'</span>';
+  if(stShown)stShown.innerHTML=L.shown+' <span class="sn" id="st-shown">'+document.getElementById('st-shown').textContent+'</span>';
+  // No record text
+  const es=document.querySelector('.es p');if(es)es.textContent=L.noRecord;
+  // Add button
+  const ab=document.querySelector('.btn-add');if(ab)ab.innerHTML=L.addBtn;
+  // Section titles
+  const ct=document.querySelector('.ct');if(ct)ct.textContent=L.contribTitle;
+  const gt=document.querySelector('#gallery-sec .blog-heading, #gallery-sec div:first-child');
+  // Blog
+  const bt=document.querySelector('.blog-heading');if(bt)bt.textContent=L.blogTitle;
+  // Ad title
+  const at=document.querySelector('#ad-banner-sec div:first-child');if(at)at.textContent=L.adTitle;
+  // Admin/Logout buttons
+  const adminBtn=document.getElementById('tb-adminbtn');if(adminBtn)adminBtn.innerHTML='🔑 <span class="hm">'+L.adminLogin+'</span>';
+  const logoutBtn=document.getElementById('tb-logout');if(logoutBtn)logoutBtn.innerHTML='🚪 <span class="hm">'+L.logout+'</span>';
+  s('gkv52_lang',lang);
+}
+document.addEventListener('click',e=>{
+  const menu=document.getElementById('lang-menu');
+  if(menu&&!menu.contains(e.target)&&!e.target.closest('[onclick="toggleLangMenu()"]')){
+    menu.style.display='none';
+  }
+});
 function toggleAdmCorner(){
   const box=document.getElementById('adm-corner-box');
   box.style.display=box.style.display==='block'?'none':'block';
@@ -1648,6 +1756,7 @@ window.saveBlogPost=saveBlogPost;window.deleteBlogPost=deleteBlogPost;window.ren
 window.handleAd=handleAd;window.renderAds=renderAds;
 window.submitFeedback=submitFeedback;window.deleteFeedback=deleteFeedback;window.toggleFeedbackShow=toggleFeedbackShow;
 window.toggleContribShow=toggleContribShow;window.contribPlay=contribPlay;window.contribPause=contribPause;window.galleryPlay=galleryPlay;window.galleryPause=galleryPause;window.adPlay=adPlay;window.adPause=adPause;
+window.toggleLangMenu=toggleLangMenu;window.setLang=setLang;
 
 // ══ GALLERY FUNCTIONS ══
 function handleGallery(e,n){
