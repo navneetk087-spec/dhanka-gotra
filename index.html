@@ -444,14 +444,12 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
       <!-- AD BANNER — गोत्र list के बाद -->
       <div id="ad-banner-sec" style="display:none;background:#f5f0e8;border-bottom:1px solid var(--b);padding:14px 18px;">
         <div style="font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--im);margin-bottom:10px;text-align:center;">📢 Notice / Advertisement</div>
-        <div style="position:relative;">
-          <div id="ad-wrap" style="overflow-x:hidden;width:100%;">
-            <div id="ad-grid" style="display:flex;gap:10px;padding:4px;transition:transform 0.3s ease;"></div>
-          </div>
-          <div style="display:flex;justify-content:center;gap:8px;margin-top:8px;">
-            <button onclick="adScroll(-1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:4px 12px;cursor:pointer;font-size:.82rem;">◀</button>
-            <button onclick="adScroll(1)" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:4px 12px;cursor:pointer;font-size:.82rem;">▶</button>
-          </div>
+        <div style="overflow:hidden;width:100%;">
+          <div id="ad-grid" style="display:flex;gap:10px;padding:4px;animation:slideLeft 18s linear infinite;width:max-content;"></div>
+        </div>
+        <div style="display:flex;justify-content:center;gap:8px;margin-top:8px;">
+          <button onclick="adPlay()" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">▶ Play</button>
+          <button onclick="adPause()" style="background:var(--sd);color:#fff;border:none;border-radius:3px;padding:5px 14px;cursor:pointer;font-size:.85rem;">⏸ Pause</button>
         </div>
       </div>
 
@@ -1501,10 +1499,14 @@ function renderAds(){
   if(!sec||!grid)return;
   if(imgs.length){
     sec.style.display='block';
-    grid.innerHTML=imgs.map(src=>`<img src="${src}" style="width:100%;height:80px;object-fit:cover;border-radius:4px;border:1px solid var(--b);"/>`).join('');
+    const doubled=[...imgs,...imgs];
+    grid.innerHTML=doubled.map(src=>`<img src="${src}" style="height:80px;width:140px;object-fit:cover;border-radius:4px;border:1px solid var(--b);flex-shrink:0;"/>`).join('');
+    grid.style.animationDuration=(imgs.length*3)+'s';
   } else sec.style.display='none';
   for(let i=1;i<=5;i++){const v=g('gkv52_ad'+i);if(v){const p=document.getElementById('ad-prev-'+i);const ph=document.getElementById('ad-ph-'+i);if(p){p.src=v;p.style.display='block';}if(ph)ph.style.display='none';}}
 }
+function adPlay(){const el=document.getElementById('ad-grid');if(el)el.style.animationPlayState='running';}
+function adPause(){const el=document.getElementById('ad-grid');if(el)el.style.animationPlayState='paused';}
 
 // ══ SLIDER PLAY/PAUSE ══
 function sliderPause(){
@@ -1645,7 +1647,7 @@ window.handleSlider=handleSlider;window.renderSlider=renderSlider;window.sliderP
 window.saveBlogPost=saveBlogPost;window.deleteBlogPost=deleteBlogPost;window.renderBlog=renderBlog;
 window.handleAd=handleAd;window.renderAds=renderAds;
 window.submitFeedback=submitFeedback;window.deleteFeedback=deleteFeedback;window.toggleFeedbackShow=toggleFeedbackShow;
-window.toggleContribShow=toggleContribShow;window.contribPlay=contribPlay;window.contribPause=contribPause;window.galleryPlay=galleryPlay;window.galleryPause=galleryPause;window.adScroll=adScroll;
+window.toggleContribShow=toggleContribShow;window.contribPlay=contribPlay;window.contribPause=contribPause;window.galleryPlay=galleryPlay;window.galleryPause=galleryPause;window.adPlay=adPlay;window.adPause=adPause;
 
 // ══ GALLERY FUNCTIONS ══
 function handleGallery(e,n){
