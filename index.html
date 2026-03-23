@@ -443,8 +443,8 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
       </div>
 
       <!-- Description Section -->
-      <div id="desc-sec" style="display:none;background:linear-gradient(135deg,#1a0f05,#2d1a08);padding:14px 20px;border-bottom:1px solid var(--bd);text-align:center;">
-        <p id="desc-txt" style="font-family:'Tiro Devanagari Hindi',serif;font-size:.95rem;color:rgba(253,245,228,.85);line-height:1.7;max-width:700px;margin:0 auto;font-style:italic;"></p>
+      <div id="desc-sec" style="display:none;background:linear-gradient(135deg,#1a0f05,#2d1a08);padding:18px 24px;border-bottom:1px solid var(--bd);">
+        <p id="desc-txt" style="font-family:'Tiro Devanagari Hindi',serif;font-size:1rem;color:rgba(253,245,228,.9);line-height:1.8;width:100%;margin:0;"></p>
       </div>
 
       <div class="sbar">
@@ -1144,13 +1144,12 @@ function applyBranding(){
   // Main page description section
   const descSec=document.getElementById('desc-sec');
   const descTxt=document.getElementById('desc-txt');
-  const align=g('gkv52_desc_align')||'center';
+  const align=g('gkv52_desc_align')||'left';
   if(descSec&&descTxt){
     if(desc){
       descSec.style.display='block';
       descTxt.textContent=desc;
       descTxt.style.textAlign=align;
-      descSec.style.textAlign=align;
     } else descSec.style.display='none';
   }
   // Load alignment in admin panel
