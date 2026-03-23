@@ -382,11 +382,6 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
         <a class="yt-bar-btn" id="yt-bar-link" href="#" target="_blank">▶ Subscribe</a>
       </div>
 
-      <!-- Description Section -->
-      <div id="desc-sec" style="display:none;background:linear-gradient(135deg,#1a0f05,#2d1a08);padding:14px 20px;border-bottom:1px solid var(--bd);text-align:center;">
-        <p id="desc-txt" style="font-family:'Tiro Devanagari Hindi',serif;font-size:.95rem;color:rgba(253,245,228,.85);line-height:1.7;max-width:700px;margin:0 auto;font-style:italic;"></p>
-      </div>
-
       <div class="con-bar" id="con-bar-app" style="display:none;">
         <a class="con-bar-item" id="email-bar" style="display:none;cursor:pointer;text-decoration:none;color:inherit;">📧 <span></span></a>
         <a class="con-bar-item" id="phone-bar" style="display:none;cursor:pointer;text-decoration:none;color:inherit;">📞 <span></span></a>
@@ -445,6 +440,11 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
       <div class="blog-sec" id="blog-sec" style="display:none;">
         <div class="blog-heading">📖 गोत्र — लेख व जानकारी</div>
         <div id="blog-list"></div>
+      </div>
+
+      <!-- Description Section -->
+      <div id="desc-sec" style="display:none;background:linear-gradient(135deg,#1a0f05,#2d1a08);padding:14px 20px;border-bottom:1px solid var(--bd);text-align:center;">
+        <p id="desc-txt" style="font-family:'Tiro Devanagari Hindi',serif;font-size:.95rem;color:rgba(253,245,228,.85);line-height:1.7;max-width:700px;margin:0 auto;font-style:italic;"></p>
       </div>
 
       <div class="sbar">
@@ -591,8 +591,18 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
 
         <div class="ac2"><div class="ach">📝 Description / परिचय</div>
           <div class="acb" style="display:flex;flex-direction:column;gap:9px;">
-            <div><label class="fl">App Description (Login & App में दिखेगा)</label>
+            <div><label class="fl">App Description (Website पर दिखेगा)</label>
               <textarea class="fim" id="set-desc" style="width:100%;min-height:75px;" placeholder="धानका समाज के बारे में कुछ लिखें..."></textarea></div>
+            <div>
+              <label class="fl">Description Alignment</label>
+              <div style="display:flex;gap:8px;margin-top:4px;">
+                <button onclick="setDescAlign('left')" id="align-left" style="flex:1;padding:7px;border:2px solid var(--b);border-radius:3px;background:#fff;cursor:pointer;font-size:.9rem;transition:all .2s;" onmouseover="this.style.background='var(--sl)'" onmouseout="this.style.background=document.getElementById('set-desc-align').value==='left'?'var(--sd)':'#fff'">⬅️ Left</button>
+                <button onclick="setDescAlign('center')" id="align-center" style="flex:1;padding:7px;border:2px solid var(--b);border-radius:3px;background:var(--sd);color:#fff;cursor:pointer;font-size:.9rem;transition:all .2s;">↔️ Center</button>
+                <button onclick="setDescAlign('right')" id="align-right" style="flex:1;padding:7px;border:2px solid var(--b);border-radius:3px;background:#fff;cursor:pointer;font-size:.9rem;transition:all .2s;" onmouseover="this.style.background='var(--sl)'" onmouseout="this.style.background=document.getElementById('set-desc-align').value==='right'?'var(--sd)':'#fff'">➡️ Right</button>
+                <button onclick="setDescAlign('justify')" id="align-justify" style="flex:1;padding:7px;border:2px solid var(--b);border-radius:3px;background:#fff;cursor:pointer;font-size:.9rem;transition:all .2s;" onmouseover="this.style.background='var(--sl)'" onmouseout="this.style.background=document.getElementById('set-desc-align').value==='justify'?'var(--sd)':'#fff'">☰ Justify</button>
+                <input type="hidden" id="set-desc-align" value="center"/>
+              </div>
+            </div>
             <div><label class="fl">Footer Quote (Hindi)</label>
               <textarea class="fim" id="set-fhi" style="width:100%;min-height:55px;" placeholder="हिंदी में कोई अच्छी बात..."></textarea></div>
             <div><label class="fl">Footer Quote (English)</label>
@@ -1134,10 +1144,18 @@ function applyBranding(){
   // Main page description section
   const descSec=document.getElementById('desc-sec');
   const descTxt=document.getElementById('desc-txt');
+  const align=g('gkv52_desc_align')||'center';
   if(descSec&&descTxt){
-    if(desc){descSec.style.display='block';descTxt.textContent=desc;}
-    else descSec.style.display='none';
+    if(desc){
+      descSec.style.display='block';
+      descTxt.textContent=desc;
+      descTxt.style.textAlign=align;
+      descSec.style.textAlign=align;
+    } else descSec.style.display='none';
   }
+  // Load alignment in admin panel
+  const alignInp=document.getElementById('set-desc-align');
+  if(alignInp){alignInp.value=align;setDescAlign(align);}
 
   const fhi=g(K.fhi);const fen=g(K.fen);
   if(fhi){const el=document.getElementById('fq-hi');if(el)el.innerHTML=fhi;}
@@ -1193,14 +1211,29 @@ function saveBannerCap(){
 }
 function handleYtLogo(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{s(K.ylo,ev.target.result);fbSaveSettings(K.ylo,ev.target.result);applyBranding();toast('✅ YouTube Logo upload हो गया!');};r.readAsDataURL(f);e.target.value='';}
 
+function setDescAlign(align){
+  const inp=document.getElementById('set-desc-align');
+  if(inp)inp.value=align;
+  // Buttons highlight
+  ['left','center','right','justify'].forEach(a=>{
+    const btn=document.getElementById('align-'+a);
+    if(btn){
+      btn.style.background=a===align?'var(--sd)':'#fff';
+      btn.style.color=a===align?'#fff':'var(--ink)';
+    }
+  });
+}
 function saveDesc(){
   const desc=document.getElementById('set-desc').value;
   const fhi=document.getElementById('set-fhi').value;
   const fen=document.getElementById('set-fen').value;
+  const align=document.getElementById('set-desc-align')?.value||'center';
   s(K.desc,desc);s(K.fhi,fhi);s(K.fen,fen);
+  s('gkv52_desc_align',align);
   fbSaveSettings(K.desc,desc);
   fbSaveSettings(K.fhi,fhi);
   fbSaveSettings(K.fen,fen);
+  fbSaveSettings('gkv52_desc_align',align);
   applyBranding();toast('✅ Description save हो गया!');
 }
 function saveYt(){
@@ -1834,7 +1867,7 @@ window.saveBlogPost=saveBlogPost;window.deleteBlogPost=deleteBlogPost;window.ren
 window.handleAd=handleAd;window.renderAds=renderAds;
 window.submitFeedback=submitFeedback;window.deleteFeedback=deleteFeedback;window.toggleFeedbackShow=toggleFeedbackShow;
 window.toggleContribShow=toggleContribShow;window.contribPlay=contribPlay;window.contribPause=contribPause;window.galleryPlay=galleryPlay;window.galleryPause=galleryPause;window.adPlay=adPlay;window.adPause=adPause;
-window.toggleLangMenu=toggleLangMenu;window.setLang=setLang;
+window.toggleLangMenu=toggleLangMenu;window.setLang=setLang;window.setDescAlign=setDescAlign;
 
 // ══ GALLERY FUNCTIONS ══
 function handleGallery(e,n){
