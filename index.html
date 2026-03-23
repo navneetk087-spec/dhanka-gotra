@@ -1653,18 +1653,38 @@ window.installPWA=installPWA;
 const langCodes={hi:'hi',en:'en',pa:'pa',gu:'gu',mr:'mr'};
 const translationCache={};
 
-async function translateText(text,targetLang){
-  if(!text||targetLang==='hi')return text;
-  const cacheKey=targetLang+'::'+text.substring(0,50);
-  if(translationCache[cacheKey])return translationCache[cacheKey];
+async function translateChunk(text,targetLang){
+  if(!text)return text;
   try{
     const url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=hi|${langCodes[targetLang]}`;
     const res=await fetch(url);
     const data=await res.json();
-    const translated=data?.responseData?.translatedText||text;
-    translationCache[cacheKey]=translated;
-    return translated;
+    return data?.responseData?.translatedText||text;
   }catch(e){return text;}
+}
+
+async function translateText(text,targetLang){
+  if(!text||targetLang==='hi')return text;
+  const cacheKey=targetLang+'::'+text.substring(0,50);
+  if(translationCache[cacheKey])return translationCache[cacheKey];
+  let result='';
+  if(text.length<=450){
+    result=await translateChunk(text,targetLang);
+  } else {
+    // 450 chars के chunks में तोड़ो
+    const words=text.split(' ');
+    let chunk='';const parts=[];
+    for(const w of words){
+      if((chunk+' '+w).length>450){parts.push(chunk.trim());chunk=w;}
+      else chunk+=' '+w;
+    }
+    if(chunk.trim())parts.push(chunk.trim());
+    const translated=[];
+    for(const p of parts){translated.push(await translateChunk(p,targetLang));}
+    result=translated.join(' ');
+  }
+  translationCache[cacheKey]=result;
+  return result;
 }
 
 async function translateAllContent(lang){
