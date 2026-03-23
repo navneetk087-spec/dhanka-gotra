@@ -382,6 +382,11 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
         <a class="yt-bar-btn" id="yt-bar-link" href="#" target="_blank">▶ Subscribe</a>
       </div>
 
+      <!-- Description Section -->
+      <div id="desc-sec" style="display:none;background:linear-gradient(135deg,#1a0f05,#2d1a08);padding:14px 20px;border-bottom:1px solid var(--bd);text-align:center;">
+        <p id="desc-txt" style="font-family:'Tiro Devanagari Hindi',serif;font-size:.95rem;color:rgba(253,245,228,.85);line-height:1.7;max-width:700px;margin:0 auto;font-style:italic;"></p>
+      </div>
+
       <div class="con-bar" id="con-bar-app" style="display:none;">
         <a class="con-bar-item" id="email-bar" style="display:none;cursor:pointer;text-decoration:none;color:inherit;">📧 <span></span></a>
         <a class="con-bar-item" id="phone-bar" style="display:none;cursor:pointer;text-decoration:none;color:inherit;">📞 <span></span></a>
@@ -1126,6 +1131,13 @@ function applyBranding(){
   ['spl-desc','h-desc'].forEach(id=>{
     const el=document.getElementById(id);if(el){el.textContent=desc;el.style.display=desc?'block':'none';}
   });
+  // Main page description section
+  const descSec=document.getElementById('desc-sec');
+  const descTxt=document.getElementById('desc-txt');
+  if(descSec&&descTxt){
+    if(desc){descSec.style.display='block';descTxt.textContent=desc;}
+    else descSec.style.display='none';
+  }
 
   const fhi=g(K.fhi);const fen=g(K.fen);
   if(fhi){const el=document.getElementById('fq-hi');if(el)el.innerHTML=fhi;}
@@ -1179,10 +1191,26 @@ function saveBannerCap(){
   else if(capDiv){capDiv.style.display='none';}
   toast('✅ Caption save हो गई!');
 }
-function handleYtLogo(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{s(K.ylo,ev.target.result);applyBranding();toast('✅ YouTube Logo upload हो गया!');};r.readAsDataURL(f);e.target.value='';}
+function handleYtLogo(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{s(K.ylo,ev.target.result);fbSaveSettings(K.ylo,ev.target.result);applyBranding();toast('✅ YouTube Logo upload हो गया!');};r.readAsDataURL(f);e.target.value='';}
 
-function saveDesc(){s(K.desc,document.getElementById('set-desc').value);s(K.fhi,document.getElementById('set-fhi').value);s(K.fen,document.getElementById('set-fen').value);applyBranding();toast('✅ Description save हो गया!');}
-function saveYt(){s(K.yn,document.getElementById('set-yn').value.trim());s(K.yl,document.getElementById('set-yl').value.trim());applyBranding();toast('✅ YouTube info save हो गया!');}
+function saveDesc(){
+  const desc=document.getElementById('set-desc').value;
+  const fhi=document.getElementById('set-fhi').value;
+  const fen=document.getElementById('set-fen').value;
+  s(K.desc,desc);s(K.fhi,fhi);s(K.fen,fen);
+  fbSaveSettings(K.desc,desc);
+  fbSaveSettings(K.fhi,fhi);
+  fbSaveSettings(K.fen,fen);
+  applyBranding();toast('✅ Description save हो गया!');
+}
+function saveYt(){
+  const yn=document.getElementById('set-yn').value.trim();
+  const yl=document.getElementById('set-yl').value.trim();
+  s(K.yn,yn);s(K.yl,yl);
+  fbSaveSettings(K.yn,yn);
+  fbSaveSettings(K.yl,yl);
+  applyBranding();toast('✅ YouTube info save हो गया!');
+}
 function saveCon(){s(K.ce,document.getElementById('set-cemail').value.trim());s(K.cp,document.getElementById('set-cphone').value.trim());applyBranding();updateFooterContact();toast('✅ Contact info save हो गया!');}
 function saveCreds(){
   const ae=document.getElementById('set-ae').value.trim();const ap2=document.getElementById('set-ap').value;
@@ -1555,7 +1583,40 @@ function updateFooterContact(){
   if(wli&&cp2){wli.style.display='';if(wa)wa.href='https://wa.me/'+cp2.replace(/[^0-9]/g,'');}
 }
 
-// ══ LANGUAGE SYSTEM ══
+// ══ PWA INSTALL PROMPT ══
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // 3 second बाद popup दिखाओ
+  setTimeout(() => {
+    const div = document.createElement('div');
+    div.id = 'pwa-prompt';
+    div.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#2d1a08;color:#fdf5e4;border:2px solid var(--g);border-radius:10px;padding:16px 20px;z-index:99999;display:flex;align-items:center;gap:14px;box-shadow:0 8px 30px rgba(0,0,0,.5);min-width:280px;max-width:340px;animation:fadeIn .4s ease;';
+    div.innerHTML = `
+      <img src="android-chrome-192x192.png" style="width:48px;height:48px;border-radius:10px;flex-shrink:0;"/>
+      <div style="flex:1;">
+        <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:.95rem;margin-bottom:3px;">52 धानका गोत्र</div>
+        <div style="font-size:.75rem;opacity:.7;margin-bottom:10px;">App Install करें — बेहतर experience के लिए</div>
+        <div style="display:flex;gap:8px;">
+          <button onclick="installPWA()" style="background:var(--g);color:#1a0f05;border:none;border-radius:5px;padding:6px 16px;font-size:.85rem;cursor:pointer;font-weight:600;">📲 Install</button>
+          <button onclick="document.getElementById('pwa-prompt').remove()" style="background:rgba(255,255,255,.1);color:#fdf5e4;border:1px solid rgba(255,255,255,.2);border-radius:5px;padding:6px 12px;font-size:.82rem;cursor:pointer;">बाद में</button>
+        </div>
+      </div>`;
+    document.body.appendChild(div);
+  }, 3000);
+});
+
+function installPWA(){
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(()=>{
+      deferredPrompt=null;
+      const p=document.getElementById('pwa-prompt');if(p)p.remove();
+    });
+  }
+}
+window.installPWA=installPWA;
 const LANGS={
   hi:{
     title:'52 धानका गोत्र',sub:'Kul · Vansh · Gotra — विरासत डेटाबेस',
