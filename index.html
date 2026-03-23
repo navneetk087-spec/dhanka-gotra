@@ -116,8 +116,8 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
 .tb-l{display:flex;align-items:center;gap:10px;}
 .tb-logo{width:38px;height:38px;border-radius:50%;border:2px solid var(--g);background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:1.3rem;overflow:hidden;cursor:pointer;flex-shrink:0;}
 .tb-logo img{width:100%;height:100%;object-fit:cover;}
-.tb-title{font-family:'Tiro Devanagari Hindi',serif;font-size:.97rem;color:#fdf5e4;line-height:1.2;}
-.tb-sub{font-size:.7rem;color:rgba(253,245,228,.58);font-style:italic;}
+.tb-title{font-family:'Tiro Devanagari Hindi',serif;font-size:clamp(.75rem,.97rem,1rem);color:#fdf5e4;line-height:1.2;}
+.tb-sub{font-size:clamp(.55rem,.7rem,.8rem);color:rgba(253,245,228,.58);font-style:italic;}
 .tb-r{display:flex;gap:7px;align-items:center;}
 .bico{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:#fdf5e4;border-radius:3px;padding:6px 11px;cursor:pointer;font-family:'Crimson Pro',serif;font-size:.78rem;transition:all .2s;display:flex;align-items:center;gap:4px;white-space:nowrap;}
 .bico:hover{background:rgba(255,255,255,.28);}
@@ -922,6 +922,7 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
         <div class="fg"><label class="fl">जाति / समाज</label><input type="text" class="fim" id="f-j" placeholder="धानका"/></div>
       </div>
       <div class="fg full"><label class="fl">नोट्स</label><textarea class="fim" id="f-n" placeholder="अन्य जानकारी..." style="min-height:65px;resize:vertical;"></textarea></div>
+      <div class="fg full"><label class="fl">📖 गोत्र इतिहास / Gotra History</label><textarea class="fim" id="f-hist" placeholder="इस गोत्र का इतिहास, उत्पत्ति, विशेषताएं यहाँ लिखें..." style="min-height:100px;resize:vertical;"></textarea></div>
     </div>
     <div class="mf"><button class="bca" onclick="closeM('fm')">रद्द करें</button><button class="bsv" onclick="saveRec()">💾 सुरक्षित करें</button></div>
   </div>
@@ -934,7 +935,26 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
   </div>
 </div>
 
-<div class="mb" id="delm">
+<div class="mb" id="histm">
+  <div class="mo" style="max-width:600px;">
+    <div class="mh">
+      <span class="mt" id="hist-title">📖 गोत्र इतिहास</span>
+      <button class="mc" onclick="closeM('histm')">✕</button>
+    </div>
+    <div style="padding:12px 18px;border-bottom:1px solid var(--b);display:flex;gap:8px;flex-wrap:wrap;">
+      <button onclick="translateHistory('hi')" class="hist-lang-btn" style="padding:5px 12px;border:2px solid var(--b);border-radius:3px;background:var(--sd);color:#fff;cursor:pointer;font-size:.82rem;">🇮🇳 हिंदी</button>
+      <button onclick="translateHistory('en')" class="hist-lang-btn" style="padding:5px 12px;border:2px solid var(--b);border-radius:3px;background:#fff;cursor:pointer;font-size:.82rem;">🇬🇧 English</button>
+      <button onclick="translateHistory('pa')" class="hist-lang-btn" style="padding:5px 12px;border:2px solid var(--b);border-radius:3px;background:#fff;cursor:pointer;font-size:.82rem;">🟠 ਪੰਜਾਬੀ</button>
+      <button onclick="translateHistory('gu')" class="hist-lang-btn" style="padding:5px 12px;border:2px solid var(--b);border-radius:3px;background:#fff;cursor:pointer;font-size:.82rem;">🟣 ગુજરાતી</button>
+      <button onclick="translateHistory('mr')" class="hist-lang-btn" style="padding:5px 12px;border:2px solid var(--b);border-radius:3px;background:#fff;cursor:pointer;font-size:.82rem;">🟤 मराठी</button>
+    </div>
+    <div class="mbod">
+      <div id="hist-body" style="font-family:'Tiro Devanagari Hindi',serif;font-size:.98rem;color:var(--is);line-height:1.8;white-space:pre-wrap;"></div>
+      <div id="hist-empty" style="text-align:center;color:var(--im);font-style:italic;padding:20px;">अभी इस गोत्र का इतिहास उपलब्ध नहीं है।<br><span style="font-size:.8rem;">Admin से संपर्क करें।</span></div>
+    </div>
+    <div class="mf"><button class="bca" onclick="closeM('histm')">बंद करें</button></div>
+  </div>
+</div>
   <div class="cm"><div class="cmh">⚠️ Record हटाना</div>
     <div class="cmb" id="del-txt"></div>
     <div class="cmf"><button class="bca" onclick="closeM('delm')">रद्द करें</button><button class="bdc" onclick="confirmDel()">🗑️ हाँ, हटाएं</button></div>
@@ -1456,7 +1476,7 @@ function renderTbl(){
       <td>${r.kul?`<span class="tdb">${r.kul}</span>`:'—'}</td>
       <td>${r.vansh||'—'}</td>
       <td class="hm">${r.origin||'—'}</td>
-      <td><button class="bv" onclick="viewRec('${r.id}')">👁</button><button class="be" onclick="openEdit('${r.id}')">✏️</button><button class="bd" onclick="openDel('${r.id}')">🗑️</button></td>`;
+      <td><button class="bv" onclick="viewRec('${r.id}')">👁</button><button class="bv" onclick="viewHistory('${r.id}')" style="background:#e8f4e8;color:#2d6a3f;border:1px solid #b8d4b8;" title="इतिहास देखें">📖</button><button class="be" onclick="openEdit('${r.id}')">✏️</button><button class="bd" onclick="openDel('${r.id}')">🗑️</button></td>`;
     tb.appendChild(tr);
   });
 }
@@ -1482,12 +1502,14 @@ function openEdit(id){
   document.getElementById('f-v').value=r.vansh||'';document.getElementById('f-pr').value=r.pravar||'';
   document.getElementById('f-d').value=r.devta||'';document.getElementById('f-ve').value=r.ved||'';
   document.getElementById('f-o').value=r.origin||'';document.getElementById('f-j').value=r.jati||'';
-  document.getElementById('f-n').value=r.notes||'';openM('fm');
+  document.getElementById('f-n').value=r.notes||'';
+  document.getElementById('f-hist').value=r.history||'';
+  openM('fm');
 }
 function saveRec(){
   const gotra=document.getElementById('f-g').value.trim();if(!gotra){alert('गोत्र जरूरी है!');return;}
   const eid=document.getElementById('eid').value;
-  const rec={gotra,kul:document.getElementById('f-k').value.trim(),vansh:document.getElementById('f-v').value.trim(),pravar:document.getElementById('f-pr').value.trim(),devta:document.getElementById('f-d').value.trim(),ved:document.getElementById('f-ve').value.trim(),origin:document.getElementById('f-o').value.trim(),jati:document.getElementById('f-j').value.trim(),notes:document.getElementById('f-n').value.trim(),ts:Date.now()};
+  const rec={gotra,kul:document.getElementById('f-k').value.trim(),vansh:document.getElementById('f-v').value.trim(),pravar:document.getElementById('f-pr').value.trim(),devta:document.getElementById('f-d').value.trim(),ved:document.getElementById('f-ve').value.trim(),origin:document.getElementById('f-o').value.trim(),jati:document.getElementById('f-j').value.trim(),notes:document.getElementById('f-n').value.trim(),history:document.getElementById('f-hist').value.trim(),ts:Date.now()};
   if(eid){rec.id=eid;rec._exists=true;toast('⏳ Update हो रहा है...');}
   else{rec.id=uid();toast('⏳ Save हो रहा है...');}
   closeM('fm');
@@ -1745,7 +1767,7 @@ const LANGS={
     langName:'हिंदी'
   },
   en:{
-    title:'52 Dhanaka Gotra',sub:'Kul · Vansh · Gotra — Heritage Database',
+    title:'52 Dhanaka Gotra',sub:'Kul · Vansh · Gotra',
     search:'Search... Gotra, Kul, Vansh',
     colGotra:'Gotra',colKul:'Kul',colVansh:'Vansh',colOrigin:'Origin',
     total:'Total:',shown:'Showing:',noRecord:'No record found.',
@@ -1952,7 +1974,7 @@ window.saveBlogPost=saveBlogPost;window.deleteBlogPost=deleteBlogPost;window.ren
 window.handleAd=handleAd;window.renderAds=renderAds;
 window.submitFeedback=submitFeedback;window.deleteFeedback=deleteFeedback;window.toggleFeedbackShow=toggleFeedbackShow;
 window.toggleContribShow=toggleContribShow;window.contribPlay=contribPlay;window.contribPause=contribPause;window.galleryPlay=galleryPlay;window.galleryPause=galleryPause;window.adPlay=adPlay;window.adPause=adPause;
-window.toggleLangMenu=toggleLangMenu;window.setLang=setLang;window.setDescAlign=setDescAlign;
+window.viewHistory=viewHistory;window.translateHistory=translateHistory;
 
 // ══ GALLERY FUNCTIONS ══
 function handleGallery(e,n){
@@ -2016,20 +2038,44 @@ function adScroll(dir){
   el.style.transform=`translateX(${adPos}px)`;
 }
 
-// ══ SAVE ALL ══
+// ══ HISTORY FUNCTIONS ══
+let currentHistoryText='';
+function viewHistory(id){
+  const r=records.find(x=>x.id===id);if(!r)return;
+  document.getElementById('hist-title').textContent=`📖 ${r.gotra} — इतिहास`;
+  currentHistoryText=r.history||'';
+  const body=document.getElementById('hist-body');
+  const empty=document.getElementById('hist-empty');
+  if(currentHistoryText){
+    body.textContent=currentHistoryText;
+    body.style.display='block';
+    empty.style.display='none';
+  } else {
+    body.style.display='none';
+    empty.style.display='block';
+  }
+  // Reset language buttons
+  document.querySelectorAll('.hist-lang-btn').forEach(b=>{b.style.background='#fff';b.style.color='var(--ink)';});
+  document.querySelector('.hist-lang-btn').style.background='var(--sd)';
+  document.querySelector('.hist-lang-btn').style.color='#fff';
+  openM('histm');
+}
+async function translateHistory(lang){
+  const body=document.getElementById('hist-body');
+  const empty=document.getElementById('hist-empty');
+  if(!currentHistoryText){empty.style.display='block';body.style.display='none';return;}
+  // Button highlight
+  document.querySelectorAll('.hist-lang-btn').forEach(b=>{b.style.background='#fff';b.style.color='var(--ink)';});
+  event.target.style.background='var(--sd)';event.target.style.color='#fff';
+  if(lang==='hi'){body.textContent=currentHistoryText;body.style.display='block';empty.style.display='none';return;}
+  body.textContent='🔄 अनुवाद हो रहा है...';body.style.display='block';empty.style.display='none';
+  const translated=await translateText(currentHistoryText,lang);
+  body.textContent=translated;
+}
 function saveAll(){
   saveDesc();saveYt();saveCon();saveCreds();saveContribs();saveGallery();saveColors();
   toast('✅ सब कुछ Save हो गया! 🎉');
 }window.sendOTP=sendOTP;window.verifyOTP=verifyOTP;window.exportOTPUsers=exportOTPUsers;window.adminLogoClick=()=>{if(isAdmin)triggerLogo();};
-</script>
-  <script>
-if('serviceWorker' in navigator){
-  window.addEventListener('load', ()=>{
-    navigator.serviceWorker.register('/dhanka-gotra/sw.js')
-      .then(reg => console.log('SW registered'))
-      .catch(err => console.log('SW error:', err));
-  });
-}
 </script>
 </body>
 </html>
