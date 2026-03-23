@@ -436,12 +436,6 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
         </div>
       </div>
 
-      <!-- BLOG SECTION -->
-      <div class="blog-sec" id="blog-sec" style="display:none;">
-        <div class="blog-heading">📖 गोत्र — लेख व जानकारी</div>
-        <div id="blog-list"></div>
-      </div>
-
       <!-- Description Section -->
       <div id="desc-sec" style="display:none;background:linear-gradient(135deg,#1a0f05,#2d1a08);padding:18px 24px;border-bottom:1px solid var(--bd);">
         <p id="desc-txt" style="font-family:'Tiro Devanagari Hindi',serif;font-size:1rem;color:rgba(253,245,228,.9);line-height:1.8;width:100%;margin:0;"></p>
@@ -868,17 +862,6 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--p);color:var(--ink
               </div>
             </div>
             <div style="font-size:.75rem;color:var(--im);font-style:italic;margin-top:7px;">ये images right से left scroll होंगी</div>
-          </div>
-        </div>
-
-        <div class="ac2"><div class="ach">✍️ Blog / लेख लिखें</div>
-          <div class="acb" style="display:flex;flex-direction:column;gap:9px;">
-            <div><label class="fl">Article Title / शीर्षक</label>
-              <input type="text" class="fim" id="blog-title-inp" style="width:100%;" placeholder="जैसे: भारद्वाज गोत्र का इतिहास..."/></div>
-            <div><label class="fl">Content / लेख लिखें</label>
-              <textarea class="fim" id="blog-content-inp" style="width:100%;min-height:120px;resize:vertical;" placeholder="यहाँ गोत्र के बारे में लिखें..."></textarea></div>
-            <button class="bss" onclick="saveBlogPost()">📝 Post करें</button>
-            <div id="blog-admin-list" style="margin-top:10px;"></div>
           </div>
         </div>
 
@@ -1472,11 +1455,11 @@ function renderTbl(){
   fil.forEach((r,i)=>{
     const tr=document.createElement('tr');
     tr.innerHTML=`<td class="tdi">${i+1}</td>
-      <td><div class="tdm">${r.gotra||'—'}</div>${r.jati?`<div class="tds">${r.jati}</div>`:''}</td>
+      <td style="cursor:pointer;" onclick="viewHistory('${r.id}')"><div class="tdm" style="color:var(--sd);">${r.gotra||'—'}</div>${r.jati?`<div class="tds">${r.jati}</div>`:''}</td>
       <td>${r.kul?`<span class="tdb">${r.kul}</span>`:'—'}</td>
       <td>${r.vansh||'—'}</td>
       <td class="hm">${r.origin||'—'}</td>
-      <td><button class="bv" onclick="viewRec('${r.id}')">👁</button><button class="bv" onclick="viewHistory('${r.id}')" style="background:#e8f4e8;color:#2d6a3f;border:1px solid #b8d4b8;" title="इतिहास देखें">📖</button><button class="be" onclick="openEdit('${r.id}')">✏️</button><button class="bd" onclick="openDel('${r.id}')">🗑️</button></td>`;
+      <td><button class="bv" onclick="viewRec('${r.id}')">👁</button><button class="bv" onclick="viewHistory('${r.id}')" style="background:#e8f4e8;color:#2d6a3f;border:1px solid #b8d4b8;" title="इतिहास">📖</button><button class="be" onclick="openEdit('${r.id}')">✏️</button><button class="bd" onclick="openDel('${r.id}')">🗑️</button></td>`;
     tb.appendChild(tr);
   });
 }
