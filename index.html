@@ -1045,9 +1045,12 @@ const s=(k,v)=>localStorage.setItem(k,v);
 function init(){
   if(!g(K.ae))s(K.ae,DEF.ae);if(!g(K.ap2))s(K.ap2,DEF.ap);
   if(!g(K.pe))s(K.pe,DEF.pe);if(!g(K.pp))s(K.pp,DEF.pp);
-  if(!g(K.con))s(K.con,JSON.stringify(
-    Array.from({length:52},(_,i)=>({name:`सदस्य ${i+1}`,role:'',photo:''}))
-  ));
+  // Contributors 52 सुनिश्चित करो
+  let con=JSON.parse(g(K.con)||'[]');
+  if(con.length<52){
+    while(con.length<52)con.push({name:`सदस्य ${con.length+1}`,role:'',photo:''});
+    s(K.con,JSON.stringify(con));
+  }
   // तुरंत Lock screen हटाओ — directly app खोलो
   s(K.guestOn,'1');
   applyBranding();
@@ -1255,6 +1258,7 @@ function renderContribs(){
   const con=JSON.parse(g(K.con)||'[]');
   const cl=document.getElementById('cl');cl.innerHTML='';
   const hidden=JSON.parse(g('gkv52_con_hidden')||'[]');
+  // Public को सिर्फ वो दिखाओ जो hidden नहीं हैं
   const visible=con.filter((_,i)=>isAdmin||!hidden.includes(i));
   // Double for infinite loop
   [...visible,...visible].forEach((c,i)=>{
@@ -1267,8 +1271,7 @@ function renderContribs(){
       <div class="cn" style="font-size:.9rem;">${c.name||'—'}</div>${c.role?`<div class="cr">${c.role}</div>`:''}`;
     cl.appendChild(div);
   });
-  // Set animation duration based on count
-  if(cl)cl.style.animationDuration=(visible.length*2)+'s';
+  if(cl)cl.style.animationDuration=(Math.max(visible.length,1)*2)+'s';
   const ea=document.getElementById('contrib-ea');if(!ea)return;
   ea.innerHTML='';
   con.forEach((c,i)=>{
@@ -1282,7 +1285,7 @@ function renderContribs(){
           <button class="pu" onclick="cpPick(${i})">📷 Photo</button>
           <label style="display:flex;align-items:center;gap:5px;font-size:.78rem;cursor:pointer;">
             <input type="checkbox" ${isHidden?'':'checked'} onchange="toggleContribShow(${i},this.checked)" style="cursor:pointer;"/>
-            Website पर दिखाएं
+            🌐 Website पर दिखाएं
           </label>
         </div>
       </div>`;
@@ -1297,7 +1300,7 @@ function toggleContribShow(i,show){
   s('gkv52_con_hidden',JSON.stringify(hidden));
   fbSaveSettings('gkv52_con_hidden',JSON.stringify(hidden));
   renderContribs();
-  toast(show?`✅ सदस्य ${i+1} दिखेगा`:`✅ सदस्य ${i+1} छुपाया`);
+  toast(show?`✅ सदस्य ${i+1} website पर दिखेगा`:`✅ सदस्य ${i+1} website से छुपाया`);
 }
 let contribPos=0;
 function contribScroll(dir){
@@ -1314,8 +1317,15 @@ function cpPick(i){cpIdx=i;document.getElementById('cp-fi').click();}
 function handleCPhoto(e){const f=e.target.files[0];if(!f||cpIdx===null)return;const r=new FileReader();r.onload=ev=>{const c=JSON.parse(g(K.con)||'[]');c[cpIdx].photo=ev.target.result;s(K.con,JSON.stringify(c));renderContribs();toast('✅ Photo upload हो गई!');};r.readAsDataURL(f);e.target.value='';}
 function autoSC(i,field,val){const c=JSON.parse(g(K.con)||'[]');c[i][field]=val;s(K.con,JSON.stringify(c));}
 function saveContribs(){
-  const c=JSON.parse(g(K.con)||'[]');
-  c.forEach((_,i)=>{const ni=document.getElementById(`cn-${i}`);const ri=document.getElementById(`cr-${i}`);if(ni)c[i].name=ni.value.trim();if(ri)c[i].role=ri.value.trim();});
+  let c=JSON.parse(g(K.con)||'[]');
+  // 52 slots सुनिश्चित करो
+  while(c.length<52)c.push({name:`सदस्य ${c.length+1}`,role:'',photo:''});
+  c.forEach((_,i)=>{
+    const ni=document.getElementById(`cn-${i}`);
+    const ri=document.getElementById(`cr-${i}`);
+    if(ni)c[i].name=ni.value.trim()||`सदस्य ${i+1}`;
+    if(ri)c[i].role=ri.value.trim();
+  });
   s(K.con,JSON.stringify(c));
   fbSaveSettings(K.con,JSON.stringify(c));
   renderContribs();toast('✅ Contributors save हो गए!');
