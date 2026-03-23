@@ -1695,10 +1695,9 @@ async function translateAllContent(lang){
     const fhi=g(K.fhi)||'';
     const fqHi=document.getElementById('fq-hi');
     if(fqHi&&fhi)fqHi.innerHTML=fhi;
-    const csTitle=document.querySelector('#cs-title-txt');
-    if(csTitle)csTitle.textContent='52 धानका गोत्र';
-    const csSub=document.querySelector('#cs-sub-txt');
-    if(csSub)csSub.textContent='Dhanaka Community · Heritage Database';
+    const fen=g(K.fen)||'';
+    const fqEn=document.getElementById('fq-en');
+    if(fqEn&&fen)fqEn.textContent=fen;
     return;
   }
   toast('🔄 अनुवाद हो रहा है...');
@@ -1712,6 +1711,13 @@ async function translateAllContent(lang){
   if(fhi){
     const t=await translateText(fhi,lang);
     const el=document.getElementById('fq-hi');
+    if(el)el.textContent=t;
+  }
+  // English quote भी translate करो
+  const fen=g(K.fen)||'';
+  if(fen){
+    const t=await translateText(fen,lang);
+    const el=document.getElementById('fq-en');
     if(el)el.textContent=t;
   }
   toast('✅ अनुवाद हो गया!');
