@@ -2022,5 +2022,14 @@ function saveAll(){
   toast('✅ सब कुछ Save हो गया! 🎉');
 }window.sendOTP=sendOTP;window.verifyOTP=verifyOTP;window.exportOTPUsers=exportOTPUsers;window.adminLogoClick=()=>{if(isAdmin)triggerLogo();};
 </script>
+  <script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('/dhanka-gotra/sw.js')
+      .then(reg => console.log('SW registered'))
+      .catch(err => console.log('SW error:', err));
+  });
+}
+</script>
 </body>
 </html>
