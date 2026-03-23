@@ -1459,7 +1459,7 @@ function renderTbl(){
       <td>${r.kul?`<span class="tdb">${r.kul}</span>`:'—'}</td>
       <td>${r.vansh||'—'}</td>
       <td class="hm">${r.origin||'—'}</td>
-      <td><button class="bv" onclick="viewRec('${r.id}')">👁</button><button class="bv" onclick="viewHistory('${r.id}')" style="background:#e8f4e8;color:#2d6a3f;border:1px solid #b8d4b8;" title="इतिहास">📖</button><button class="be" onclick="openEdit('${r.id}')">✏️</button><button class="bd" onclick="openDel('${r.id}')">🗑️</button></td>`;
+      <td onclick="event.stopPropagation()"><button class="bv" onclick="viewRec('${r.id}')">👁</button><button class="bv" onclick="viewHistory('${r.id}')" style="background:#e8f4e8;color:#2d6a3f;border:1px solid #b8d4b8;" title="इतिहास">📖</button><button class="be" onclick="openEdit('${r.id}')">✏️</button><button class="bd" onclick="openDel('${r.id}')">🗑️</button></td>`;
     tb.appendChild(tr);
   });
 }
