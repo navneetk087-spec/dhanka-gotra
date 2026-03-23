@@ -1649,6 +1649,54 @@ function installPWA(){
   }
 }
 window.installPWA=installPWA;
+// ══ TRANSLATION SYSTEM ══
+const langCodes={hi:'hi',en:'en',pa:'pa',gu:'gu',mr:'mr'};
+const translationCache={};
+
+async function translateText(text,targetLang){
+  if(!text||targetLang==='hi')return text;
+  const cacheKey=targetLang+'::'+text.substring(0,50);
+  if(translationCache[cacheKey])return translationCache[cacheKey];
+  try{
+    const url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=hi|${langCodes[targetLang]}`;
+    const res=await fetch(url);
+    const data=await res.json();
+    const translated=data?.responseData?.translatedText||text;
+    translationCache[cacheKey]=translated;
+    return translated;
+  }catch(e){return text;}
+}
+
+async function translateAllContent(lang){
+  if(lang==='hi'){
+    const desc=g(K.desc)||'';
+    const descTxt=document.getElementById('desc-txt');
+    if(descTxt&&desc){descTxt.textContent=desc;const align=g('gkv52_desc_align')||'left';descTxt.style.textAlign=align;}
+    const fhi=g(K.fhi)||'';
+    const fqHi=document.getElementById('fq-hi');
+    if(fqHi&&fhi)fqHi.innerHTML=fhi;
+    const csTitle=document.querySelector('#cs-title-txt');
+    if(csTitle)csTitle.textContent='52 धानका गोत्र';
+    const csSub=document.querySelector('#cs-sub-txt');
+    if(csSub)csSub.textContent='Dhanaka Community · Heritage Database';
+    return;
+  }
+  toast('🔄 अनुवाद हो रहा है...');
+  const desc=g(K.desc)||'';
+  if(desc){
+    const t=await translateText(desc,lang);
+    const el=document.getElementById('desc-txt');
+    if(el){el.textContent=t;const align=g('gkv52_desc_align')||'left';el.style.textAlign=align;}
+  }
+  const fhi=g(K.fhi)||'';
+  if(fhi){
+    const t=await translateText(fhi,lang);
+    const el=document.getElementById('fq-hi');
+    if(el)el.textContent=t;
+  }
+  toast('✅ अनुवाद हो गया!');
+}
+
 const LANGS={
   hi:{
     title:'52 धानका गोत्र',sub:'Kul · Vansh · Gotra — विरासत डेटाबेस',
@@ -1739,6 +1787,8 @@ function setLang(lang){
   const adminBtn=document.getElementById('tb-adminbtn');if(adminBtn)adminBtn.innerHTML='🔑 <span class="hm">'+L.adminLogin+'</span>';
   const logoutBtn=document.getElementById('tb-logout');if(logoutBtn)logoutBtn.innerHTML='🚪 <span class="hm">'+L.logout+'</span>';
   s('gkv52_lang',lang);
+  // Description, Footer Quote translate करो
+  translateAllContent(lang);
 }
 document.addEventListener('click',e=>{
   const menu=document.getElementById('lang-menu');
