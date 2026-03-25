@@ -3,1055 +3,1668 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>धानका इतिहास एवं गोत्र</title>
+<title id="doc-title">धानका इतिहास एवं गोत्र</title>
 <meta id="meta-desc" name="description" content="52 धानका गोत्र की सम्पूर्ण जानकारी"/>
-<meta id="meta-keys" name="keywords" content="धानका गोत्र, Dhanka Gotra, धानका इतिहास"/>
-<meta id="meta-robots" name="robots" content="index, follow"/>
-<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<meta id="meta-keys" name="keywords" content="धानका गोत्र, Dhanka Gotra"/>
+<meta name="robots" content="index, follow"/>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Playfair+Display:wght@600;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ═══════════════════════════════════════
+   ROOT VARIABLES
+═══════════════════════════════════════ */
 :root{
-  --saffron:#E8651A;--deep:#1A0A00;--gold:#C9922A;
-  --cream:#FDF6EC;--rust:#8B2500;--sand:#F0DFC0;
-  --text:#2A1500;--muted:#7A5C40;--green:#2E7D32;--red:#C62828;
+  --saffron:#E8651A; --deep:#1A0A00; --gold:#C9922A;
+  --cream:#FDF6EC;   --rust:#8B2500; --sand:#F0DFC0;
+  --text:#2A1500;    --muted:#7A5C40; --green:#2E7D32; --red:#C62828;
+  --sidebar-w:220px; --right-w:240px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;}
+body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:400;min-height:100vh;}
 
-/* TOP BORDER */
-.top-border{height:6px;background:linear-gradient(90deg,var(--rust),var(--saffron),var(--gold),var(--saffron),var(--rust));}
+/* ═══ TOP BORDER ═══ */
+.top-border{height:5px;background:linear-gradient(90deg,var(--rust),var(--saffron),var(--gold),var(--saffron),var(--rust));}
 
-/* HEADER */
-header{background:var(--deep);color:var(--cream);text-align:center;padding:2rem 1.5rem;position:relative;overflow:hidden;}
-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(232,101,26,.18),transparent 70%);pointer-events:none;}
-.header-emblem{font-size:2.2rem;margin-bottom:.3rem;}
-header h1{font-family:'Tiro Devanagari Hindi',serif;font-size:clamp(1.6rem,4vw,2.6rem);color:var(--gold);}
-header h2{font-family:'Playfair Display',serif;font-size:clamp(.9rem,2vw,1.2rem);color:var(--sand);font-weight:400;margin-top:.3rem;}
+/* ═══════════════════════════════════════
+   NO.7 — HEADER SLIDER
+═══════════════════════════════════════ */
+#header-slider{background:var(--deep);padding:1rem 1rem .6rem;position:relative;overflow:hidden;}
+#header-slider::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(232,101,26,.15),transparent 70%);pointer-events:none;}
 
-/* NAV */
-nav{background:var(--rust);display:flex;flex-wrap:wrap;justify-content:center;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,.3);}
-nav a{color:var(--cream);text-decoration:none;padding:.7rem 1.2rem;font-size:.85rem;font-weight:500;transition:background .2s;}
+.slider-track{display:flex;gap:.8rem;overflow:hidden;position:relative;}
+.slider-frame{
+  flex:0 0 calc(20% - .64rem);
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;
+  cursor:pointer;
+}
+.slider-frame.hidden-frame{display:none;}
+.slider-img-wrap{
+  width:100%;aspect-ratio:4/3;
+  border:2px solid rgba(201,146,42,.4);
+  border-radius:8px;overflow:hidden;
+  background:rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .3s;
+}
+.slider-frame:hover .slider-img-wrap{border-color:var(--gold);}
+.slider-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.slider-img-wrap .no-photo{color:rgba(201,146,42,.5);font-size:1.8rem;text-align:center;}
+.slider-caption{font-family:'Tiro Devanagari Hindi',serif;font-size:.72rem;color:var(--sand);text-align:center;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+/* Manual nav arrows */
+.slider-nav{display:flex;justify-content:center;gap:.5rem;margin-top:.5rem;}
+.slider-arrow{background:rgba(201,146,42,.2);border:1px solid rgba(201,146,42,.4);color:var(--gold);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.9rem;transition:background .2s;display:flex;align-items:center;justify-content:center;}
+.slider-arrow:hover{background:var(--gold);color:var(--deep);}
+
+/* ═══════════════════════════════════════
+   NO.6 — NAV BAR
+═══════════════════════════════════════ */
+#topbar{background:var(--rust);position:sticky;top:0;z-index:500;box-shadow:0 2px 12px rgba(0,0,0,.3);}
+.topbar-title{background:var(--deep);text-align:center;padding:.4rem 1rem;border-bottom:1px solid rgba(201,146,42,.3);}
+.topbar-title span{font-family:'Tiro Devanagari Hindi',serif;font-size:1rem;color:var(--gold);letter-spacing:.02em;}
+.topbar-title small{color:var(--sand);font-size:.72rem;margin-left:.5rem;opacity:.8;}
+nav{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;}
+nav a{color:var(--cream);text-decoration:none;padding:.6rem 1rem;font-size:.82rem;font-weight:500;transition:background .2s;white-space:nowrap;}
 nav a:hover,nav a.active{background:var(--saffron);color:var(--deep);}
+.admin-nav-btn{background:none;border:1px solid rgba(201,146,42,.4);color:var(--gold);padding:.4rem .8rem;font-size:.78rem;cursor:pointer;border-radius:4px;margin-left:.5rem;transition:background .2s;}
+.admin-nav-btn:hover{background:var(--gold);color:var(--deep);}
 
-/* LANG BAR */
-#lang-bar{background:#2c1500;padding:.5rem 1rem;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.5rem;border-bottom:2px solid var(--gold);}
-.lang-btn{background:transparent;border:1px solid rgba(201,146,42,.4);color:var(--sand);padding:.25rem .7rem;font-size:.78rem;cursor:pointer;border-radius:2px;transition:all .2s;}
+/* ═══════════════════════════════════════
+   LANGUAGE BAR
+═══════════════════════════════════════ */
+#lang-bar{background:#2c1500;padding:.4rem 1rem;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.4rem;border-bottom:2px solid var(--gold);}
+#lang-bar span{color:var(--gold);font-size:.75rem;font-weight:500;}
+.lang-btn{background:transparent;border:1px solid rgba(201,146,42,.35);color:var(--sand);padding:.22rem .65rem;font-size:.76rem;cursor:pointer;border-radius:3px;transition:all .2s;font-family:'DM Sans',sans-serif;}
 .lang-btn:hover,.lang-btn.active-lang{background:var(--saffron);color:white;border-color:var(--saffron);}
 #google_translate_element{display:none;}
 
-/* PAGE */
-.page{display:none;padding:2rem 1.5rem;max-width:1100px;margin:0 auto;}
-.page.active{display:block;}
-.sec-title{font-family:'Tiro Devanagari Hindi',serif;font-size:1.6rem;color:var(--rust);margin-bottom:.3rem;}
-.sec-sub{color:var(--muted);font-size:.9rem;margin-bottom:1.8rem;}
-.ornament{color:var(--gold);letter-spacing:.4rem;margin-bottom:1.5rem;font-size:1rem;}
+/* ═══════════════════════════════════════
+   MAIN 3-COLUMN LAYOUT
+═══════════════════════════════════════ */
+#main-layout{display:grid;grid-template-columns:var(--sidebar-w) 1fr var(--right-w);gap:0;min-height:60vh;}
 
-/* ── GLASS CARDS (Feature 1) ── */
-.doc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1.4rem;}
+/* ═══ NO.1 — LEFT SIDEBAR ═══ */
+#left-sidebar{background:white;border-right:1px solid var(--sand);padding:.8rem 0;}
+.sidebar-head{font-family:'Tiro Devanagari Hindi',serif;font-size:.82rem;color:var(--muted);padding:.3rem .8rem .5rem;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--sand);margin-bottom:.3rem;}
+.sidebar-menu{list-style:none;display:flex;flex-direction:column;}
+.sidebar-menu li a,.sidebar-menu li button{
+  display:flex;align-items:center;gap:.5rem;
+  width:100%;text-align:left;
+  padding:.6rem .8rem;
+  font-size:.85rem;color:var(--text);
+  text-decoration:none;background:none;border:none;cursor:pointer;
+  border-left:3px solid transparent;
+  transition:background .18s,border-color .18s;
+  font-family:'DM Sans',sans-serif;
+}
+.sidebar-menu li a:hover,.sidebar-menu li button:hover,
+.sidebar-menu li a.active-menu,.sidebar-menu li button.active-menu{
+  background:var(--sand);border-left-color:var(--saffron);color:var(--rust);font-weight:500;
+}
+.sidebar-menu li .menu-icon{font-size:1rem;width:20px;text-align:center;}
+
+/* ═══ NO.5 — MAIN CONTENT ═══ */
+#main-content{padding:1.2rem 1rem;min-height:60vh;}
+.content-header{margin-bottom:1rem;}
+.content-title{font-family:'Tiro Devanagari Hindi',serif;font-size:1.4rem;color:var(--rust);}
+.content-sub{font-size:.85rem;color:var(--muted);margin-top:.2rem;}
+
+/* Admin rich text area */
+.admin-content-box{background:var(--cream);border:1px solid var(--sand);border-radius:6px;padding:1rem;min-height:80px;font-family:'Tiro Devanagari Hindi',serif;font-size:.95rem;line-height:1.8;color:var(--text);}
+
+/* Doc grid */
+.doc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;margin-top:.8rem;}
 .doc-card{
-  background:rgba(255,255,255,0.85);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  border:1px solid rgba(201,146,42,0.25);
-  border-radius:16px;
-  padding:1.4rem 1.2rem;
-  text-align:center;
-  box-shadow:0 4px 20px rgba(26,10,0,.10);
-  cursor:pointer;
-  transition:transform .25s,box-shadow .25s,border-color .25s;
-  position:relative;
-  overflow:hidden;
+  background:rgba(255,255,255,.9);
+  border:1px solid rgba(201,146,42,.2);
+  border-radius:12px;padding:1rem .8rem;text-align:center;
+  box-shadow:0 3px 14px rgba(26,10,0,.08);cursor:pointer;
+  transition:transform .22s,box-shadow .22s,border-color .22s;
 }
-.doc-card::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(232,101,26,.06) 0%,transparent 60%);
-  border-radius:16px;pointer-events:none;
-}
-.doc-card:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(26,10,0,.18);border-color:var(--saffron);}
-.doc-card .doc-icon{font-size:2.6rem;margin-bottom:.6rem;display:block;}
-.doc-card .doc-title{font-family:'Tiro Devanagari Hindi',serif;font-size:1rem;color:var(--deep);margin-bottom:.3rem;font-weight:600;}
-.doc-card .doc-sub{font-size:.76rem;color:var(--muted);}
-.doc-card .doc-count{margin-top:.5rem;font-size:.72rem;color:var(--saffron);font-weight:500;}
-.doc-card .no-img{background:var(--sand);border-radius:6px;padding:.3rem .6rem;font-size:.72rem;color:var(--muted);margin-top:.5rem;display:inline-block;}
+.doc-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(26,10,0,.14);border-color:var(--saffron);}
+.doc-card .dc-icon{font-size:2.2rem;display:block;margin-bottom:.4rem;}
+.doc-card .dc-title{font-family:'Tiro Devanagari Hindi',serif;font-size:.9rem;color:var(--deep);font-weight:600;}
+.doc-card .dc-sub{font-size:.7rem;color:var(--muted);margin-top:.2rem;}
+.doc-card .dc-count{font-size:.68rem;color:var(--saffron);margin-top:.4rem;font-weight:500;}
 
-/* PDF CARDS */
+/* PDF cards */
 .pdf-card{
-  background:linear-gradient(135deg,rgba(26,10,0,0.92),rgba(139,37,0,0.85));
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(201,146,42,0.3);
-  border-radius:16px;
-  padding:1.4rem 1.2rem;
-  text-align:center;
-  box-shadow:0 4px 20px rgba(26,10,0,.2);
-  cursor:pointer;
-  transition:transform .25s,box-shadow .25s;
-  color:var(--cream);
+  background:linear-gradient(135deg,rgba(26,10,0,.9),rgba(139,37,0,.8));
+  border:1px solid rgba(201,146,42,.25);border-radius:12px;
+  padding:1rem .8rem;text-align:center;
+  box-shadow:0 3px 14px rgba(26,10,0,.15);cursor:pointer;
+  transition:transform .22s,box-shadow .22s;color:var(--cream);
 }
-.pdf-card:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(26,10,0,.3);}
-.pdf-card .doc-icon{font-size:2.6rem;margin-bottom:.6rem;display:block;}
-.pdf-card .doc-title{font-family:'Tiro Devanagari Hindi',serif;font-size:1rem;color:var(--gold);margin-bottom:.3rem;font-weight:600;}
-.pdf-card .doc-sub{font-size:.76rem;color:rgba(253,246,236,.7);}
-.pdf-card .pdf-dl-badge{margin-top:.6rem;display:inline-block;background:rgba(201,146,42,.2);border:1px solid var(--gold);color:var(--gold);font-size:.7rem;padding:.2rem .6rem;border-radius:4px;}
-.pdf-card .pdf-dl-off{margin-top:.6rem;display:inline-block;background:rgba(198,40,40,.2);border:1px solid var(--red);color:#ff8a80;font-size:.7rem;padding:.2rem .6rem;border-radius:4px;}
+.pdf-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(26,10,0,.25);}
+.pdf-card .dc-title{color:var(--gold);}
+.pdf-card .dc-sub{color:rgba(253,246,236,.65);}
 
-/* SECTION DIVIDER */
-.section-sep{margin:2rem 0 1.2rem;display:flex;align-items:center;gap:.8rem;}
-.section-sep span{font-family:'Tiro Devanagari Hindi',serif;font-size:1rem;color:var(--rust);white-space:nowrap;}
-.section-sep::before,.section-sep::after{content:'';flex:1;height:1px;background:var(--sand);}
+/* ═══ NO.4 — RIGHT SIDEBAR ═══ */
+#right-sidebar{background:white;border-left:1px solid var(--sand);padding:.8rem;}
 
-/* MODAL */
+.right-widget{margin-bottom:1.2rem;}
+.right-widget h4{font-family:'Tiro Devanagari Hindi',serif;font-size:.9rem;color:var(--rust);padding-bottom:.4rem;border-bottom:1px solid var(--sand);margin-bottom:.6rem;}
+.about-text{font-size:.8rem;color:var(--text);line-height:1.7;}
+.social-link{display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--text);font-size:.8rem;padding:.35rem .5rem;border-left:2px solid var(--gold);margin-bottom:.35rem;background:var(--cream);transition:background .2s;}
+.social-link:hover{background:var(--sand);}
+.yt-btn{display:block;background:#FF0000;color:white;text-align:center;padding:.4rem;font-size:.78rem;border-radius:4px;text-decoration:none;margin-bottom:.5rem;font-weight:500;}
+.yt-btn:hover{background:#cc0000;}
+
+/* Updates Slider */
+.updates-slider{border:1px solid var(--sand);border-radius:6px;overflow:hidden;}
+.update-item{display:none;padding:.6rem .7rem;border-bottom:1px solid var(--sand);cursor:pointer;text-decoration:none;color:var(--text);}
+.update-item.active-slide{display:block;background:#fff8f0;}
+.update-item:hover{background:var(--sand);}
+.update-item .upd-title{font-size:.78rem;font-weight:500;color:var(--rust);}
+.update-item .upd-date{font-size:.68rem;color:var(--muted);margin-top:.15rem;}
+.slider-dots{display:flex;justify-content:center;gap:.3rem;padding:.4rem;}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--sand);border:none;cursor:pointer;transition:background .2s;}
+.sdot.active-dot{background:var(--saffron);}
+
+/* Admin login popup right sidebar */
+.admin-login-panel{background:var(--deep);border-radius:8px;padding:.8rem;text-align:center;margin-top:.5rem;}
+.admin-login-panel p{color:var(--muted);font-size:.72rem;margin-bottom:.5rem;}
+.admin-input{width:100%;padding:.4rem .6rem;background:rgba(255,255,255,.08);border:1px solid rgba(201,146,42,.3);color:var(--cream);font-size:.8rem;border-radius:4px;outline:none;margin-bottom:.4rem;}
+.admin-input:focus{border-color:var(--saffron);}
+.admin-login-btn{width:100%;padding:.4rem;background:var(--saffron);color:white;border:none;border-radius:4px;font-size:.8rem;cursor:pointer;font-weight:500;}
+.admin-login-btn:hover{background:var(--rust);}
+.admin-err{color:#ff8a80;font-size:.72rem;margin-top:.3rem;display:none;}
+
+/* ═══════════════════════════════════════
+   NO.2 — AD SLIDER
+═══════════════════════════════════════ */
+#ad-section{background:var(--deep);padding:.8rem 1rem .6rem;border-top:2px solid rgba(201,146,42,.2);}
+.ad-label{text-align:center;font-size:.65rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;}
+/* Same structure as header slider */
+
+/* ═══════════════════════════════════════
+   NO.3 — FOOTER
+═══════════════════════════════════════ */
+#footer{background:var(--deep);color:var(--muted);padding:1.5rem 1rem .8rem;}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.2rem;margin-bottom:1rem;}
+.footer-col h5{font-family:'Tiro Devanagari Hindi',serif;font-size:.88rem;color:var(--gold);margin-bottom:.5rem;padding-bottom:.3rem;border-bottom:1px solid rgba(201,146,42,.2);}
+.footer-col p,.footer-col a{font-size:.75rem;color:var(--muted);text-decoration:none;display:block;margin-bottom:.25rem;line-height:1.6;}
+.footer-col a:hover{color:var(--saffron);}
+.footer-bottom{border-top:1px solid rgba(201,146,42,.15);padding-top:.6rem;text-align:center;font-size:.72rem;}
+.footer-bottom a{color:var(--saffron);text-decoration:none;margin:0 .4rem;}
+
+/* ═══════════════════════════════════════
+   MODALS
+═══════════════════════════════════════ */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1000;align-items:center;justify-content:center;padding:1rem;}
 .modal-overlay.open{display:flex;}
-.modal-box{background:white;max-width:820px;width:100%;border-top:5px solid var(--saffron);position:relative;max-height:90vh;overflow-y:auto;animation:modalIn .3s ease;border-radius:4px;}
-@keyframes modalIn{from{opacity:0;transform:scale(.93)}to{opacity:1;transform:scale(1)}}
-.modal-header{background:var(--deep);color:var(--cream);padding:1rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;position:sticky;top:0;z-index:10;}
-.modal-header h3{font-family:'Tiro Devanagari Hindi',serif;font-size:1.15rem;color:var(--gold);}
-.modal-close{background:none;border:none;color:var(--cream);font-size:1.6rem;cursor:pointer;line-height:1;}
+.modal-box{background:white;max-width:820px;width:100%;border-top:5px solid var(--saffron);max-height:90vh;overflow-y:auto;animation:mIn .3s ease;border-radius:4px;}
+@keyframes mIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+.modal-hd{background:var(--deep);color:var(--cream);padding:.8rem 1.2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;}
+.modal-hd h3{font-family:'Tiro Devanagari Hindi',serif;font-size:1.05rem;color:var(--gold);}
+.modal-close{background:none;border:none;color:var(--cream);font-size:1.5rem;cursor:pointer;}
 .modal-close:hover{color:var(--saffron);}
-.modal-body{padding:1.5rem;}
-.modal-body img{width:100%;height:auto;display:block;border:1px solid var(--sand);-webkit-user-select:none;user-select:none;-webkit-user-drag:none;pointer-events:none;}
-.modal-body{-webkit-user-select:none;user-select:none;}
-.modal-empty{text-align:center;padding:3rem;color:var(--muted);}
-.modal-empty .empty-icon{font-size:3rem;margin-bottom:.8rem;}
+.modal-bd{padding:1.2rem;}
+.modal-bd img{width:100%;height:auto;display:block;border:1px solid var(--sand);-webkit-user-select:none;user-select:none;pointer-events:none;}
+.modal-bd{-webkit-user-select:none;user-select:none;}
+.modal-empty{text-align:center;padding:2.5rem;color:var(--muted);}
+.pdf-viewer{width:100%;height:72vh;border:none;}
 
-/* PDF VIEWER MODAL */
-.pdf-viewer{width:100%;height:75vh;border:none;}
+/* ═══════════════════════════════════════
+   ADMIN PANEL (full page)
+═══════════════════════════════════════ */
+#page-admin{display:none;padding:1.2rem 1rem;max-width:1100px;margin:0 auto;}
+.admin-topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem;margin-bottom:1.2rem;}
+.admin-topbar h2{font-family:'Tiro Devanagari Hindi',serif;font-size:1.3rem;color:var(--rust);}
+.adm-tabs{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:1rem;}
+.adm-tab{background:var(--sand);border:1px solid var(--gold);color:var(--text);padding:.4rem .9rem;font-size:.82rem;cursor:pointer;border-radius:4px;transition:background .2s;}
+.adm-tab:hover,.adm-tab.active-tab{background:var(--saffron);color:white;border-color:var(--saffron);}
+.adm-panel{display:none;}
+.adm-panel.active-panel{display:block;}
 
-/* LOGIN SCREEN */
-#login-screen{position:fixed;inset:0;background:var(--deep);z-index:9999;display:flex;align-items:center;justify-content:center;}
-.login-box{background:rgba(255,255,255,.05);border:1px solid rgba(201,146,42,.3);border-radius:16px;padding:2.5rem 2rem;width:320px;text-align:center;}
-.login-box .login-icon{font-size:3rem;margin-bottom:.8rem;}
-.login-box h2{font-family:'Tiro Devanagari Hindi',serif;color:var(--gold);font-size:1.4rem;margin-bottom:.3rem;}
-.login-box p{color:var(--muted);font-size:.82rem;margin-bottom:1.5rem;}
-.login-input{width:100%;padding:.7rem 1rem;background:rgba(255,255,255,.08);border:1px solid rgba(201,146,42,.3);color:var(--cream);font-size:.9rem;border-radius:6px;outline:none;margin-bottom:.8rem;font-family:'DM Sans',sans-serif;}
-.login-input:focus{border-color:var(--saffron);}
-.login-btn{width:100%;padding:.75rem;background:var(--saffron);color:white;border:none;border-radius:6px;font-size:.9rem;font-weight:500;cursor:pointer;transition:background .2s;}
-.login-btn:hover{background:var(--rust);}
-.login-error{color:#ff8a80;font-size:.8rem;margin-top:.5rem;display:none;}
+.acard{background:white;border-top:4px solid var(--saffron);padding:1.2rem;box-shadow:0 2px 12px rgba(26,10,0,.07);border-radius:4px;margin-bottom:1rem;}
+.acard h3{font-family:'Tiro Devanagari Hindi',serif;font-size:1rem;color:var(--rust);margin-bottom:.8rem;padding-bottom:.4rem;border-bottom:1px solid var(--sand);}
+.fg{display:flex;flex-direction:column;gap:.25rem;margin-bottom:.6rem;}
+.fg label{font-size:.75rem;color:var(--muted);font-weight:500;letter-spacing:.04em;}
+.fg input,.fg select,.fg textarea{padding:.45rem .65rem;border:1px solid var(--sand);font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;background:white;border-radius:3px;width:100%;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--saffron);}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem;}
+@media(max-width:500px){.row2,.row3{grid-template-columns:1fr;}}
 
-/* ADMIN LAYOUT */
-.admin-wrap{display:grid;grid-template-columns:260px 1fr;gap:2rem;align-items:start;}
-@media(max-width:700px){.admin-wrap{grid-template-columns:1fr;}}
-.admin-sidebar{background:white;border-top:4px solid var(--gold);padding:1.2rem;box-shadow:0 2px 12px rgba(26,10,0,.07);border-radius:4px;}
-.admin-sidebar h3{font-family:'Tiro Devanagari Hindi',serif;font-size:1.05rem;color:var(--rust);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--sand);}
-.cat-list{display:flex;flex-direction:column;gap:.4rem;}
-.cat-item{display:flex;align-items:center;justify-content:space-between;padding:.55rem .8rem;background:var(--cream);border-left:3px solid transparent;cursor:pointer;transition:background .2s,border-color .2s;font-size:.88rem;border-radius:2px;}
-.cat-item:hover{background:var(--sand);border-color:var(--gold);}
-.cat-item .cat-name{font-family:'Tiro Devanagari Hindi',serif;}
-.cat-item .cat-actions{display:flex;gap:.3rem;}
-.cat-actions button{background:none;border:none;cursor:pointer;font-size:.85rem;padding:.1rem .3rem;border-radius:2px;transition:background .2s;}
-.cat-actions .edit-btn:hover{background:#fff3e0;}
-.cat-actions .del-btn:hover{background:#ffebee;}
-.add-cat-form{margin-top:1rem;display:flex;flex-direction:column;gap:.5rem;}
-.add-cat-form input{padding:.5rem .7rem;border:1px solid var(--sand);font-family:'Tiro Devanagari Hindi',serif;font-size:.88rem;outline:none;background:white;}
-.add-cat-form input:focus{border-color:var(--saffron);}
+.btn-p{background:var(--saffron);color:white;border:none;padding:.5rem 1rem;cursor:pointer;font-size:.82rem;font-weight:500;border-radius:3px;transition:background .2s;}
+.btn-p:hover{background:var(--rust);}
+.btn-s{background:var(--sand);color:var(--text);border:1px solid var(--gold);padding:.45rem .9rem;cursor:pointer;font-size:.82rem;border-radius:3px;transition:background .2s;}
+.btn-s:hover{background:var(--gold);color:white;}
+.btn-d{background:var(--red);color:white;border:none;padding:.45rem .9rem;cursor:pointer;font-size:.82rem;border-radius:3px;}
+.btn-g{background:#2E7D32;color:white;border:none;padding:.5rem 1rem;cursor:pointer;font-size:.82rem;border-radius:3px;}
 
-.admin-main{display:flex;flex-direction:column;gap:1.5rem;}
-.admin-card{background:white;border-top:4px solid var(--saffron);padding:1.4rem;box-shadow:0 2px 12px rgba(26,10,0,.07);border-radius:4px;}
-.admin-card h3{font-family:'Tiro Devanagari Hindi',serif;font-size:1.1rem;color:var(--rust);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--sand);}
-.upload-zone{border:2px dashed var(--sand);padding:1.5rem;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative;border-radius:6px;}
+.upload-zone{border:2px dashed var(--sand);padding:1.2rem;text-align:center;cursor:pointer;position:relative;border-radius:6px;transition:border-color .2s,background .2s;}
 .upload-zone:hover{border-color:var(--saffron);background:#fff8f0;}
 .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;}
-.upload-zone .upload-icon{font-size:2rem;margin-bottom:.4rem;}
-.upload-zone p{font-size:.85rem;color:var(--muted);}
-.img-preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:.6rem;margin-top:.8rem;}
+
+/* Toggle */
+.tog-wrap{display:flex;align-items:center;gap:.6rem;}
+.tog{position:relative;width:40px;height:22px;display:inline-block;}
+.tog input{opacity:0;width:0;height:0;}
+.tog-sl{position:absolute;inset:0;background:#ccc;border-radius:22px;cursor:pointer;transition:.3s;}
+.tog-sl::before{content:'';position:absolute;width:16px;height:16px;left:3px;top:3px;background:white;border-radius:50%;transition:.3s;}
+.tog input:checked+.tog-sl{background:var(--green);}
+.tog input:checked+.tog-sl::before{transform:translateX(18px);}
+
+/* Entries table */
+.etable{width:100%;border-collapse:collapse;font-size:.82rem;}
+.etable th{background:var(--deep);color:var(--gold);padding:.45rem .7rem;text-align:left;font-weight:400;font-size:.75rem;}
+.etable td{padding:.5rem .7rem;border-bottom:1px solid var(--sand);vertical-align:middle;}
+.etable tr:hover td{background:#fff8f0;}
+.etable img{width:36px;height:36px;object-fit:cover;border-radius:3px;}
+.badge{display:inline-block;padding:.12rem .45rem;font-size:.68rem;font-weight:500;border-radius:2px;}
+.b-ok{background:#e8f5e9;color:#2e7d32;}
+.b-off{background:#fce4ec;color:#c62828;}
+
+/* Alignment buttons */
+.align-btns{display:flex;gap:.3rem;}
+.aln-btn{background:var(--sand);border:1px solid var(--gold);color:var(--text);padding:.28rem .55rem;cursor:pointer;border-radius:3px;font-size:.85rem;transition:background .2s;}
+.aln-btn:hover,.aln-btn.act{background:var(--saffron);color:white;border-color:var(--saffron);}
+
+/* Color/font pickers row */
+.style-row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:.4rem;}
+.style-row label{font-size:.75rem;color:var(--muted);}
+.style-row input[type=color]{width:36px;height:28px;border:1px solid var(--sand);border-radius:3px;cursor:pointer;padding:0;}
+.style-row select{padding:.3rem .5rem;border:1px solid var(--sand);font-size:.78rem;border-radius:3px;outline:none;}
+
+/* img preview grid */
+.img-prev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:.5rem;margin-top:.6rem;}
 .img-thumb{position:relative;aspect-ratio:1;overflow:hidden;border:1px solid var(--sand);border-radius:4px;}
 .img-thumb img{width:100%;height:100%;object-fit:cover;}
-.img-thumb .del-img{position:absolute;top:2px;right:2px;background:rgba(198,40,40,.85);color:white;border:none;width:20px;height:20px;font-size:.7rem;cursor:pointer;border-radius:50%;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
-@media(max-width:500px){.form-row{grid-template-columns:1fr;}}
-.form-group{display:flex;flex-direction:column;gap:.3rem;}
-.form-group label{font-size:.78rem;color:var(--muted);font-weight:500;letter-spacing:.04em;}
-.form-group input,.form-group select,.form-group textarea{padding:.5rem .7rem;border:1px solid var(--sand);font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;background:white;border-radius:3px;}
-.form-group input:focus,.form-group select:focus{border-color:var(--saffron);}
-
-.btn-primary{background:var(--saffron);color:white;border:none;padding:.55rem 1rem;cursor:pointer;font-size:.85rem;font-weight:500;transition:background .2s;border-radius:3px;}
-.btn-primary:hover{background:var(--rust);}
-.btn-secondary{background:var(--sand);color:var(--text);border:1px solid var(--gold);padding:.5rem 1rem;cursor:pointer;font-size:.85rem;transition:background .2s;border-radius:3px;}
-.btn-secondary:hover{background:var(--gold);color:white;}
-.btn-danger{background:var(--red);color:white;border:none;padding:.5rem 1rem;cursor:pointer;font-size:.85rem;border-radius:3px;}
-
-.img-entries-table{width:100%;border-collapse:collapse;font-size:.85rem;}
-.img-entries-table th{background:var(--deep);color:var(--gold);padding:.55rem .8rem;text-align:left;font-weight:400;font-size:.78rem;}
-.img-entries-table td{padding:.6rem .8rem;border-bottom:1px solid var(--sand);vertical-align:middle;}
-.img-entries-table tr:hover td{background:#fff8f0;}
-.img-entries-table img{width:40px;height:40px;object-fit:cover;border:1px solid var(--sand);border-radius:3px;}
-.badge{display:inline-block;padding:.15rem .5rem;font-size:.72rem;font-weight:500;border-radius:2px;}
-.badge-ok{background:#e8f5e9;color:#2e7d32;}
-.action-row{display:flex;gap:.5rem;flex-wrap:wrap;}
-
-/* TOGGLE SWITCH */
-.toggle-wrap{display:flex;align-items:center;gap:.7rem;}
-.toggle{position:relative;width:44px;height:24px;display:inline-block;}
-.toggle input{opacity:0;width:0;height:0;}
-.toggle-slider{position:absolute;inset:0;background:#ccc;border-radius:24px;cursor:pointer;transition:.3s;}
-.toggle-slider::before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:white;border-radius:50%;transition:.3s;}
-.toggle input:checked + .toggle-slider{background:var(--green);}
-.toggle input:checked + .toggle-slider::before{transform:translateX(20px);}
-.toggle-label{font-size:.85rem;color:var(--text);}
-
-/* ALIGNMENT BUTTONS (Feature 3) */
-.align-group{display:flex;gap:.3rem;}
-.align-btn{background:var(--sand);border:1px solid var(--gold);color:var(--text);padding:.3rem .6rem;cursor:pointer;border-radius:3px;font-size:.9rem;transition:background .2s;}
-.align-btn:hover,.align-btn.active-align{background:var(--saffron);color:white;border-color:var(--saffron);}
+.img-thumb .del-img{position:absolute;top:2px;right:2px;background:rgba(198,40,40,.85);color:white;border:none;width:18px;height:18px;font-size:.65rem;cursor:pointer;border-radius:50%;}
 
 /* TOAST */
-.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--deep);color:var(--cream);padding:.7rem 1.2rem;font-size:.85rem;border-left:4px solid var(--saffron);z-index:2000;animation:toastIn .3s ease;display:none;border-radius:4px;}
+.toast{position:fixed;bottom:1.2rem;right:1.2rem;background:var(--deep);color:var(--cream);padding:.6rem 1rem;font-size:.82rem;border-left:4px solid var(--saffron);z-index:9999;display:none;border-radius:4px;animation:tIn .3s ease;}
 .toast.show{display:block;}
-@keyframes toastIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes tIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* GOTRA FIXED */
-.gotra-fixed,.notranslate{font-family:'Tiro Devanagari Hindi',serif !important;}
+/* NOTRANSLATE */
+.notranslate,.gotra-fix{font-family:'Tiro Devanagari Hindi',serif!important;}
 
 /* RESPONSIVE */
-@media(max-width:600px){.doc-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));}}
-
-/* PDF SECTION */
-.pdf-section-title{font-family:'Tiro Devanagari Hindi',serif;font-size:1.1rem;color:var(--deep);margin:1.5rem 0 .8rem;display:flex;align-items:center;gap:.5rem;}
+@media(max-width:900px){
+  #main-layout{grid-template-columns:var(--sidebar-w) 1fr;}
+  #right-sidebar{display:none;}
+}
+@media(max-width:600px){
+  #main-layout{grid-template-columns:1fr;}
+  #left-sidebar{display:none;}
+  .slider-frame{flex:0 0 calc(50% - .4rem);}
+}
+/* Google translate hide */
+.goog-te-banner-frame,.skiptranslate iframe{display:none!important;height:0!important;}
+body{top:0!important;}
+.goog-te-gadget{display:none!important;}
 </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN (Feature 4) -->
-<div id="login-screen" style="display:none;">
-  <div class="login-box">
-    <div class="login-icon">🏹</div>
-    <h2>Admin Login</h2>
-    <p>धानका इतिहास एवं गोत्र</p>
-    <input type="password" id="login-pass" class="login-input" placeholder="Password डालें..." onkeydown="if(event.key==='Enter')doLogin()"/>
-    <button class="login-btn" onclick="doLogin()">🔐 Login करें</button>
-    <div class="login-error" id="login-error">❌ गलत password!</div>
+<div class="top-border"></div>
+
+<!-- ══════════════════════════════════════
+     NO.7 — HEADER SLIDER
+══════════════════════════════════════ -->
+<div id="header-slider">
+  <div class="slider-track" id="slider-track">
+    <div class="slider-frame" id="sf0">
+      <div class="slider-img-wrap"><span class="no-photo">🏹</span></div>
+      <div class="slider-caption" id="sc0">फ्रेम 1</div>
+    </div>
+    <div class="slider-frame" id="sf1">
+      <div class="slider-img-wrap"><span class="no-photo">🏹</span></div>
+      <div class="slider-caption" id="sc1">फ्रेम 2</div>
+    </div>
+    <div class="slider-frame" id="sf2">
+      <div class="slider-img-wrap"><span class="no-photo">🏹</span></div>
+      <div class="slider-caption" id="sc2">फ्रेम 3</div>
+    </div>
+    <div class="slider-frame" id="sf3">
+      <div class="slider-img-wrap"><span class="no-photo">🏹</span></div>
+      <div class="slider-caption" id="sc3">फ्रेम 4</div>
+    </div>
+    <div class="slider-frame" id="sf4">
+      <div class="slider-img-wrap"><span class="no-photo">🏹</span></div>
+      <div class="slider-caption" id="sc4">फ्रेम 5</div>
+    </div>
+  </div>
+  <div class="slider-nav">
+    <button class="slider-arrow" onclick="slideHeader(-1)">&#8592;</button>
+    <button class="slider-arrow" onclick="slideHeader(1)">&#8594;</button>
   </div>
 </div>
 
-<div class="top-border"></div>
-
-<header>
-  <div class="header-emblem" id="h-emblem">🏹</div>
-  <h1 id="h-title">धानका इतिहास एवं गोत्र</h1>
-  <h2 id="h-subtitle">Dhanka History &amp; Gotra — <span class="notranslate" translate="no">52 धानका गोत्र</span> की सम्पूर्ण जानकारी</h2>
-</header>
-
-<nav>
-  <a href="#" class="active" onclick="showPage('viewer',this)">📂 दस्तावेज़</a>
-  <a href="#" onclick="showPage('books',this)">📚 पुस्तकें / Books</a>
-  <a href="#" onclick="requireAdmin('admin',this)">⚙️ Admin</a>
-</nav>
-
-<!-- LANG BAR -->
-<div id="lang-bar">
-  <span style="color:var(--gold);font-size:.78rem;font-weight:500;">🌐 भाषा चुनें:</span>
-  <div style="display:flex;flex-wrap:wrap;gap:.4rem;">
-    <button onclick="setLang('hi')"  class="lang-btn active-lang" data-lang="hi">हिंदी</button>
-    <button onclick="setLang('en')"  class="lang-btn" data-lang="en">English</button>
-    <button onclick="setLang('pa')"  class="lang-btn" data-lang="pa">ਪੰਜਾਬੀ</button>
-    <button onclick="setLang('mr')"  class="lang-btn" data-lang="mr">मराठी</button>
-    <button onclick="setLang('gu')"  class="lang-btn" data-lang="gu">ગુજરાતી</button>
-    <button onclick="setLang('raj')" class="lang-btn" data-lang="raj">राजस्थानी</button>
-    <button onclick="setLang('bn')"  class="lang-btn" data-lang="bn">বাংলা</button>
-    <button onclick="setLang('te')"  class="lang-btn" data-lang="te">తెలుగు</button>
-    <button onclick="setLang('ur')"  class="lang-btn" data-lang="ur">اردو</button>
+<!-- ══════════════════════════════════════
+     NO.6 — NAV BAR
+══════════════════════════════════════ -->
+<div id="topbar">
+  <div class="topbar-title">
+    <span id="nav-blog-title">धानका इतिहास एवं गोत्र</span>
+    <small id="nav-blog-sub">— Document Library</small>
   </div>
+  <nav>
+    <a href="#" class="active" onclick="showSection('docs',this)">📂 दस्तावेज़</a>
+    <a href="#" onclick="showSection('books',this)">📚 पुस्तकें</a>
+    <a href="#" onclick="showSection('main-text',this)">📝 जानकारी</a>
+    <button class="admin-nav-btn" onclick="toggleAdminPanel()">⚙️ Admin</button>
+  </nav>
+</div>
+
+<!-- LANGUAGE BAR -->
+<div id="lang-bar">
+  <span>🌐 भाषा:</span>
+  <button onclick="setLang('hi')"  class="lang-btn active-lang" data-lang="hi">हिंदी</button>
+  <button onclick="setLang('en')"  class="lang-btn" data-lang="en">English</button>
+  <button onclick="setLang('pa')"  class="lang-btn" data-lang="pa">ਪੰਜਾਬੀ</button>
+  <button onclick="setLang('mr')"  class="lang-btn" data-lang="mr">मराठी</button>
+  <button onclick="setLang('gu')"  class="lang-btn" data-lang="gu">ગુજરાતી</button>
   <div id="google_translate_element"></div>
 </div>
 
-<!-- ══ PAGE 1: DOCUMENTS ══ -->
-<div id="page-viewer" class="page active">
-  <h2 class="sec-title" id="pg-title" style="margin-top:1rem;">धानका इतिहास एवं गोत्र — दस्तावेज़ पुस्तकालय</h2>
-  <p class="sec-sub" id="pg-sub">52 धानका गोत्र, इतिहास और सम्पूर्ण जानकारी। किसी भी topic पर click करें।</p>
-  <div class="ornament">❧ ✦ ❧</div>
-  <div id="public-grid" class="doc-grid"></div>
+<!-- ══════════════════════════════════════
+     MAIN 3-COLUMN LAYOUT
+══════════════════════════════════════ -->
+<div id="main-layout">
+
+  <!-- NO.1 — LEFT SIDEBAR -->
+  <aside id="left-sidebar">
+    <div class="sidebar-head">दस्तावेज़ / Menu</div>
+    <ul class="sidebar-menu" id="sidebar-menu-list">
+      <!-- Rendered by JS -->
+    </ul>
+  </aside>
+
+  <!-- NO.5 — MAIN CONTENT -->
+  <main id="main-content">
+    <!-- DOCS SECTION -->
+    <div id="section-docs">
+      <div class="content-header">
+        <h2 class="content-title" id="pg-title">धानका इतिहास एवं गोत्र — दस्तावेज़ पुस्तकालय</h2>
+        <p class="content-sub" id="pg-sub">किसी भी topic पर click करें।</p>
+      </div>
+      <div id="doc-grid" class="doc-grid"></div>
+    </div>
+
+    <!-- BOOKS SECTION -->
+    <div id="section-books" style="display:none;">
+      <div class="content-header">
+        <h2 class="content-title">📚 पुस्तकें एवं PDF</h2>
+        <p class="content-sub">धानका समाज की पुस्तकें पढ़ें।</p>
+      </div>
+      <div id="books-grid" class="doc-grid"></div>
+    </div>
+
+    <!-- MAIN TEXT SECTION (Feature: admin editable content) -->
+    <div id="section-main-text" style="display:none;">
+      <div class="content-header">
+        <h2 class="content-title" id="mt-title">धानका समाज — जानकारी</h2>
+      </div>
+      <div class="admin-content-box notranslate" id="mt-content">यहाँ Admin Panel से content add करें।</div>
+    </div>
+  </main>
+
+  <!-- NO.4 — RIGHT SIDEBAR -->
+  <aside id="right-sidebar">
+
+    <!-- Admin Login -->
+    <div class="right-widget">
+      <h4>⚙️ Admin</h4>
+      <div id="admin-login-widget">
+        <div class="admin-login-panel">
+          <p>Admin Panel</p>
+          <input type="password" id="rw-pass" class="admin-input" placeholder="Password..." onkeydown="if(event.key==='Enter')rwLogin()"/>
+          <button class="admin-login-btn" onclick="rwLogin()">Login</button>
+          <div class="admin-err" id="rw-err">❌ गलत password</div>
+        </div>
+      </div>
+      <div id="admin-logged-widget" style="display:none;">
+        <div style="display:flex;gap:.4rem;flex-wrap:wrap;">
+          <button class="btn-p" style="font-size:.75rem;padding:.35rem .7rem;" onclick="toggleAdminPanel()">⚙️ Panel खोलें</button>
+          <button class="btn-d" style="font-size:.75rem;padding:.35rem .7rem;" onclick="doLogout()">🚪 Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- About Us -->
+    <div class="right-widget">
+      <h4>🏹 हमारे बारे में</h4>
+      <p class="about-text" id="rw-about">धानका समाज की जानकारी यहाँ Admin से add करें।</p>
+    </div>
+
+    <!-- YouTube -->
+    <div class="right-widget" id="rw-yt-wrap">
+      <h4>▶ YouTube</h4>
+      <a href="#" id="rw-yt-link" class="yt-btn" target="_blank">@Dhanka52Gotra</a>
+    </div>
+
+    <!-- Social Links -->
+    <div class="right-widget">
+      <h4>🔗 Social Media</h4>
+      <div id="rw-social-list"></div>
+    </div>
+
+    <!-- Latest Updates Slider -->
+    <div class="right-widget">
+      <h4>📢 Latest Updates</h4>
+      <div class="updates-slider" id="updates-slider"></div>
+      <div class="slider-dots" id="update-dots"></div>
+    </div>
+
+  </aside>
 </div>
 
-<!-- ══ PAGE 2: BOOKS/PDF ══ -->
-<div id="page-books" class="page">
-  <h2 class="sec-title" style="margin-top:1rem;">📚 पुस्तकें एवं PDF</h2>
-  <p class="sec-sub">धानका समाज की पुस्तकें और दस्तावेज़ पढ़ें।</p>
-  <div class="ornament">❧ ✦ ❧</div>
-  <div id="books-grid" class="doc-grid"></div>
+<!-- ══════════════════════════════════════
+     NO.2 — AD SLIDER
+══════════════════════════════════════ -->
+<div id="ad-section">
+  <div class="ad-label">Advertisement</div>
+  <div class="slider-track" id="ad-track">
+    <div class="slider-frame" id="af0"><div class="slider-img-wrap"><span class="no-photo">📢</span></div><div class="slider-caption" id="ac0">Ad 1</div></div>
+    <div class="slider-frame" id="af1"><div class="slider-img-wrap"><span class="no-photo">📢</span></div><div class="slider-caption" id="ac1">Ad 2</div></div>
+    <div class="slider-frame" id="af2"><div class="slider-img-wrap"><span class="no-photo">📢</span></div><div class="slider-caption" id="ac2">Ad 3</div></div>
+    <div class="slider-frame" id="af3"><div class="slider-img-wrap"><span class="no-photo">📢</span></div><div class="slider-caption" id="ac3">Ad 4</div></div>
+    <div class="slider-frame" id="af4"><div class="slider-img-wrap"><span class="no-photo">📢</span></div><div class="slider-caption" id="ac4">Ad 5</div></div>
+  </div>
+  <div class="slider-nav">
+    <button class="slider-arrow" onclick="slideAd(-1)">&#8592;</button>
+    <button class="slider-arrow" onclick="slideAd(1)">&#8594;</button>
+  </div>
 </div>
 
-<!-- ══ PAGE 3: ADMIN ══ -->
-<div id="page-admin" class="page">
-  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;margin-top:1rem;margin-bottom:1.5rem;">
-    <h2 class="sec-title">⚙️ Admin Panel</h2>
-    <div style="display:flex;gap:.6rem;">
-      <button class="btn-secondary" onclick="showResetPass()">🔑 Password Reset</button>
-      <button class="btn-danger" onclick="adminLogout()">🚪 Logout</button>
+<!-- ══════════════════════════════════════
+     NO.3 — FOOTER
+══════════════════════════════════════ -->
+<footer id="footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h5>🏠 Home</h5>
+      <p id="ft-home">धानका इतिहास एवं गोत्र ब्लॉग</p>
+      <a href="#" id="ft-home-link">मुख्य पृष्ठ</a>
+    </div>
+    <div class="footer-col">
+      <h5>❓ Help</h5>
+      <p id="ft-help">किसी भी सहायता के लिए संपर्क करें।</p>
+      <a href="#" id="ft-help-link">Help Center</a>
+    </div>
+    <div class="footer-col">
+      <h5>🗺️ Sitemap</h5>
+      <a href="#" id="ft-sitemap">Sitemap देखें</a>
+      <a href="#" id="ft-feedback">📝 Feedback दें</a>
+    </div>
+    <div class="footer-col">
+      <h5>📋 Policies</h5>
+      <a href="#" id="ft-privacy">Privacy Policy</a>
+      <a href="#" id="ft-copyright">Copyright Policy</a>
+      <a href="#" id="ft-terms">Terms &amp; Conditions</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span id="ft-copyright-text">© 2026 धानका इतिहास एवं गोत्र</span>
+    <a href="#" id="ft-contact-link">Contact Us</a>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════
+     ADMIN PANEL (full overlay)
+══════════════════════════════════════ -->
+<div id="page-admin">
+  <div class="admin-topbar">
+    <h2>⚙️ Admin Panel</h2>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+      <button class="btn-s" onclick="showResetPass()">🔑 Password</button>
+      <button class="btn-d" onclick="doLogout()">🚪 Logout</button>
+      <button class="btn-s" onclick="closeAdmin()">✕ बंद करें</button>
     </div>
   </div>
 
-  <div class="admin-wrap">
-    <!-- SIDEBAR: Categories -->
-    <div class="admin-sidebar">
+  <!-- TABS -->
+  <div class="adm-tabs">
+    <button class="adm-tab active-tab" onclick="openTab('tab-blog',this)">🖊️ Blog</button>
+    <button class="adm-tab" onclick="openTab('tab-slider',this)">🖼️ Header Slider</button>
+    <button class="adm-tab" onclick="openTab('tab-ad',this)">📢 Ad Slider</button>
+    <button class="adm-tab" onclick="openTab('tab-menu',this)">📋 Sidebar Menu</button>
+    <button class="adm-tab" onclick="openTab('tab-docs',this)">📂 Documents</button>
+    <button class="adm-tab" onclick="openTab('tab-books',this)">📚 PDF Books</button>
+    <button class="adm-tab" onclick="openTab('tab-right',this)">📌 Right Sidebar</button>
+    <button class="adm-tab" onclick="openTab('tab-footer',this)">🔻 Footer</button>
+    <button class="adm-tab" onclick="openTab('tab-seo',this)">🔍 SEO</button>
+    <button class="adm-tab" onclick="openTab('tab-pass',this)">🔑 Password</button>
+  </div>
+
+  <!-- ① BLOG SETTINGS -->
+  <div id="tab-blog" class="adm-panel active-panel">
+    <div class="acard">
+      <h3>Blog का नाम और जानकारी</h3>
+      <div class="row2">
+        <div class="fg"><label>Header Icon</label><input type="text" id="s-emblem" maxlength="4" placeholder="🏹"/></div>
+        <div class="fg"><label>Browser Tab Title</label><input type="text" id="s-tabTitle"/></div>
+      </div>
+      <div class="row2">
+        <div class="fg"><label>Nav Blog Title</label><input type="text" id="s-navTitle"/></div>
+        <div class="fg"><label>Nav Subtitle</label><input type="text" id="s-navSub"/></div>
+      </div>
+      <div class="row2">
+        <div class="fg"><label>Documents Page Title</label><input type="text" id="s-pageTitle"/></div>
+        <div class="fg"><label>Documents Page Sub</label><input type="text" id="s-pageSub"/></div>
+      </div>
+
+      <!-- Alignment -->
+      <div style="background:var(--cream);padding:.7rem;border-radius:6px;margin-top:.6rem;">
+        <label style="font-size:.75rem;color:var(--muted);font-weight:500;">📐 Page Title Alignment</label>
+        <div class="align-btns" style="margin-top:.4rem;">
+          <button class="aln-btn" onclick="setAlign('left')">◀ Left</button>
+          <button class="aln-btn act" onclick="setAlign('center')">▬ Center</button>
+          <button class="aln-btn" onclick="setAlign('right')">Right ▶</button>
+        </div>
+      </div>
+
+      <!-- Style controls -->
+      <div style="background:var(--cream);padding:.7rem;border-radius:6px;margin-top:.6rem;">
+        <label style="font-size:.75rem;color:var(--muted);font-weight:500;">🎨 Text Style</label>
+        <div class="style-row">
+          <label>Title Color</label>
+          <input type="color" id="title-color" value="#8B2500" onchange="applyTitleStyle()"/>
+          <label>Sub Color</label>
+          <input type="color" id="sub-color" value="#7A5C40" onchange="applyTitleStyle()"/>
+          <label>Font</label>
+          <select id="title-font" onchange="applyTitleStyle()">
+            <option value="'Tiro Devanagari Hindi',serif">Tiro (Hindi)</option>
+            <option value="'Playfair Display',serif">Playfair</option>
+            <option value="'DM Sans',sans-serif">DM Sans</option>
+          </select>
+          <label>Size</label>
+          <select id="title-size" onchange="applyTitleStyle()">
+            <option value="1.2rem">Small</option>
+            <option value="1.4rem" selected>Medium</option>
+            <option value="1.8rem">Large</option>
+            <option value="2.2rem">XLarge</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Main Text Section content -->
+      <div class="fg" style="margin-top:.6rem;">
+        <label>📝 "जानकारी" Section Title</label>
+        <input type="text" id="mt-title-inp" placeholder="धानका समाज — जानकारी"/>
+      </div>
+      <div class="fg">
+        <label>📝 "जानकारी" Section Content (HTML allowed)</label>
+        <textarea id="mt-content-inp" rows="5" placeholder="यहाँ content लिखें..."></textarea>
+      </div>
+
+      <div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="btn-p" onclick="saveBlogSettings()">💾 Save करें</button>
+        <button class="btn-s" onclick="closeAdmin()">👁 Preview</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② HEADER SLIDER -->
+  <div id="tab-slider" class="adm-panel">
+    <div class="acard">
+      <h3>Header Slider — 5 Frames</h3>
+      <p style="font-size:.8rem;color:var(--muted);margin-bottom:.8rem;">हर frame के लिए photo upload करें और नाम डालें। Frame को show/hide कर सकते हैं।</p>
+      <div id="slider-admin-frames"></div>
+      <button class="btn-p" onclick="saveSliderSettings()">💾 Slider Save करें</button>
+    </div>
+  </div>
+
+  <!-- ③ AD SLIDER -->
+  <div id="tab-ad" class="adm-panel">
+    <div class="acard">
+      <h3>Advertisement Slider — 5 Frames</h3>
+      <div id="ad-admin-frames"></div>
+      <button class="btn-p" onclick="saveAdSettings()">💾 Ad Slider Save करें</button>
+    </div>
+  </div>
+
+  <!-- ④ SIDEBAR MENU -->
+  <div id="tab-menu" class="adm-panel">
+    <div class="acard">
+      <h3>Left Sidebar Menu Items</h3>
+      <div id="menu-items-list"></div>
+      <div style="background:var(--cream);padding:.8rem;border-radius:6px;margin-top:.8rem;">
+        <h4 style="font-size:.85rem;color:var(--rust);margin-bottom:.6rem;">➕ नया Menu Item जोड़ें</h4>
+        <div class="row3">
+          <div class="fg"><label>Icon</label><input type="text" id="new-menu-icon" placeholder="📊" maxlength="4"/></div>
+          <div class="fg"><label>नाम</label><input type="text" id="new-menu-name" placeholder="Population"/></div>
+          <div class="fg">
+            <label>Action</label>
+            <select id="new-menu-action">
+              <option value="section-docs">Documents दिखाएँ</option>
+              <option value="section-books">Books दिखाएँ</option>
+              <option value="section-main-text">जानकारी दिखाएँ</option>
+              <option value="link">बाहरी Link खोलें</option>
+            </select>
+          </div>
+        </div>
+        <div class="fg" id="new-menu-link-wrap" style="display:none;">
+          <label>URL (https://...)</label>
+          <input type="text" id="new-menu-link" placeholder="https://example.com"/>
+        </div>
+        <button class="btn-p" style="margin-top:.4rem;" onclick="addMenuItem()">➕ Add करें</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ DOCUMENTS -->
+  <div id="tab-docs" class="adm-panel">
+    <div class="acard">
       <h3>📁 Image Categories</h3>
-      <div id="cat-list" class="cat-list"></div>
-      <div class="add-cat-form" style="margin-top:1rem;">
-        <input type="text" id="new-cat-input" placeholder="नई category नाम..." maxlength="50"/>
-        <input type="text" id="new-cat-sub"   placeholder="Subtitle (optional)" maxlength="60"/>
-        <input type="text" id="new-cat-icon"  placeholder="Icon emoji 📊" maxlength="4"/>
-        <button class="btn-primary" onclick="addCategory()">➕ जोड़ें</button>
-      </div>
-
-      <h3 style="margin-top:1.5rem;">📚 PDF Categories</h3>
-      <div id="pdf-cat-list" class="cat-list"></div>
-      <div class="add-cat-form" style="margin-top:.8rem;">
-        <input type="text" id="new-pdf-cat-input" placeholder="PDF category नाम..." maxlength="50"/>
-        <input type="text" id="new-pdf-cat-sub"   placeholder="Subtitle" maxlength="60"/>
-        <input type="text" id="new-pdf-cat-icon"  placeholder="Icon emoji 📖" maxlength="4"/>
-        <button class="btn-primary" onclick="addPdfCategory()">➕ जोड़ें</button>
+      <div id="img-cat-list"></div>
+      <div style="background:var(--cream);padding:.7rem;border-radius:6px;margin-top:.6rem;">
+        <div class="row3">
+          <div class="fg"><label>Icon</label><input type="text" id="new-cat-icon" placeholder="📊" maxlength="4"/></div>
+          <div class="fg"><label>नाम</label><input type="text" id="new-cat-name" placeholder="जनसंख्या"/></div>
+          <div class="fg"><label>Subtitle</label><input type="text" id="new-cat-sub" placeholder="Population"/></div>
+        </div>
+        <button class="btn-p" onclick="addImgCat()">➕ Category जोड़ें</button>
       </div>
     </div>
-
-    <!-- MAIN: Cards -->
-    <div class="admin-main">
-
-      <!-- ① BLOG SETTINGS -->
-      <div class="admin-card" style="border-top-color:var(--gold);">
-        <h3>🖊️ Blog Settings</h3>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Header Icon</label>
-            <input type="text" id="s-emblem" maxlength="4" placeholder="🏹"/>
-          </div>
-          <div class="form-group">
-            <label>Browser Tab Title</label>
-            <input type="text" id="s-tabTitle" placeholder="धानका इतिहास एवं गोत्र"/>
-          </div>
-        </div>
-        <div class="form-row" style="margin-top:.6rem;">
-          <div class="form-group">
-            <label>Header बड़ा नाम</label>
-            <input type="text" id="s-title" placeholder="धानका इतिहास एवं गोत्र"/>
-          </div>
-          <div class="form-group">
-            <label>Header Subtitle</label>
-            <input type="text" id="s-subtitle" placeholder="Dhanka History and Gotra"/>
-          </div>
-        </div>
-
-        <!-- Feature 3: Alignment -->
-        <div style="margin-top:.8rem;padding:.8rem;background:var(--cream);border-radius:6px;">
-          <label style="font-size:.78rem;color:var(--muted);font-weight:500;display:block;margin-bottom:.5rem;">📐 Header Alignment</label>
-          <div class="align-group">
-            <button class="align-btn" onclick="setAlign('header','left')"   title="Left">◀ बाएँ</button>
-            <button class="align-btn active-align" onclick="setAlign('header','center')" title="Center">▬ बीच</button>
-            <button class="align-btn" onclick="setAlign('header','right')"  title="Right">दाएँ ▶</button>
-          </div>
-          <label style="font-size:.78rem;color:var(--muted);font-weight:500;display:block;margin:.6rem 0 .4rem;">📐 Page Title Alignment</label>
-          <div class="align-group">
-            <button class="align-btn" onclick="setAlign('page','left')"   title="Left">◀ बाएँ</button>
-            <button class="align-btn active-align" onclick="setAlign('page','center')" title="Center">▬ बीच</button>
-            <button class="align-btn" onclick="setAlign('page','right')"  title="Right">दाएँ ▶</button>
-          </div>
-        </div>
-
-        <div class="form-row" style="margin-top:.8rem;">
-          <div class="form-group">
-            <label>Documents Page शीर्षक</label>
-            <input type="text" id="s-pageTitle"/>
-          </div>
-          <div class="form-group">
-            <label>Documents Page विवरण</label>
-            <input type="text" id="s-pageSub"/>
-          </div>
-        </div>
-        <div style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap;">
-          <button class="btn-primary" onclick="saveSiteSettings()">💾 Save करें</button>
-          <button class="btn-secondary" onclick="showPage('viewer',null)">👁 Preview</button>
-        </div>
+    <div class="acard">
+      <h3>🖼️ Image Upload</h3>
+      <div class="row2">
+        <div class="fg"><label>Category</label><select id="upload-img-cat"></select></div>
+        <div class="fg"><label>Title</label><input type="text" id="upload-img-title" placeholder="Document का नाम"/></div>
       </div>
-
-      <!-- ② IMAGE UPLOAD -->
-      <div class="admin-card">
-        <h3>🖼️ Image Upload करें</h3>
-        <div class="form-row" style="margin-bottom:.8rem;">
-          <div class="form-group">
-            <label>Category चुनें</label>
-            <select id="upload-cat"></select>
-          </div>
-          <div class="form-group">
-            <label>Image Title</label>
-            <input type="text" id="upload-title" placeholder="जैसे: जनगणना 2011"/>
-          </div>
-        </div>
-        <div class="upload-zone">
-          <input type="file" id="file-input" accept="image/*" multiple onchange="handleImgFiles(this.files)"/>
-          <div class="upload-icon">🖼️</div>
-          <p>Click करें या drag करें • JPG, PNG</p>
-        </div>
-        <div id="img-preview" class="img-preview"></div>
-        <div style="margin-top:.8rem;display:flex;gap:.6rem;">
-          <button class="btn-primary" onclick="saveImages()">💾 Save</button>
-          <button class="btn-secondary" onclick="clearImgUpload()">✕ Clear</button>
-        </div>
+      <div class="upload-zone"><input type="file" id="img-file-inp" accept="image/*" multiple onchange="handleImgFiles(this.files)"/>📁 Click या Drag — JPG, PNG</div>
+      <div id="img-prev-grid" class="img-prev-grid"></div>
+      <div style="margin-top:.6rem;display:flex;gap:.5rem;">
+        <button class="btn-p" onclick="saveImgs()">💾 Save</button>
+        <button class="btn-s" onclick="clearImgUpload()">✕ Clear</button>
       </div>
-
-      <!-- ③ PDF UPLOAD (Feature 2) -->
-      <div class="admin-card" style="border-top-color:#2E7D32;">
-        <h3>📚 PDF Book Upload करें</h3>
-        <div class="form-row" style="margin-bottom:.8rem;">
-          <div class="form-group">
-            <label>PDF Category चुनें</label>
-            <select id="upload-pdf-cat"></select>
-          </div>
-          <div class="form-group">
-            <label>Book Title</label>
-            <input type="text" id="upload-pdf-title" placeholder="जैसे: धानका इतिहास पुस्तक"/>
-          </div>
-        </div>
-        <div class="form-row" style="margin-bottom:.8rem;">
-          <div class="form-group">
-            <label>Author / लेखक</label>
-            <input type="text" id="upload-pdf-author" placeholder="लेखक का नाम"/>
-          </div>
-          <div class="form-group">
-            <label>Description</label>
-            <input type="text" id="upload-pdf-desc" placeholder="पुस्तक का संक्षिप्त विवरण"/>
-          </div>
-        </div>
-        <!-- Download Toggle (Feature 2) -->
-        <div style="background:var(--cream);padding:.7rem 1rem;border-radius:6px;margin-bottom:.8rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;">
-          <span style="font-size:.85rem;font-weight:500;">📥 Download की सुविधा:</span>
-          <label class="toggle">
-            <input type="checkbox" id="pdf-dl-toggle" checked/>
-            <span class="toggle-slider"></span>
-          </label>
-          <span class="toggle-label" id="dl-toggle-label">✅ Download ON</span>
-        </div>
-        <div class="upload-zone">
-          <input type="file" id="pdf-file-input" accept=".pdf" onchange="handlePdfFile(this.files)"/>
-          <div class="upload-icon">📄</div>
-          <p>PDF file यहाँ drop करें या click करें</p>
-        </div>
-        <div id="pdf-preview-name" style="margin-top:.5rem;font-size:.82rem;color:var(--green);display:none;"></div>
-        <div style="margin-top:.8rem;display:flex;gap:.6rem;">
-          <button class="btn-primary" style="background:#2E7D32;" onclick="savePdf()">💾 PDF Save करें</button>
-          <button class="btn-secondary" onclick="clearPdfUpload()">✕ Clear</button>
-        </div>
-      </div>
-
-      <!-- ④ ALL ENTRIES TABLE -->
-      <div class="admin-card">
-        <h3>📋 सभी Documents</h3>
-        <div style="overflow-x:auto;">
-          <table class="img-entries-table">
-            <thead><tr><th>Preview</th><th>Title</th><th>Category</th><th>Type</th><th>Actions</th></tr></thead>
-            <tbody id="entries-body"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- ⑤ SEO SETTINGS -->
-      <div class="admin-card" style="border-top-color:#2E7D32;">
-        <h3>🔍 SEO Settings</h3>
-        <div class="form-group" style="margin-bottom:.6rem;">
-          <label>Meta Description (150 अक्षर)</label>
-          <textarea id="s-seoDesc" rows="2" style="padding:.5rem;border:1px solid var(--sand);width:100%;font-size:.85rem;outline:none;resize:vertical;" placeholder="52 धानका गोत्र जानकारी..."></textarea>
-        </div>
-        <div class="form-group" style="margin-bottom:.6rem;">
-          <label>Keywords (comma separated)</label>
-          <textarea id="s-seoKeys" rows="2" style="padding:.5rem;border:1px solid var(--sand);width:100%;font-size:.85rem;outline:none;resize:vertical;" placeholder="धानका गोत्र, Dhanka Gotra..."></textarea>
-        </div>
-        <button class="btn-primary" style="background:#2E7D32;" onclick="saveSeoSettings()">💾 SEO Save करें</button>
-      </div>
-
-      <!-- ⑥ PASSWORD RESET (Feature 4) -->
-      <div class="admin-card" id="reset-pass-card" style="display:none;border-top-color:var(--red);">
-        <h3>🔑 Password Reset</h3>
-        <div class="form-group" style="margin-bottom:.6rem;">
-          <label>पुराना Password</label>
-          <input type="password" id="old-pass" placeholder="Current password"/>
-        </div>
-        <div class="form-group" style="margin-bottom:.6rem;">
-          <label>नया Password</label>
-          <input type="password" id="new-pass" placeholder="New password (min 4 chars)"/>
-        </div>
-        <div class="form-group" style="margin-bottom:.8rem;">
-          <label>नया Password confirm करें</label>
-          <input type="password" id="confirm-pass" placeholder="Repeat new password"/>
-        </div>
-        <div style="display:flex;gap:.6rem;">
-          <button class="btn-primary" style="background:var(--red);" onclick="resetPassword()">🔑 Password बदलें</button>
-          <button class="btn-secondary" onclick="hideResetPass()">✕ Cancel</button>
-        </div>
-      </div>
-
+    </div>
+    <div class="acard">
+      <h3>📋 All Images</h3>
+      <div style="overflow-x:auto;"><table class="etable"><thead><tr><th>Preview</th><th>Title</th><th>Category</th><th>Action</th></tr></thead><tbody id="img-entries"></tbody></table></div>
     </div>
   </div>
-</div>
 
-<!-- MODAL: Image/PDF viewer -->
-<div class="modal-overlay" id="modal" onclick="closeModal(event)">
-  <div class="modal-box">
-    <div class="modal-header">
-      <h3 id="modal-title">—</h3>
-      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+  <!-- ⑥ PDF BOOKS -->
+  <div id="tab-books" class="adm-panel">
+    <div class="acard">
+      <h3>📁 PDF Categories</h3>
+      <div id="pdf-cat-list"></div>
+      <div style="background:var(--cream);padding:.7rem;border-radius:6px;margin-top:.6rem;">
+        <div class="row3">
+          <div class="fg"><label>Icon</label><input type="text" id="new-pcat-icon" placeholder="📖" maxlength="4"/></div>
+          <div class="fg"><label>नाम</label><input type="text" id="new-pcat-name" placeholder="इतिहास पुस्तकें"/></div>
+          <div class="fg"><label>Subtitle</label><input type="text" id="new-pcat-sub" placeholder="History Books"/></div>
+        </div>
+        <button class="btn-p" onclick="addPdfCat()">➕ Category जोड़ें</button>
+      </div>
     </div>
-    <div class="modal-body" id="modal-body"></div>
+    <div class="acard" style="border-top-color:#2E7D32;">
+      <h3>📚 PDF Upload</h3>
+      <div class="row2">
+        <div class="fg"><label>Category</label><select id="upload-pdf-cat"></select></div>
+        <div class="fg"><label>Book Title</label><input type="text" id="upload-pdf-title" placeholder="पुस्तक का नाम"/></div>
+      </div>
+      <div class="row2">
+        <div class="fg"><label>Author</label><input type="text" id="upload-pdf-author" placeholder="लेखक"/></div>
+        <div class="fg"><label>Description</label><input type="text" id="upload-pdf-desc" placeholder="संक्षिप्त विवरण"/></div>
+      </div>
+      <div style="background:var(--cream);padding:.6rem;border-radius:6px;margin-bottom:.6rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;">
+        <span style="font-size:.82rem;font-weight:500;">📥 Download:</span>
+        <label class="tog"><input type="checkbox" id="pdf-dl-tog" checked/><span class="tog-sl"></span></label>
+        <span id="dl-tog-lbl" style="font-size:.8rem;">✅ ON</span>
+      </div>
+      <div class="upload-zone"><input type="file" id="pdf-file-inp" accept=".pdf" onchange="handlePdfFile(this.files)"/>📄 PDF file यहाँ drop करें</div>
+      <div id="pdf-file-name" style="font-size:.78rem;color:var(--green);margin-top:.4rem;display:none;"></div>
+      <div style="margin-top:.6rem;display:flex;gap:.5rem;">
+        <button class="btn-g" onclick="savePdf()">💾 PDF Save</button>
+        <button class="btn-s" onclick="clearPdfUpload()">✕ Clear</button>
+      </div>
+    </div>
+    <div class="acard">
+      <h3>📋 All PDFs</h3>
+      <div style="overflow-x:auto;"><table class="etable"><thead><tr><th>Title</th><th>Category</th><th>Download</th><th>Action</th></tr></thead><tbody id="pdf-entries"></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- ⑦ RIGHT SIDEBAR -->
+  <div id="tab-right" class="adm-panel">
+    <div class="acard">
+      <h3>🏹 About Us</h3>
+      <div class="fg"><label>Text</label><textarea id="rw-about-inp" rows="4" placeholder="धानका समाज के बारे में..."></textarea></div>
+      <button class="btn-p" onclick="saveRightWidget()">💾 Save</button>
+    </div>
+    <div class="acard">
+      <h3>▶ YouTube Link</h3>
+      <div class="row2">
+        <div class="fg"><label>Channel Name</label><input type="text" id="yt-name-inp" placeholder="@Dhanka52Gotra"/></div>
+        <div class="fg"><label>URL</label><input type="text" id="yt-url-inp" placeholder="https://youtube.com/@..."/></div>
+      </div>
+      <button class="btn-p" onclick="saveRightWidget()">💾 Save</button>
+    </div>
+    <div class="acard">
+      <h3>🔗 Social Media Links</h3>
+      <div id="social-links-list"></div>
+      <div style="background:var(--cream);padding:.7rem;border-radius:6px;margin-top:.6rem;">
+        <div class="row3">
+          <div class="fg"><label>Icon</label><input type="text" id="new-social-icon" placeholder="📘" maxlength="4"/></div>
+          <div class="fg"><label>नाम</label><input type="text" id="new-social-name" placeholder="Facebook"/></div>
+          <div class="fg"><label>URL</label><input type="text" id="new-social-url" placeholder="https://..."/></div>
+        </div>
+        <button class="btn-p" onclick="addSocialLink()">➕ Add</button>
+      </div>
+    </div>
+    <div class="acard">
+      <h3>📢 Latest Updates (Slider)</h3>
+      <div id="updates-list"></div>
+      <div style="background:var(--cream);padding:.7rem;border-radius:6px;margin-top:.6rem;">
+        <div class="row2">
+          <div class="fg"><label>Title</label><input type="text" id="new-upd-title" placeholder="नई जानकारी..."/></div>
+          <div class="fg"><label>URL (optional)</label><input type="text" id="new-upd-url" placeholder="https://..."/></div>
+        </div>
+        <div class="fg"><label>Date</label><input type="text" id="new-upd-date" placeholder="March 2026"/></div>
+        <button class="btn-p" onclick="addUpdate()">➕ Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑧ FOOTER -->
+  <div id="tab-footer" class="adm-panel">
+    <div class="acard">
+      <h3>Footer Content Edit करें</h3>
+      <div class="row2">
+        <div class="fg"><label>Home Text</label><input type="text" id="ft-home-inp"/></div>
+        <div class="fg"><label>Home Link URL</label><input type="text" id="ft-homelink-inp" placeholder="https://..."/></div>
+      </div>
+      <div class="row2">
+        <div class="fg"><label>Help Text</label><textarea id="ft-help-inp" rows="2"></textarea></div>
+        <div class="fg"><label>Help Link URL</label><input type="text" id="ft-helplink-inp" placeholder="https://..."/></div>
+      </div>
+      <div class="row2">
+        <div class="fg"><label>Sitemap URL</label><input type="text" id="ft-sitemap-inp" placeholder="https://..."/></div>
+        <div class="fg"><label>Feedback URL</label><input type="text" id="ft-feedback-inp" placeholder="https://..."/></div>
+      </div>
+      <div class="row3">
+        <div class="fg"><label>Privacy Policy URL</label><input type="text" id="ft-privacy-inp"/></div>
+        <div class="fg"><label>Copyright Policy URL</label><input type="text" id="ft-copyright-inp"/></div>
+        <div class="fg"><label>Terms &amp; Conditions URL</label><input type="text" id="ft-terms-inp"/></div>
+      </div>
+      <div class="row2">
+        <div class="fg"><label>Copyright Text</label><input type="text" id="ft-copytxt-inp" placeholder="© 2026 धानका इतिहास एवं गोत्र"/></div>
+        <div class="fg"><label>Contact URL</label><input type="text" id="ft-contact-inp" placeholder="https://..."/></div>
+      </div>
+      <button class="btn-p" onclick="saveFooter()">💾 Footer Save करें</button>
+    </div>
+  </div>
+
+  <!-- ⑨ SEO -->
+  <div id="tab-seo" class="adm-panel">
+    <div class="acard" style="border-top-color:#2E7D32;">
+      <h3>🔍 SEO Settings</h3>
+      <div class="fg"><label>Meta Description (150 अक्षर)</label><textarea id="s-seoDesc" rows="2" placeholder="52 धानका गोत्र जानकारी..."></textarea></div>
+      <div class="fg"><label>Keywords</label><textarea id="s-seoKeys" rows="2" placeholder="धानका गोत्र, Dhanka Gotra..."></textarea></div>
+      <button class="btn-g" onclick="saveSeo()">💾 SEO Save</button>
+    </div>
+  </div>
+
+  <!-- ⑩ PASSWORD -->
+  <div id="tab-pass" class="adm-panel">
+    <div class="acard" style="border-top-color:var(--red);">
+      <h3>🔑 Password Reset</h3>
+      <div class="fg"><label>पुराना Password</label><input type="password" id="old-pass"/></div>
+      <div class="fg"><label>नया Password</label><input type="password" id="new-pass"/></div>
+      <div class="fg"><label>Confirm Password</label><input type="password" id="conf-pass"/></div>
+      <button class="btn-d" onclick="resetPass()">🔑 Password बदलें</button>
+    </div>
+  </div>
+
+</div><!-- /page-admin -->
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-hd"><h3 id="modal-title">—</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-bd" id="modal-body"></div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════════════════
-//  STORE
-// ══════════════════════════════════════════
-const DEFAULT_PASS = 'dhanka2024';
-
-let store = JSON.parse(localStorage.getItem('dhankaV2') || 'null') || {
-  adminPass: DEFAULT_PASS,
-  categories: [
-    {id:'c1',name:'जनसंख्या',sub:'Population Data',icon:'📊'},
-    {id:'c2',name:'इतिहास',sub:'History',icon:'📜'},
-    {id:'c3',name:'52 गोत्र',sub:'Gotra List',icon:'🌿'},
-    {id:'c4',name:'राज्यवार',sub:'States Distribution',icon:'🗺️'}
-  ],
-  pdfCategories: [
-    {id:'p1',name:'इतिहास पुस्तकें',sub:'History Books',icon:'📖'},
-    {id:'p2',name:'गोत्र पुस्तकें',sub:'Gotra Books',icon:'📗'}
-  ],
-  images: [],
-  pdfs: [],
-  site: {
-    emblem:'🏹',
-    title:'धानका इतिहास एवं गोत्र',
-    subtitle:'Dhanka History & Gotra — 52 धानका गोत्र की सम्पूर्ण जानकारी',
+// ══════════════════════════════════════
+//  DEFAULT STORE
+// ══════════════════════════════════════
+const DEF_PASS = 'dhanka2024';
+let store = JSON.parse(localStorage.getItem('dhankaFull')||'null') || {
+  pass: DEF_PASS,
+  site:{
+    emblem:'🏹', tabTitle:'धानका इतिहास एवं गोत्र',
+    navTitle:'धानका इतिहास एवं गोत्र', navSub:'— Document Library',
     pageTitle:'धानका इतिहास एवं गोत्र — दस्तावेज़ पुस्तकालय',
     pageSub:'किसी भी topic पर click करें।',
-    tabTitle:'धानका इतिहास एवं गोत्र',
-    headerAlign:'center',
     pageAlign:'left',
-    seoDesc:'',seoKeys:''
+    titleColor:'#8B2500', subColor:'#7A5C40',
+    titleFont:"'Tiro Devanagari Hindi',serif", titleSize:'1.4rem',
+    mtTitle:'धानका समाज — जानकारी', mtContent:'यहाँ Admin Panel से content add करें।',
+    seoDesc:'', seoKeys:''
+  },
+  slider:[
+    {img:'',caption:'फ्रेम 1',show:true},
+    {img:'',caption:'फ्रेम 2',show:true},
+    {img:'',caption:'फ्रेम 3',show:true},
+    {img:'',caption:'फ्रेम 4',show:true},
+    {img:'',caption:'फ्रेम 5',show:true}
+  ],
+  adSlider:[
+    {img:'',caption:'Ad 1',show:true},
+    {img:'',caption:'Ad 2',show:true},
+    {img:'',caption:'Ad 3',show:true},
+    {img:'',caption:'Ad 4',show:true},
+    {img:'',caption:'Ad 5',show:true}
+  ],
+  menuItems:[
+    {id:'m1',icon:'📊',name:'जनसंख्या',action:'section-docs',link:''},
+    {id:'m2',icon:'📜',name:'इतिहास',action:'section-docs',link:''},
+    {id:'m3',icon:'🌿',name:'52 गोत्र',action:'link',link:'https://navneetk087-spec.github.io/dhanka-gotra'},
+    {id:'m4',icon:'📚',name:'Books',action:'section-books',link:''}
+  ],
+  imgCats:[
+    {id:'c1',icon:'📊',name:'जनसंख्या',sub:'Population'},
+    {id:'c2',icon:'📜',name:'इतिहास',sub:'History'},
+    {id:'c3',icon:'🌿',name:'52 गोत्र',sub:'Gotra List'},
+    {id:'c4',icon:'🗺️',name:'राज्यवार',sub:'States'}
+  ],
+  pdfCats:[
+    {id:'p1',icon:'📖',name:'इतिहास पुस्तकें',sub:'History Books'},
+    {id:'p2',icon:'📗',name:'गोत्र पुस्तकें',sub:'Gotra Books'}
+  ],
+  images:[], pdfs:[],
+  right:{
+    about:'धानका समाज की जानकारी यहाँ Admin से add करें।',
+    ytName:'@Dhanka52Gotra', ytUrl:'https://youtube.com/@Dhanka52Gotra',
+    socials:[], updates:[]
+  },
+  footer:{
+    homeText:'धानका इतिहास एवं गोत्र ब्लॉग', homeLink:'#',
+    helpText:'किसी भी सहायता के लिए संपर्क करें।', helpLink:'#',
+    sitemapUrl:'#', feedbackUrl:'#',
+    privacyUrl:'#', copyrightUrl:'#', termsUrl:'#',
+    copyrightText:'© 2026 धानका इतिहास एवं गोत्र', contactUrl:'#'
   }
 };
+function sv(){localStorage.setItem('dhankaFull',JSON.stringify(store));}
+function uid(){return 'id'+Date.now()+Math.random().toString(36).slice(2,5);}
 
-function save(){ localStorage.setItem('dhankaV2', JSON.stringify(store)); }
-function uid(){ return 'id_'+Date.now()+'_'+Math.random().toString(36).slice(2,6); }
+// ══════════════════════════════════════
+//  AUTH
+// ══════════════════════════════════════
+let isAdmin = false;
 
-// ══════════════════════════════════════════
-//  ADMIN AUTH (Feature 4)
-// ══════════════════════════════════════════
-let adminLoggedIn = false;
-
-function requireAdmin(page, el){
-  if(adminLoggedIn){ showPage(page,el); return; }
-  document.getElementById('login-screen').style.display='flex';
-  document.getElementById('login-pass').value='';
-  document.getElementById('login-error').style.display='none';
-  window._pendingPage = {page,el};
-}
-
-function doLogin(){
-  const pass = document.getElementById('login-pass').value;
-  if(pass === store.adminPass){
-    adminLoggedIn = true;
-    document.getElementById('login-screen').style.display='none';
-    const p = window._pendingPage;
-    if(p) showPage(p.page, p.el);
-    showToast('✅ Login successful!');
+function rwLogin(){
+  const p = document.getElementById('rw-pass').value;
+  if(p===store.pass){
+    isAdmin=true;
+    document.getElementById('admin-login-widget').style.display='none';
+    document.getElementById('admin-logged-widget').style.display='block';
+    document.getElementById('rw-pass').value='';
+    showToast('✅ Admin Login हो गए!');
   } else {
-    document.getElementById('login-error').style.display='block';
+    document.getElementById('rw-err').style.display='block';
   }
 }
 
-function adminLogout(){
-  adminLoggedIn = false;
-  showPage('viewer', document.querySelector('nav a'));
-  document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
-  document.querySelector('nav a').classList.add('active');
+function doLogout(){
+  isAdmin=false;
+  document.getElementById('admin-login-widget').style.display='block';
+  document.getElementById('admin-logged-widget').style.display='none';
+  document.getElementById('page-admin').style.display='none';
+  document.getElementById('main-layout').style.display='';
+  document.getElementById('ad-section').style.display='';
+  document.getElementById('footer').style.display='';
   showToast('🚪 Logout हो गए।');
 }
 
-function showResetPass(){ document.getElementById('reset-pass-card').style.display='block'; document.getElementById('reset-pass-card').scrollIntoView({behavior:'smooth'}); }
-function hideResetPass(){ document.getElementById('reset-pass-card').style.display='none'; }
-
-function resetPassword(){
-  const oldP = document.getElementById('old-pass').value;
-  const newP = document.getElementById('new-pass').value;
-  const conP = document.getElementById('confirm-pass').value;
-  if(oldP !== store.adminPass){ showToast('❌ पुराना password गलत है!'); return; }
-  if(newP.length < 4){ showToast('❌ Password कम से कम 4 characters का हो!'); return; }
-  if(newP !== conP){ showToast('❌ नया password match नहीं हुआ!'); return; }
-  store.adminPass = newP;
-  save();
-  hideResetPass();
-  document.getElementById('old-pass').value='';
-  document.getElementById('new-pass').value='';
-  document.getElementById('confirm-pass').value='';
-  showToast('✅ Password successfully बदल गया!');
+function toggleAdminPanel(){
+  if(!isAdmin){showToast('❗ पहले Login करें');return;}
+  const ap = document.getElementById('page-admin');
+  const showing = ap.style.display==='block';
+  ap.style.display = showing?'none':'block';
+  document.getElementById('main-layout').style.display = showing?'':'none';
+  document.getElementById('ad-section').style.display  = showing?'':'none';
+  document.getElementById('footer').style.display      = showing?'':'none';
+  if(!showing) renderAdminAll();
 }
 
-// ══════════════════════════════════════════
-//  NAVIGATION
-// ══════════════════════════════════════════
-function showPage(name, el){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+function closeAdmin(){toggleAdminPanel();}
+
+function resetPass(){
+  const o=document.getElementById('old-pass').value;
+  const n=document.getElementById('new-pass').value;
+  const c=document.getElementById('conf-pass').value;
+  if(o!==store.pass){showToast('❌ पुराना password गलत!');return;}
+  if(n.length<4){showToast('❌ कम से कम 4 characters!');return;}
+  if(n!==c){showToast('❌ Password match नहीं हुआ!');return;}
+  store.pass=n; sv();
+  showToast('✅ Password बदल गया!');
+  ['old-pass','new-pass','conf-pass'].forEach(id=>document.getElementById(id).value='');
+}
+
+// ══════════════════════════════════════
+//  TABS
+// ══════════════════════════════════════
+function openTab(id,el){
+  document.querySelectorAll('.adm-panel').forEach(p=>p.classList.remove('active-panel'));
+  document.querySelectorAll('.adm-tab').forEach(t=>t.classList.remove('active-tab'));
+  document.getElementById(id).classList.add('active-panel');
+  el.classList.add('active-tab');
+}
+
+// ══════════════════════════════════════
+//  SECTIONS
+// ══════════════════════════════════════
+function showSection(id, el){
+  ['section-docs','section-books','section-main-text'].forEach(s=>{
+    document.getElementById(s).style.display = s===id?'block':'none';
+  });
   document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
   if(el) el.classList.add('active');
-  if(name==='viewer') renderPublic();
-  if(name==='books')  renderBooks();
-  if(name==='admin')  renderAdmin();
+  if(id==='section-docs') renderDocs();
+  if(id==='section-books') renderBooks();
 }
 
-// ══════════════════════════════════════════
-//  ALIGNMENT (Feature 3)
-// ══════════════════════════════════════════
-function setAlign(target, align){
-  if(target==='header'){
-    store.site.headerAlign = align;
-    document.querySelector('header').style.textAlign = align;
-  } else {
-    store.site.pageAlign = align;
-    document.getElementById('pg-title').style.textAlign = align;
-    document.getElementById('pg-sub').style.textAlign = align;
-  }
-  save();
-  // Update active button
-  document.querySelectorAll(`.align-btn`).forEach(b=>{
-    if(b.getAttribute('onclick').includes(target) && b.getAttribute('onclick').includes(align))
-      b.classList.add('active-align');
-    else if(b.getAttribute('onclick').includes(target))
-      b.classList.remove('active-align');
-  });
-  showToast('✅ Alignment set: '+align);
-}
-
-function applyAlignments(){
+// ══════════════════════════════════════
+//  APPLY SITE SETTINGS
+// ══════════════════════════════════════
+function applySite(){
   const s = store.site;
-  if(s.headerAlign) document.querySelector('header').style.textAlign = s.headerAlign;
-  if(s.pageAlign){
-    document.getElementById('pg-title').style.textAlign = s.pageAlign;
-    document.getElementById('pg-sub').style.textAlign   = s.pageAlign;
-  }
+  document.title = s.tabTitle;
+  document.getElementById('nav-blog-title').textContent = s.navTitle||'';
+  document.getElementById('nav-blog-sub').textContent   = s.navSub||'';
+  document.getElementById('pg-title').textContent       = s.pageTitle||'';
+  document.getElementById('pg-sub').textContent         = s.pageSub||'';
+  document.getElementById('mt-title').textContent       = s.mtTitle||'';
+  document.getElementById('mt-content').innerHTML       = s.mtContent||'';
+  // Alignment
+  const ta = s.pageAlign||'left';
+  document.getElementById('pg-title').style.textAlign = ta;
+  document.getElementById('pg-sub').style.textAlign   = ta;
+  // Styles
+  document.getElementById('pg-title').style.color      = s.titleColor||'#8B2500';
+  document.getElementById('pg-title').style.fontFamily = s.titleFont||"'Tiro Devanagari Hindi',serif";
+  document.getElementById('pg-title').style.fontSize   = s.titleSize||'1.4rem';
+  document.getElementById('pg-sub').style.color        = s.subColor||'#7A5C40';
+  // SEO
+  document.getElementById('meta-desc').setAttribute('content',s.seoDesc||'');
+  document.getElementById('meta-keys').setAttribute('content',s.seoKeys||'');
 }
 
-// ══════════════════════════════════════════
-//  PUBLIC VIEWER
-// ══════════════════════════════════════════
-function renderPublic(){
-  const s = store.site;
-  document.title = s.tabTitle||'धानका इतिहास एवं गोत्र';
-  document.getElementById('h-emblem').textContent   = s.emblem||'🏹';
-  document.getElementById('h-title').textContent    = s.title||'';
-  document.getElementById('h-subtitle').textContent = s.subtitle||'';
-  document.getElementById('pg-title').textContent   = s.pageTitle||'';
-  document.getElementById('pg-sub').textContent     = s.pageSub||'';
-  applyAlignments();
-
-  const grid = document.getElementById('public-grid');
-  grid.innerHTML = '';
-  store.categories.forEach(cat=>{
-    const imgs = store.images.filter(i=>i.catId===cat.id);
-    const isGotra = cat.name.includes('गोत्र')||cat.name.toLowerCase().includes('gotra');
-    const card = document.createElement('div');
-    card.className = 'doc-card';
-    const tClass = isGotra?'doc-title notranslate gotra-fixed':'doc-title';
-    const sClass = isGotra?'doc-sub notranslate gotra-fixed':'doc-sub';
-    card.innerHTML = `
-      <span class="doc-icon">${cat.icon}</span>
-      <div class="${tClass}" translate="${isGotra?'no':'yes'}">${cat.name}</div>
-      <div class="${sClass}" translate="${isGotra?'no':'yes'}">${cat.sub}</div>
-      ${imgs.length===0
-        ? '<span class="no-img">कोई document नहीं</span>'
-        : `<div class="doc-count">📄 ${imgs.length} document${imgs.length>1?'s':''}</div>`}
-    `;
-    card.onclick = ()=>openImgModal(cat);
-    grid.appendChild(card);
+function setAlign(a){
+  store.site.pageAlign=a; sv(); applySite();
+  document.querySelectorAll('.aln-btn').forEach(b=>{
+    b.classList.toggle('act', b.getAttribute('onclick').includes("'"+a+"'"));
   });
-  setTimeout(protectGotra, 200);
+  showToast('✅ Alignment: '+a);
 }
 
-// ══════════════════════════════════════════
-//  BOOKS / PDF PAGE (Feature 2)
-// ══════════════════════════════════════════
-function renderBooks(){
-  const grid = document.getElementById('books-grid');
-  grid.innerHTML = '';
+function applyTitleStyle(){
+  store.site.titleColor = document.getElementById('title-color').value;
+  store.site.subColor   = document.getElementById('sub-color').value;
+  store.site.titleFont  = document.getElementById('title-font').value;
+  store.site.titleSize  = document.getElementById('title-size').value;
+  sv(); applySite();
+}
 
-  if(store.pdfCategories.length===0 && store.pdfs.length===0){
-    grid.innerHTML = '<p style="color:var(--muted);text-align:center;padding:2rem;grid-column:1/-1;">Admin Panel से PDF books upload करें।</p>';
-    return;
-  }
+function saveBlogSettings(){
+  const s = store.site;
+  s.tabTitle  = document.getElementById('s-tabTitle').value.trim();
+  s.navTitle  = document.getElementById('s-navTitle').value.trim();
+  s.navSub    = document.getElementById('s-navSub').value.trim();
+  s.pageTitle = document.getElementById('s-pageTitle').value.trim();
+  s.pageSub   = document.getElementById('s-pageSub').value.trim();
+  s.mtTitle   = document.getElementById('mt-title-inp').value.trim();
+  s.mtContent = document.getElementById('mt-content-inp').value;
+  sv(); applySite(); showToast('✅ Blog Settings save!');
+}
 
-  store.pdfCategories.forEach(pcat=>{
-    const pdfs = store.pdfs.filter(p=>p.catId===pcat.id);
-    if(pdfs.length===0){
-      // Empty category card
-      const card = document.createElement('div');
-      card.className = 'pdf-card';
-      card.innerHTML = `
-        <span class="doc-icon">${pcat.icon}</span>
-        <div class="doc-title">${pcat.name}</div>
-        <div class="doc-sub">${pcat.sub}</div>
-        <span class="pdf-dl-off">कोई PDF नहीं</span>
-      `;
-      grid.appendChild(card);
+function saveSeo(){
+  store.site.seoDesc = document.getElementById('s-seoDesc').value.trim();
+  store.site.seoKeys = document.getElementById('s-seoKeys').value.trim();
+  sv(); applySite(); showToast('✅ SEO save!');
+}
+
+// ══════════════════════════════════════
+//  SLIDER (Header)
+// ══════════════════════════════════════
+let hSlideOffset = 0;
+function applySlider(){
+  store.slider.forEach((fr,i)=>{
+    const sf = document.getElementById('sf'+i);
+    if(!sf) return;
+    sf.classList.toggle('hidden-frame',!fr.show);
+    const wrap = sf.querySelector('.slider-img-wrap');
+    if(fr.img){
+      wrap.innerHTML=`<img src="${fr.img}" alt="${fr.caption}"/>`;
     } else {
-      pdfs.forEach(pdf=>{
-        const card = document.createElement('div');
-        card.className = 'pdf-card';
-        card.innerHTML = `
-          <span class="doc-icon">${pcat.icon}</span>
-          <div class="doc-title">${pdf.title||pcat.name}</div>
-          <div class="doc-sub">${pdf.author?'✍️ '+pdf.author:pcat.sub}</div>
-          ${pdf.desc?`<div style="font-size:.72rem;color:rgba(253,246,236,.6);margin-top:.3rem;">${pdf.desc}</div>`:''}
-          ${pdf.downloadOn
-            ? '<span class="pdf-dl-badge">📥 Download Available</span>'
-            : '<span class="pdf-dl-off">🔒 Download Off</span>'}
-        `;
-        card.onclick = ()=>openPdfModal(pdf, pcat);
-        grid.appendChild(card);
-      });
+      wrap.innerHTML=`<span class="no-photo">🏹</span>`;
     }
+    document.getElementById('sc'+i).textContent = fr.caption||('फ्रेम '+(i+1));
   });
 }
 
-function openPdfModal(pdf, pcat){
-  document.getElementById('modal-title').textContent = pcat.icon+' '+pdf.title;
-  const body = document.getElementById('modal-body');
-  body.innerHTML = `
-    <div style="text-align:center;padding:1rem 0 .5rem;">
-      ${pdf.author?`<p style="color:var(--muted);font-size:.85rem;margin-bottom:.5rem;">✍️ ${pdf.author}</p>`:''}
-      ${pdf.desc?`<p style="font-size:.85rem;margin-bottom:1rem;color:var(--text);">${pdf.desc}</p>`:''}
-    </div>
-    <iframe class="pdf-viewer" src="${pdf.data}#toolbar=${pdf.downloadOn?1:0}&navpanes=0" 
-      title="${pdf.title}"></iframe>
-    ${pdf.downloadOn
-      ? `<div style="text-align:center;margin-top:.8rem;"><a href="${pdf.data}" download="${pdf.title}.pdf" style="display:inline-block;background:var(--green);color:white;padding:.5rem 1.4rem;text-decoration:none;font-size:.85rem;border-radius:3px;">📥 Download PDF</a></div>`
-      : '<p style="text-align:center;font-size:.8rem;color:var(--muted);margin-top:.5rem;">🔒 Download इस document के लिए बंद है।</p>'}
-  `;
-  document.getElementById('modal').classList.add('open');
+function slideHeader(dir){
+  const track = document.getElementById('slider-track');
+  const frames = track.querySelectorAll('.slider-frame:not(.hidden-frame)');
+  const visible = Math.min(5, window.innerWidth < 600 ? 2 : 5);
+  const max = Math.max(0, frames.length - visible);
+  hSlideOffset = Math.min(Math.max(0, hSlideOffset+dir), max);
+  frames.forEach((f,i)=>{
+    f.style.transform = `translateX(calc(-${hSlideOffset * (100 + 8)}% - ${hSlideOffset*.8}rem))`;
+    f.style.transition = 'transform .4s ease';
+  });
 }
 
-// ══════════════════════════════════════════
-//  IMAGE MODAL
-// ══════════════════════════════════════════
-function openImgModal(cat){
-  const imgs = store.images.filter(i=>i.catId===cat.id);
-  const isGotra = cat.name.includes('गोत्र')||cat.name.toLowerCase().includes('gotra');
-  const mt = document.getElementById('modal-title');
-  mt.textContent = cat.icon+' '+cat.name+' — '+cat.sub;
-  if(isGotra){mt.classList.add('notranslate');mt.setAttribute('translate','no');}
-  const body = document.getElementById('modal-body');
-  if(imgs.length===0){
-    body.innerHTML = `<div class="modal-empty"><div class="empty-icon">📭</div><p style="font-family:'Tiro Devanagari Hindi',serif;">अभी कोई document नहीं।<br>Admin Panel से add करें।</p></div>`;
-  } else {
-    body.innerHTML = imgs.map(img=>`
-      <div style="margin-bottom:1.2rem;">
-        ${img.title?`<p style="font-family:'Tiro Devanagari Hindi',serif;font-size:.9rem;color:var(--rust);margin-bottom:.4rem;" class="${isGotra?'notranslate':''}">📌 ${img.title}</p>`:''}
-        <img src="${img.data}" alt="${img.title||cat.name}" draggable="false"/>
+// AD Slider
+let aSlideOffset = 0;
+function applyAdSlider(){
+  store.adSlider.forEach((fr,i)=>{
+    const af = document.getElementById('af'+i);
+    if(!af) return;
+    af.classList.toggle('hidden-frame',!fr.show);
+    const wrap = af.querySelector('.slider-img-wrap');
+    if(fr.img){
+      wrap.innerHTML=`<img src="${fr.img}" alt="${fr.caption}"/>`;
+    } else {
+      wrap.innerHTML=`<span class="no-photo">📢</span>`;
+    }
+    document.getElementById('ac'+i).textContent = fr.caption||('Ad '+(i+1));
+  });
+}
+
+function slideAd(dir){
+  const track = document.getElementById('ad-track');
+  const frames = track.querySelectorAll('.slider-frame:not(.hidden-frame)');
+  const max = Math.max(0, frames.length - 5);
+  aSlideOffset = Math.min(Math.max(0, aSlideOffset+dir), max);
+  frames.forEach(f=>{
+    f.style.transform=`translateX(calc(-${aSlideOffset*108}%))`;
+    f.style.transition='transform .4s ease';
+  });
+}
+
+// Slider admin render
+function renderSliderAdmin(){
+  const cont = document.getElementById('slider-admin-frames');
+  cont.innerHTML = '';
+  store.slider.forEach((fr,i)=>{
+    const div = document.createElement('div');
+    div.style.cssText='background:var(--cream);padding:.6rem;border-radius:6px;margin-bottom:.5rem;';
+    div.innerHTML=`
+      <div style="display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;">
+        <strong style="font-size:.82rem;min-width:55px;">Frame ${i+1}</strong>
+        <label class="tog"><input type="checkbox" id="sf-show${i}" ${fr.show?'checked':''}/><span class="tog-sl"></span></label>
+        <span style="font-size:.75rem;color:var(--muted);">${fr.show?'Show':'Hide'}</span>
+        <input type="text" id="sf-cap${i}" value="${fr.caption||''}" placeholder="Caption/नाम" style="padding:.3rem .5rem;border:1px solid var(--sand);font-size:.8rem;border-radius:3px;flex:1;min-width:100px;outline:none;"/>
       </div>
-    `).join('');
-  }
-  document.getElementById('modal').classList.add('open');
-}
-
-function closeModal(e){ if(e.target===document.getElementById('modal')) closeModalDirect(); }
-function closeModalDirect(){ document.getElementById('modal').classList.remove('open'); }
-
-// ══════════════════════════════════════════
-//  ADMIN RENDER
-// ══════════════════════════════════════════
-function renderAdmin(){
-  renderCatList();
-  renderPdfCatList();
-  renderUploadSelects();
-  renderEntriesTable();
-  const s = store.site;
-  document.getElementById('s-emblem').value    = s.emblem||'';
-  document.getElementById('s-title').value     = s.title||'';
-  document.getElementById('s-subtitle').value  = s.subtitle||'';
-  document.getElementById('s-pageTitle').value = s.pageTitle||'';
-  document.getElementById('s-pageSub').value   = s.pageSub||'';
-  document.getElementById('s-tabTitle').value  = s.tabTitle||'';
-  document.getElementById('s-seoDesc').value   = s.seoDesc||'';
-  document.getElementById('s-seoKeys').value   = s.seoKeys||'';
-}
-
-// ══════════════════════════════════════════
-//  CATEGORIES
-// ══════════════════════════════════════════
-function renderCatList(){
-  const list = document.getElementById('cat-list');
-  list.innerHTML = '';
-  store.categories.forEach(cat=>{
-    const d = document.createElement('div');
-    d.className = 'cat-item';
-    d.innerHTML = `<span class="cat-name">${cat.icon} ${cat.name}</span>
-      <span class="cat-actions">
-        <button class="edit-btn" onclick="renameCategory('${cat.id}')">✏️</button>
-        <button class="del-btn"  onclick="deleteCategory('${cat.id}')">🗑️</button>
-      </span>`;
-    list.appendChild(d);
+      <div style="margin-top:.4rem;">
+        <div class="upload-zone" style="padding:.5rem;font-size:.78rem;">
+          <input type="file" accept="image/*" onchange="loadSliderImg(${i},this.files,'header')"/>
+          ${fr.img?`<img src="${fr.img}" style="height:40px;object-fit:cover;border-radius:3px;"/> बदलें`:'📷 Photo upload करें'}
+        </div>
+      </div>`;
+    cont.appendChild(div);
   });
 }
 
-function addCategory(){
-  const name = document.getElementById('new-cat-input').value.trim();
-  const sub  = document.getElementById('new-cat-sub').value.trim();
-  const icon = document.getElementById('new-cat-icon').value.trim()||'📄';
-  if(!name){showToast('❗ नाम डालें');return;}
-  store.categories.push({id:uid(),name,sub,icon});
-  save(); renderAdmin(); showToast('✅ Category जोड़ी: '+name);
-  document.getElementById('new-cat-input').value='';
-  document.getElementById('new-cat-sub').value='';
-  document.getElementById('new-cat-icon').value='';
-}
-
-function renameCategory(id){
-  const cat = store.categories.find(c=>c.id===id);
-  if(!cat)return;
-  const n = prompt('नया नाम:',cat.name); if(!n)return;
-  const s = prompt('Subtitle:',cat.sub);
-  const i = prompt('Icon:',cat.icon);
-  cat.name=n.trim(); cat.sub=(s||'').trim(); cat.icon=(i||'📄').trim();
-  save(); renderAdmin(); showToast('✅ Renamed: '+cat.name);
-}
-
-function deleteCategory(id){
-  if(!confirm('Delete करें? Images भी हट जाएँगी।'))return;
-  store.categories = store.categories.filter(c=>c.id!==id);
-  store.images = store.images.filter(i=>i.catId!==id);
-  save(); renderAdmin(); showToast('🗑️ Deleted');
-}
-
-// PDF CATEGORIES
-function renderPdfCatList(){
-  const list = document.getElementById('pdf-cat-list');
-  list.innerHTML = '';
-  store.pdfCategories.forEach(cat=>{
-    const d = document.createElement('div');
-    d.className = 'cat-item';
-    d.innerHTML = `<span class="cat-name">${cat.icon} ${cat.name}</span>
-      <span class="cat-actions">
-        <button class="edit-btn" onclick="renamePdfCat('${cat.id}')">✏️</button>
-        <button class="del-btn"  onclick="deletePdfCat('${cat.id}')">🗑️</button>
-      </span>`;
-    list.appendChild(d);
+function renderAdAdmin(){
+  const cont = document.getElementById('ad-admin-frames');
+  cont.innerHTML = '';
+  store.adSlider.forEach((fr,i)=>{
+    const div = document.createElement('div');
+    div.style.cssText='background:var(--cream);padding:.6rem;border-radius:6px;margin-bottom:.5rem;';
+    div.innerHTML=`
+      <div style="display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;">
+        <strong style="font-size:.82rem;min-width:35px;">Ad ${i+1}</strong>
+        <label class="tog"><input type="checkbox" id="af-show${i}" ${fr.show?'checked':''}/><span class="tog-sl"></span></label>
+        <input type="text" id="af-cap${i}" value="${fr.caption||''}" placeholder="Ad Caption" style="padding:.3rem .5rem;border:1px solid var(--sand);font-size:.8rem;border-radius:3px;flex:1;outline:none;"/>
+      </div>
+      <div style="margin-top:.4rem;">
+        <div class="upload-zone" style="padding:.5rem;font-size:.78rem;">
+          <input type="file" accept="image/*" onchange="loadSliderImg(${i},this.files,'ad')"/>
+          ${fr.img?`<img src="${fr.img}" style="height:40px;object-fit:cover;border-radius:3px;"/> बदलें`:'📷 Ad photo upload'}
+        </div>
+      </div>`;
+    cont.appendChild(div);
   });
 }
 
-function addPdfCategory(){
-  const name = document.getElementById('new-pdf-cat-input').value.trim();
-  const sub  = document.getElementById('new-pdf-cat-sub').value.trim();
-  const icon = document.getElementById('new-pdf-cat-icon').value.trim()||'📖';
-  if(!name){showToast('❗ नाम डालें');return;}
-  store.pdfCategories.push({id:uid(),name,sub,icon});
-  save(); renderAdmin(); showToast('✅ PDF Category जोड़ी: '+name);
-  document.getElementById('new-pdf-cat-input').value='';
-  document.getElementById('new-pdf-cat-sub').value='';
-  document.getElementById('new-pdf-cat-icon').value='';
-}
-
-function renamePdfCat(id){
-  const cat = store.pdfCategories.find(c=>c.id===id);
-  if(!cat)return;
-  const n=prompt('नया नाम:',cat.name);if(!n)return;
-  cat.name=n.trim();
-  save();renderAdmin();showToast('✅ Renamed');
-}
-
-function deletePdfCat(id){
-  if(!confirm('Delete करें?'))return;
-  store.pdfCategories = store.pdfCategories.filter(c=>c.id!==id);
-  store.pdfs = store.pdfs.filter(p=>p.catId!==id);
-  save();renderAdmin();showToast('🗑️ Deleted');
-}
-
-function renderUploadSelects(){
-  const imgSel = document.getElementById('upload-cat');
-  imgSel.innerHTML = store.categories.map(c=>`<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
-  const pdfSel = document.getElementById('upload-pdf-cat');
-  pdfSel.innerHTML = store.pdfCategories.map(c=>`<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
-}
-
-// ══════════════════════════════════════════
-//  IMAGE UPLOAD
-// ══════════════════════════════════════════
-let pendingImgs = [];
-
-function handleImgFiles(files){
-  const preview = document.getElementById('img-preview');
-  Array.from(files).forEach(file=>{
-    if(!file.type.startsWith('image/'))return;
-    const reader = new FileReader();
-    reader.onload = e=>{
-      const data = e.target.result;
-      const fid = uid();
-      pendingImgs.push({fid,data});
-      const div = document.createElement('div');
-      div.className='img-thumb'; div.id='thumb_'+fid;
-      div.innerHTML=`<img src="${data}"/><button class="del-img" onclick="removePendingImg('${fid}')">✕</button>`;
-      preview.appendChild(div);
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-function removePendingImg(fid){
-  pendingImgs=pendingImgs.filter(f=>f.fid!==fid);
-  const el=document.getElementById('thumb_'+fid);
-  if(el)el.remove();
-}
-
-function saveImages(){
-  if(pendingImgs.length===0){showToast('❗ पहले image select करें');return;}
-  const catId = document.getElementById('upload-cat').value;
-  const title = document.getElementById('upload-title').value.trim();
-  pendingImgs.forEach((f,i)=>{
-    store.images.push({id:uid(),catId,title:title+(pendingImgs.length>1?` (${i+1})`:''),data:f.data});
-  });
-  save(); pendingImgs=[]; clearImgUpload(); renderEntriesTable();
-  showToast('✅ Images save हो गईं!');
-}
-
-function clearImgUpload(){
-  pendingImgs=[];
-  document.getElementById('img-preview').innerHTML='';
-  document.getElementById('file-input').value='';
-  document.getElementById('upload-title').value='';
-}
-
-// ══════════════════════════════════════════
-//  PDF UPLOAD (Feature 2)
-// ══════════════════════════════════════════
-let pendingPdf = null;
-
-// Download toggle label update
-document.getElementById('pdf-dl-toggle').addEventListener('change', function(){
-  document.getElementById('dl-toggle-label').textContent = this.checked ? '✅ Download ON' : '🔒 Download OFF';
-});
-
-function handlePdfFile(files){
-  const file = files[0];
-  if(!file||file.type!=='application/pdf'){showToast('❗ केवल PDF file चुनें');return;}
+function loadSliderImg(idx, files, type){
+  const file = files[0]; if(!file) return;
   const reader = new FileReader();
   reader.onload = e=>{
-    pendingPdf = {data:e.target.result, name:file.name};
-    const pv = document.getElementById('pdf-preview-name');
-    pv.textContent = '✅ File ready: '+file.name;
-    pv.style.display='block';
+    if(type==='header') store.slider[idx].img = e.target.result;
+    else store.adSlider[idx].img = e.target.result;
+    sv(); applySlider(); applyAdSlider();
+    if(type==='header') renderSliderAdmin(); else renderAdAdmin();
+    showToast('✅ Photo upload हो गई!');
   };
   reader.readAsDataURL(file);
 }
 
-function savePdf(){
-  if(!pendingPdf){showToast('❗ पहले PDF select करें');return;}
-  const catId = document.getElementById('upload-pdf-cat').value;
-  const title  = document.getElementById('upload-pdf-title').value.trim();
-  const author = document.getElementById('upload-pdf-author').value.trim();
-  const desc   = document.getElementById('upload-pdf-desc').value.trim();
-  const dlOn   = document.getElementById('pdf-dl-toggle').checked;
-  store.pdfs.push({id:uid(),catId,title,author,desc,downloadOn:dlOn,data:pendingPdf.data});
-  save(); pendingPdf=null; clearPdfUpload(); renderEntriesTable();
-  showToast('✅ PDF save हो गई!');
+function saveSliderSettings(){
+  store.slider.forEach((fr,i)=>{
+    fr.show    = document.getElementById('sf-show'+i).checked;
+    fr.caption = document.getElementById('sf-cap'+i).value.trim();
+  });
+  sv(); applySlider(); showToast('✅ Slider save!');
 }
 
+function saveAdSettings(){
+  store.adSlider.forEach((fr,i)=>{
+    fr.show    = document.getElementById('af-show'+i).checked;
+    fr.caption = document.getElementById('af-cap'+i).value.trim();
+  });
+  sv(); applyAdSlider(); showToast('✅ Ad Slider save!');
+}
+
+// ══════════════════════════════════════
+//  SIDEBAR MENU
+// ══════════════════════════════════════
+function renderSidebarMenu(){
+  const ul = document.getElementById('sidebar-menu-list');
+  ul.innerHTML='';
+  store.menuItems.forEach(item=>{
+    const li = document.createElement('li');
+    const isGotra = item.name.includes('गोत्र')||item.name.toLowerCase().includes('gotra');
+    if(item.action==='link'){
+      li.innerHTML=`<a href="${item.link||'#'}" target="_blank" class="${isGotra?'notranslate gotra-fix':''}"><span class="menu-icon">${item.icon}</span>${item.name}</a>`;
+    } else {
+      li.innerHTML=`<button onclick="showSection('${item.action}',null)" class="${isGotra?'notranslate gotra-fix':''}"><span class="menu-icon">${item.icon}</span>${item.name}</button>`;
+    }
+    ul.appendChild(li);
+  });
+}
+
+function renderMenuAdmin(){
+  const cont = document.getElementById('menu-items-list');
+  cont.innerHTML='';
+  store.menuItems.forEach((item,i)=>{
+    const div = document.createElement('div');
+    div.style.cssText='display:flex;align-items:center;gap:.5rem;padding:.4rem .6rem;background:var(--cream);border-radius:4px;margin-bottom:.3rem;flex-wrap:wrap;';
+    div.innerHTML=`<span>${item.icon}</span><strong style="font-size:.82rem;flex:1;">${item.name}</strong>
+      <span style="font-size:.72rem;color:var(--muted);">${item.action==='link'?'🔗 '+item.link:item.action}</span>
+      <button class="btn-d" style="padding:.2rem .5rem;font-size:.72rem;" onclick="delMenuItem('${item.id}')">🗑️</button>`;
+    cont.appendChild(div);
+  });
+  // Show/hide link field
+  document.getElementById('new-menu-action').onchange = function(){
+    document.getElementById('new-menu-link-wrap').style.display = this.value==='link'?'block':'none';
+  };
+}
+
+function addMenuItem(){
+  const icon   = document.getElementById('new-menu-icon').value.trim()||'📄';
+  const name   = document.getElementById('new-menu-name').value.trim();
+  const action = document.getElementById('new-menu-action').value;
+  const link   = document.getElementById('new-menu-link').value.trim();
+  if(!name){showToast('❗ नाम डालें');return;}
+  store.menuItems.push({id:uid(),icon,name,action,link});
+  sv(); renderSidebarMenu(); renderMenuAdmin();
+  showToast('✅ Menu item जोड़ा: '+name);
+  document.getElementById('new-menu-icon').value='';
+  document.getElementById('new-menu-name').value='';
+  document.getElementById('new-menu-link').value='';
+}
+
+function delMenuItem(id){
+  store.menuItems=store.menuItems.filter(m=>m.id!==id);
+  sv(); renderSidebarMenu(); renderMenuAdmin();
+  showToast('🗑️ Deleted');
+}
+
+// ══════════════════════════════════════
+//  IMAGE DOCS
+// ══════════════════════════════════════
+function renderDocs(){
+  const grid = document.getElementById('doc-grid');
+  grid.innerHTML='';
+  store.imgCats.forEach(cat=>{
+    const imgs = store.images.filter(i=>i.catId===cat.id);
+    const isG  = cat.name.includes('गोत्र')||cat.name.toLowerCase().includes('gotra');
+    const card = document.createElement('div');
+    card.className='doc-card';
+    card.innerHTML=`
+      <span class="dc-icon">${cat.icon}</span>
+      <div class="dc-title ${isG?'notranslate gotra-fix':''}" ${isG?'translate="no"':''}>${cat.name}</div>
+      <div class="dc-sub ${isG?'notranslate gotra-fix':''}">${cat.sub}</div>
+      <div class="dc-count">${imgs.length>0?'📄 '+imgs.length+' doc':'कोई doc नहीं'}</div>`;
+    card.onclick=()=>openImgModal(cat);
+    grid.appendChild(card);
+  });
+}
+
+function openImgModal(cat){
+  const imgs=store.images.filter(i=>i.catId===cat.id);
+  const isG = cat.name.includes('गोत्र')||cat.name.toLowerCase().includes('gotra');
+  const mt = document.getElementById('modal-title');
+  mt.textContent=cat.icon+' '+cat.name+' — '+cat.sub;
+  if(isG){mt.classList.add('notranslate');mt.setAttribute('translate','no');}
+  const body=document.getElementById('modal-body');
+  if(imgs.length===0){
+    body.innerHTML='<div class="modal-empty">📭<br>कोई document नहीं।</div>';
+  } else {
+    body.innerHTML=imgs.map(img=>`
+      <div style="margin-bottom:1rem;">
+        ${img.title?`<p style="font-family:'Tiro Devanagari Hindi',serif;font-size:.88rem;color:var(--rust);margin-bottom:.4rem;" class="${isG?'notranslate':''}">📌 ${img.title}</p>`:''}
+        <img src="${img.data}" alt="${img.title||cat.name}" draggable="false"/>
+      </div>`).join('');
+  }
+  document.getElementById('modal').classList.add('open');
+}
+
+function renderImgCatAdmin(){
+  const cont=document.getElementById('img-cat-list');
+  cont.innerHTML='';
+  store.imgCats.forEach(cat=>{
+    const d=document.createElement('div');
+    d.style.cssText='display:flex;align-items:center;gap:.5rem;padding:.35rem .6rem;background:var(--cream);border-radius:4px;margin-bottom:.3rem;';
+    d.innerHTML=`<span>${cat.icon}</span><strong style="font-size:.82rem;flex:1;">${cat.name}</strong><span style="font-size:.72rem;color:var(--muted);">${cat.sub}</span>
+      <button class="btn-d" style="padding:.2rem .5rem;font-size:.72rem;" onclick="delImgCat('${cat.id}')">🗑️</button>`;
+    cont.appendChild(d);
+  });
+  const sel=document.getElementById('upload-img-cat');
+  sel.innerHTML=store.imgCats.map(c=>`<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
+}
+
+function addImgCat(){
+  const icon=document.getElementById('new-cat-icon').value.trim()||'📄';
+  const name=document.getElementById('new-cat-name').value.trim();
+  const sub =document.getElementById('new-cat-sub').value.trim();
+  if(!name){showToast('❗ नाम डालें');return;}
+  store.imgCats.push({id:uid(),icon,name,sub});
+  sv();renderImgCatAdmin();renderDocs();showToast('✅ Category जोड़ी: '+name);
+  document.getElementById('new-cat-icon').value='';
+  document.getElementById('new-cat-name').value='';
+  document.getElementById('new-cat-sub').value='';
+}
+
+function delImgCat(id){
+  if(!confirm('Delete?'))return;
+  store.imgCats=store.imgCats.filter(c=>c.id!==id);
+  store.images=store.images.filter(i=>i.catId!==id);
+  sv();renderImgCatAdmin();renderDocs();showToast('🗑️ Deleted');
+}
+
+// Image upload
+let pendImgs=[];
+function handleImgFiles(files){
+  const prev=document.getElementById('img-prev-grid');
+  Array.from(files).forEach(f=>{
+    if(!f.type.startsWith('image/'))return;
+    const r=new FileReader();
+    r.onload=e=>{
+      const fid=uid();
+      pendImgs.push({fid,data:e.target.result});
+      const div=document.createElement('div');
+      div.className='img-thumb';div.id='it_'+fid;
+      div.innerHTML=`<img src="${e.target.result}"/><button class="del-img" onclick="delPendImg('${fid}')">✕</button>`;
+      prev.appendChild(div);
+    };
+    r.readAsDataURL(f);
+  });
+}
+function delPendImg(fid){
+  pendImgs=pendImgs.filter(f=>f.fid!==fid);
+  const el=document.getElementById('it_'+fid);if(el)el.remove();
+}
+function saveImgs(){
+  if(!pendImgs.length){showToast('❗ Image select करें');return;}
+  const catId=document.getElementById('upload-img-cat').value;
+  const title=document.getElementById('upload-img-title').value.trim();
+  pendImgs.forEach((f,i)=>{
+    store.images.push({id:uid(),catId,title:title+(pendImgs.length>1?` (${i+1})`:''),data:f.data});
+  });
+  sv();pendImgs=[];clearImgUpload();renderImgEntries();renderDocs();showToast('✅ Images save!');
+}
+function clearImgUpload(){
+  pendImgs=[];
+  document.getElementById('img-prev-grid').innerHTML='';
+  document.getElementById('img-file-inp').value='';
+  document.getElementById('upload-img-title').value='';
+}
+function renderImgEntries(){
+  const tb=document.getElementById('img-entries');
+  if(!store.images.length){tb.innerHTML='<tr><td colspan="4" style="text-align:center;padding:1.5rem;color:var(--muted);">कोई image नहीं।</td></tr>';return;}
+  tb.innerHTML=store.images.map(img=>{
+    const cat=store.imgCats.find(c=>c.id===img.catId);
+    return `<tr><td><img src="${img.data}"/></td>
+      <td style="font-family:'Tiro Devanagari Hindi',serif;font-size:.82rem;">${img.title||'—'}</td>
+      <td>${cat?cat.icon+' '+cat.name:'—'}</td>
+      <td><button class="btn-d" style="padding:.2rem .5rem;font-size:.72rem;" onclick="delImg('${img.id}')">🗑️</button></td></tr>`;
+  }).join('');
+}
+function delImg(id){
+  if(!confirm('Delete?'))return;
+  store.images=store.images.filter(i=>i.id!==id);
+  sv();renderImgEntries();renderDocs();showToast('🗑️ Deleted');
+}
+
+// ══════════════════════════════════════
+//  PDF BOOKS
+// ══════════════════════════════════════
+function renderBooks(){
+  const grid=document.getElementById('books-grid');
+  grid.innerHTML='';
+  if(!store.pdfs.length){
+    grid.innerHTML='<p style="color:var(--muted);text-align:center;padding:2rem;grid-column:1/-1;">Admin से PDF upload करें।</p>';
+    return;
+  }
+  store.pdfs.forEach(pdf=>{
+    const pcat=store.pdfCats.find(c=>c.id===pdf.catId)||{icon:'📖',name:''};
+    const card=document.createElement('div');
+    card.className='pdf-card';
+    card.innerHTML=`<span class="dc-icon">${pcat.icon}</span>
+      <div class="dc-title">${pdf.title||pcat.name}</div>
+      <div class="dc-sub">${pdf.author?'✍️ '+pdf.author:pcat.sub}</div>
+      ${pdf.downloadOn?'<span style="font-size:.68rem;color:var(--gold);margin-top:.3rem;display:block;">📥 Download Available</span>':'<span style="font-size:.68rem;color:#ff8a80;margin-top:.3rem;display:block;">🔒 Download Off</span>'}`;
+    card.onclick=()=>openPdfModal(pdf,pcat);
+    grid.appendChild(card);
+  });
+}
+
+function openPdfModal(pdf,pcat){
+  document.getElementById('modal-title').textContent=pcat.icon+' '+pdf.title;
+  document.getElementById('modal-body').innerHTML=`
+    ${pdf.author?`<p style="color:var(--muted);font-size:.82rem;padding:0 0 .5rem;">✍️ ${pdf.author}</p>`:''}
+    <iframe class="pdf-viewer" src="${pdf.data}#toolbar=${pdf.downloadOn?1:0}&navpanes=0"></iframe>
+    ${pdf.downloadOn?`<div style="text-align:center;margin-top:.6rem;"><a href="${pdf.data}" download="${pdf.title}.pdf" style="display:inline-block;background:var(--green);color:white;padding:.45rem 1.2rem;text-decoration:none;font-size:.82rem;border-radius:3px;">📥 Download</a></div>`:'<p style="text-align:center;font-size:.78rem;color:var(--muted);margin-top:.5rem;">🔒 Download बंद है।</p>'}`;
+  document.getElementById('modal').classList.add('open');
+}
+
+function renderPdfCatAdmin(){
+  const cont=document.getElementById('pdf-cat-list');
+  cont.innerHTML='';
+  store.pdfCats.forEach(cat=>{
+    const d=document.createElement('div');
+    d.style.cssText='display:flex;align-items:center;gap:.5rem;padding:.35rem .6rem;background:var(--cream);border-radius:4px;margin-bottom:.3rem;';
+    d.innerHTML=`<span>${cat.icon}</span><strong style="font-size:.82rem;flex:1;">${cat.name}</strong>
+      <button class="btn-d" style="padding:.2rem .5rem;font-size:.72rem;" onclick="delPdfCat('${cat.id}')">🗑️</button>`;
+    cont.appendChild(d);
+  });
+  const sel=document.getElementById('upload-pdf-cat');
+  sel.innerHTML=store.pdfCats.map(c=>`<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
+}
+function addPdfCat(){
+  const icon=document.getElementById('new-pcat-icon').value.trim()||'📖';
+  const name=document.getElementById('new-pcat-name').value.trim();
+  const sub =document.getElementById('new-pcat-sub').value.trim();
+  if(!name){showToast('❗ नाम डालें');return;}
+  store.pdfCats.push({id:uid(),icon,name,sub});
+  sv();renderPdfCatAdmin();renderBooks();showToast('✅ PDF Category जोड़ी!');
+  document.getElementById('new-pcat-icon').value='';
+  document.getElementById('new-pcat-name').value='';
+  document.getElementById('new-pcat-sub').value='';
+}
+function delPdfCat(id){
+  if(!confirm('Delete?'))return;
+  store.pdfCats=store.pdfCats.filter(c=>c.id!==id);
+  store.pdfs=store.pdfs.filter(p=>p.catId!==id);
+  sv();renderPdfCatAdmin();renderBooks();showToast('🗑️ Deleted');
+}
+
+let pendPdf=null;
+document.getElementById('pdf-dl-tog').addEventListener('change',function(){
+  document.getElementById('dl-tog-lbl').textContent=this.checked?'✅ ON':'🔒 OFF';
+});
+function handlePdfFile(files){
+  const f=files[0];if(!f||f.type!=='application/pdf'){showToast('❗ PDF only');return;}
+  const r=new FileReader();
+  r.onload=e=>{
+    pendPdf={data:e.target.result,name:f.name};
+    const pn=document.getElementById('pdf-file-name');
+    pn.textContent='✅ '+f.name;pn.style.display='block';
+  };
+  r.readAsDataURL(f);
+}
+function savePdf(){
+  if(!pendPdf){showToast('❗ PDF select करें');return;}
+  const catId =document.getElementById('upload-pdf-cat').value;
+  const title =document.getElementById('upload-pdf-title').value.trim();
+  const author=document.getElementById('upload-pdf-author').value.trim();
+  const desc  =document.getElementById('upload-pdf-desc').value.trim();
+  const dlOn  =document.getElementById('pdf-dl-tog').checked;
+  store.pdfs.push({id:uid(),catId,title,author,desc,downloadOn:dlOn,data:pendPdf.data});
+  sv();pendPdf=null;clearPdfUpload();renderPdfEntries();renderBooks();showToast('✅ PDF save!');
+}
 function clearPdfUpload(){
-  pendingPdf=null;
-  document.getElementById('pdf-file-input').value='';
+  pendPdf=null;
+  document.getElementById('pdf-file-inp').value='';
   document.getElementById('upload-pdf-title').value='';
   document.getElementById('upload-pdf-author').value='';
   document.getElementById('upload-pdf-desc').value='';
-  document.getElementById('pdf-preview-name').style.display='none';
-  document.getElementById('pdf-dl-toggle').checked=true;
-  document.getElementById('dl-toggle-label').textContent='✅ Download ON';
+  document.getElementById('pdf-file-name').style.display='none';
+  document.getElementById('pdf-dl-tog').checked=true;
+  document.getElementById('dl-tog-lbl').textContent='✅ ON';
 }
-
-// ══════════════════════════════════════════
-//  ENTRIES TABLE
-// ══════════════════════════════════════════
-function renderEntriesTable(){
-  const tbody = document.getElementById('entries-body');
-  const allItems = [
-    ...store.images.map(i=>({...i,type:'image'})),
-    ...store.pdfs.map(p=>({...p,type:'pdf'}))
-  ];
-  if(allItems.length===0){
-    tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--muted);">कोई entry नहीं।</td></tr>';
-    return;
-  }
-  tbody.innerHTML = allItems.map(item=>{
-    const cats = item.type==='pdf' ? store.pdfCategories : store.categories;
-    const cat  = cats.find(c=>c.id===item.catId);
-    const preview = item.type==='image'
-      ? `<img src="${item.data}" alt=""/>`
-      : `<span style="font-size:1.5rem;">📄</span>`;
+function renderPdfEntries(){
+  const tb=document.getElementById('pdf-entries');
+  if(!store.pdfs.length){tb.innerHTML='<tr><td colspan="4" style="text-align:center;padding:1.5rem;color:var(--muted);">कोई PDF नहीं।</td></tr>';return;}
+  tb.innerHTML=store.pdfs.map(pdf=>{
+    const cat=store.pdfCats.find(c=>c.id===pdf.catId);
     return `<tr>
-      <td>${preview}</td>
-      <td style="font-family:'Tiro Devanagari Hindi',serif;">${item.title||'—'}</td>
+      <td style="font-family:'Tiro Devanagari Hindi',serif;font-size:.82rem;">${pdf.title||'—'}</td>
       <td>${cat?cat.icon+' '+cat.name:'—'}</td>
-      <td><span class="badge badge-ok">${item.type==='pdf'?'📄 PDF':'🖼️ Image'}</span></td>
-      <td><div class="action-row">
-        ${item.type==='pdf'?`<button class="btn-secondary" style="padding:.3rem .6rem;font-size:.75rem;" onclick="togglePdfDl('${item.id}')">${item.downloadOn?'🔒 DL Off':'📥 DL On'}</button>`:''}
-        <button class="btn-danger" style="padding:.3rem .6rem;font-size:.75rem;" onclick="deleteEntry('${item.id}','${item.type}')">🗑️</button>
-      </div></td>
-    </tr>`;
+      <td><span class="badge ${pdf.downloadOn?'b-ok':'b-off'}">${pdf.downloadOn?'ON':'OFF'}</span>
+        <button class="btn-s" style="padding:.15rem .4rem;font-size:.7rem;margin-left:.3rem;" onclick="togPdfDl('${pdf.id}')">${pdf.downloadOn?'OFF करें':'ON करें'}</button></td>
+      <td><button class="btn-d" style="padding:.2rem .5rem;font-size:.72rem;" onclick="delPdf('${pdf.id}')">🗑️</button></td></tr>`;
   }).join('');
 }
-
-function togglePdfDl(id){
-  const pdf = store.pdfs.find(p=>p.id===id);
-  if(!pdf)return;
-  pdf.downloadOn = !pdf.downloadOn;
-  save(); renderEntriesTable();
-  showToast(pdf.downloadOn?'📥 Download ON किया':'🔒 Download OFF किया');
+function togPdfDl(id){
+  const p=store.pdfs.find(x=>x.id===id);if(!p)return;
+  p.downloadOn=!p.downloadOn;sv();renderPdfEntries();showToast(p.downloadOn?'📥 Download ON':'🔒 Download OFF');
+}
+function delPdf(id){
+  if(!confirm('Delete?'))return;
+  store.pdfs=store.pdfs.filter(p=>p.id!==id);
+  sv();renderPdfEntries();renderBooks();showToast('🗑️ Deleted');
 }
 
-function deleteEntry(id, type){
-  if(!confirm('Delete करें?'))return;
-  if(type==='pdf') store.pdfs   = store.pdfs.filter(p=>p.id!==id);
-  else             store.images = store.images.filter(i=>i.id!==id);
-  save(); renderEntriesTable(); showToast('🗑️ Deleted');
+// ══════════════════════════════════════
+//  RIGHT SIDEBAR
+// ══════════════════════════════════════
+function applyRightSidebar(){
+  const r=store.right;
+  document.getElementById('rw-about').textContent=r.about||'';
+  const ytLink=document.getElementById('rw-yt-link');
+  ytLink.textContent=r.ytName||'@Dhanka52Gotra';
+  ytLink.href=r.ytUrl||'#';
+
+  const sl=document.getElementById('rw-social-list');
+  sl.innerHTML=r.socials.map(s=>`<a href="${s.url||'#'}" class="social-link" target="_blank">${s.icon} ${s.name}</a>`).join('');
+
+  // Updates slider
+  const us=document.getElementById('updates-slider');
+  const ud=document.getElementById('update-dots');
+  us.innerHTML=''; ud.innerHTML='';
+  if(r.updates.length===0){
+    us.innerHTML='<div style="padding:.6rem;font-size:.78rem;color:var(--muted);">कोई update नहीं।</div>';
+    return;
+  }
+  r.updates.forEach((u,i)=>{
+    const a=document.createElement('a');
+    a.className='update-item'+(i===0?' active-slide':'');
+    a.href=u.url||'#'; a.target='_blank';
+    a.innerHTML=`<div class="upd-title">${u.title}</div><div class="upd-date">${u.date||''}</div>`;
+    us.appendChild(a);
+    const dot=document.createElement('button');
+    dot.className='sdot'+(i===0?' active-dot':'');
+    dot.onclick=()=>showUpdate(i);
+    ud.appendChild(dot);
+  });
 }
 
-// ══════════════════════════════════════════
-//  SITE SETTINGS
-// ══════════════════════════════════════════
-function saveSiteSettings(){
-  store.site = {
-    ...store.site,
-    emblem:   document.getElementById('s-emblem').value.trim()||'🏹',
-    title:    document.getElementById('s-title').value.trim(),
-    subtitle: document.getElementById('s-subtitle').value.trim(),
-    pageTitle:document.getElementById('s-pageTitle').value.trim(),
-    pageSub:  document.getElementById('s-pageSub').value.trim(),
-    tabTitle: document.getElementById('s-tabTitle').value.trim()
-  };
-  save(); renderPublic(); showToast('✅ Settings save हो गईं!');
+let updCur=0;
+function showUpdate(i){
+  const items=document.querySelectorAll('.update-item');
+  const dots=document.querySelectorAll('.sdot');
+  items.forEach((x,j)=>x.classList.toggle('active-slide',j===i));
+  dots.forEach((x,j)=>x.classList.toggle('active-dot',j===i));
+  updCur=i;
 }
 
-function saveSeoSettings(){
-  store.site.seoDesc = document.getElementById('s-seoDesc').value.trim();
-  store.site.seoKeys = document.getElementById('s-seoKeys').value.trim();
-  save();
-  document.getElementById('meta-desc').setAttribute('content', store.site.seoDesc);
-  document.getElementById('meta-keys').setAttribute('content', store.site.seoKeys);
-  showToast('✅ SEO Settings save हो गईं!');
+// Auto-advance updates every 3 sec
+setInterval(()=>{
+  const items=document.querySelectorAll('.update-item');
+  if(items.length>1) showUpdate((updCur+1)%items.length);
+},3000);
+
+function renderRightAdmin(){
+  const r=store.right;
+  document.getElementById('rw-about-inp').value=r.about||'';
+  document.getElementById('yt-name-inp').value=r.ytName||'';
+  document.getElementById('yt-url-inp').value=r.ytUrl||'';
+  // Socials
+  const sl=document.getElementById('social-links-list');
+  sl.innerHTML=r.socials.map((s,i)=>`
+    <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.3rem;background:var(--cream);padding:.3rem .5rem;border-radius:3px;">
+      <span>${s.icon}</span><strong style="font-size:.8rem;flex:1;">${s.name}</strong>
+      <span style="font-size:.7rem;color:var(--muted);">${s.url}</span>
+      <button class="btn-d" style="padding:.15rem .4rem;font-size:.7rem;" onclick="delSocial(${i})">🗑️</button>
+    </div>`).join('');
+  // Updates
+  const ul=document.getElementById('updates-list');
+  ul.innerHTML=r.updates.map((u,i)=>`
+    <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.3rem;background:var(--cream);padding:.3rem .5rem;border-radius:3px;">
+      <strong style="font-size:.8rem;flex:1;">${u.title}</strong>
+      <span style="font-size:.7rem;color:var(--muted);">${u.date||''}</span>
+      <button class="btn-d" style="padding:.15rem .4rem;font-size:.7rem;" onclick="delUpdate(${i})">🗑️</button>
+    </div>`).join('');
 }
 
-// ══════════════════════════════════════════
-//  LANGUAGE / TRANSLATION (Feature 5)
-// ══════════════════════════════════════════
+function saveRightWidget(){
+  store.right.about  = document.getElementById('rw-about-inp').value.trim();
+  store.right.ytName = document.getElementById('yt-name-inp').value.trim();
+  store.right.ytUrl  = document.getElementById('yt-url-inp').value.trim();
+  sv(); applyRightSidebar(); showToast('✅ Right Sidebar save!');
+}
+
+function addSocialLink(){
+  const icon=document.getElementById('new-social-icon').value.trim()||'🔗';
+  const name=document.getElementById('new-social-name').value.trim();
+  const url =document.getElementById('new-social-url').value.trim();
+  if(!name){showToast('❗ नाम डालें');return;}
+  store.right.socials.push({icon,name,url});
+  sv();renderRightAdmin();applyRightSidebar();showToast('✅ Social link add!');
+  document.getElementById('new-social-icon').value='';
+  document.getElementById('new-social-name').value='';
+  document.getElementById('new-social-url').value='';
+}
+function delSocial(i){store.right.socials.splice(i,1);sv();renderRightAdmin();applyRightSidebar();showToast('🗑️ Deleted');}
+
+function addUpdate(){
+  const title=document.getElementById('new-upd-title').value.trim();
+  const url  =document.getElementById('new-upd-url').value.trim();
+  const date =document.getElementById('new-upd-date').value.trim();
+  if(!title){showToast('❗ Title डालें');return;}
+  store.right.updates.push({title,url,date});
+  sv();renderRightAdmin();applyRightSidebar();showToast('✅ Update add!');
+  document.getElementById('new-upd-title').value='';
+  document.getElementById('new-upd-url').value='';
+  document.getElementById('new-upd-date').value='';
+}
+function delUpdate(i){store.right.updates.splice(i,1);sv();renderRightAdmin();applyRightSidebar();showToast('🗑️ Deleted');}
+
+// ══════════════════════════════════════
+//  FOOTER
+// ══════════════════════════════════════
+function applyFooter(){
+  const f=store.footer;
+  document.getElementById('ft-home').textContent=f.homeText||'';
+  document.getElementById('ft-home-link').href=f.homeLink||'#';
+  document.getElementById('ft-help').textContent=f.helpText||'';
+  document.getElementById('ft-help-link').href=f.helpLink||'#';
+  document.getElementById('ft-sitemap').href=f.sitemapUrl||'#';
+  document.getElementById('ft-feedback').href=f.feedbackUrl||'#';
+  document.getElementById('ft-privacy').href=f.privacyUrl||'#';
+  document.getElementById('ft-copyright').href=f.copyrightUrl||'#';
+  document.getElementById('ft-terms').href=f.termsUrl||'#';
+  document.getElementById('ft-copyright-text').textContent=f.copyrightText||'';
+  document.getElementById('ft-contact-link').href=f.contactUrl||'#';
+}
+
+function renderFooterAdmin(){
+  const f=store.footer;
+  document.getElementById('ft-home-inp').value=f.homeText||'';
+  document.getElementById('ft-homelink-inp').value=f.homeLink||'';
+  document.getElementById('ft-help-inp').value=f.helpText||'';
+  document.getElementById('ft-helplink-inp').value=f.helpLink||'';
+  document.getElementById('ft-sitemap-inp').value=f.sitemapUrl||'';
+  document.getElementById('ft-feedback-inp').value=f.feedbackUrl||'';
+  document.getElementById('ft-privacy-inp').value=f.privacyUrl||'';
+  document.getElementById('ft-copyright-inp').value=f.copyrightUrl||'';
+  document.getElementById('ft-terms-inp').value=f.termsUrl||'';
+  document.getElementById('ft-copytxt-inp').value=f.copyrightText||'';
+  document.getElementById('ft-contact-inp').value=f.contactUrl||'';
+}
+
+function saveFooter(){
+  const f=store.footer;
+  f.homeText   =document.getElementById('ft-home-inp').value.trim();
+  f.homeLink   =document.getElementById('ft-homelink-inp').value.trim();
+  f.helpText   =document.getElementById('ft-help-inp').value.trim();
+  f.helpLink   =document.getElementById('ft-helplink-inp').value.trim();
+  f.sitemapUrl =document.getElementById('ft-sitemap-inp').value.trim();
+  f.feedbackUrl=document.getElementById('ft-feedback-inp').value.trim();
+  f.privacyUrl =document.getElementById('ft-privacy-inp').value.trim();
+  f.copyrightUrl=document.getElementById('ft-copyright-inp').value.trim();
+  f.termsUrl   =document.getElementById('ft-terms-inp').value.trim();
+  f.copyrightText=document.getElementById('ft-copytxt-inp').value.trim();
+  f.contactUrl =document.getElementById('ft-contact-inp').value.trim();
+  sv();applyFooter();showToast('✅ Footer save!');
+}
+
+// ══════════════════════════════════════
+//  RENDER ALL ADMIN
+// ══════════════════════════════════════
+function renderAdminAll(){
+  const s=store.site;
+  document.getElementById('s-tabTitle').value =s.tabTitle||'';
+  document.getElementById('s-navTitle').value =s.navTitle||'';
+  document.getElementById('s-navSub').value   =s.navSub||'';
+  document.getElementById('s-pageTitle').value=s.pageTitle||'';
+  document.getElementById('s-pageSub').value  =s.pageSub||'';
+  document.getElementById('mt-title-inp').value  =s.mtTitle||'';
+  document.getElementById('mt-content-inp').value=s.mtContent||'';
+  document.getElementById('s-seoDesc').value  =s.seoDesc||'';
+  document.getElementById('s-seoKeys').value  =s.seoKeys||'';
+  if(s.titleColor) document.getElementById('title-color').value=s.titleColor;
+  if(s.subColor)   document.getElementById('sub-color').value=s.subColor;
+  if(s.titleFont)  document.getElementById('title-font').value=s.titleFont;
+  if(s.titleSize)  document.getElementById('title-size').value=s.titleSize;
+  renderSliderAdmin(); renderAdAdmin();
+  renderMenuAdmin(); renderSidebarMenu();
+  renderImgCatAdmin(); renderImgEntries();
+  renderPdfCatAdmin(); renderPdfEntries();
+  renderRightAdmin();  renderFooterAdmin();
+}
+
+// ══════════════════════════════════════
+//  MODAL
+// ══════════════════════════════════════
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+document.addEventListener('contextmenu',e=>{if(e.target.closest('#modal'))e.preventDefault();});
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&'sSpP'.includes(e.key))e.preventDefault();});
+
+// ══════════════════════════════════════
+//  LANGUAGE (5 only, working)
+// ══════════════════════════════════════
 function googleTranslateElementInit(){
   new google.translate.TranslateElement({
     pageLanguage:'hi',
-    includedLanguages:'hi,en,pa,mr,gu,bn,te,ur,or,ml,kn,ta',
+    includedLanguages:'hi,en,pa,mr,gu',
     autoDisplay:false
   },'google_translate_element');
 }
 
 function setLang(lang){
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active-lang'));
-  const btn = document.querySelector(`[data-lang="${lang}"]`);
+  const btn=document.querySelector(`[data-lang="${lang}"]`);
   if(btn) btn.classList.add('active-lang');
   localStorage.setItem('dhankaLang',lang);
-
-  const gtLang = lang==='raj'?'hi':lang;
-
-  if(gtLang==='hi'){
+  if(lang==='hi'){
     document.cookie='googtrans=;expires=Thu,01 Jan 1970 00:00:00 UTC;path=/;';
     document.cookie='googtrans=;expires=Thu,01 Jan 1970 00:00:00 UTC;path=/;domain='+location.hostname;
     const sel=document.querySelector('select.goog-te-combo');
@@ -1060,51 +1673,44 @@ function setLang(lang){
   }
   const tryT=(n)=>{
     const sel=document.querySelector('select.goog-te-combo');
-    if(sel){sel.value=gtLang;sel.dispatchEvent(new Event('change'));}
+    if(sel){sel.value=lang;sel.dispatchEvent(new Event('change'));}
     else if(n>0) setTimeout(()=>tryT(n-1),500);
   };
-  tryT(10);
+  tryT(12);
 }
 
 function protectGotra(){
-  document.querySelectorAll('.gotra-fixed,.notranslate').forEach(el=>{
+  document.querySelectorAll('.gotra-fix,.notranslate').forEach(el=>{
     el.classList.add('notranslate');
     el.setAttribute('translate','no');
   });
 }
 
-// ══════════════════════════════════════════
+// ══════════════════════════════════════
 //  TOAST
-// ══════════════════════════════════════════
-let toastTimer;
+// ══════════════════════════════════════
+let tTimer;
 function showToast(msg){
   const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>t.classList.remove('show'),3000);
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(tTimer);tTimer=setTimeout(()=>t.classList.remove('show'),3000);
 }
 
-// ══════════════════════════════════════════
-//  PROTECTION
-// ══════════════════════════════════════════
-document.addEventListener('contextmenu',e=>{if(e.target.closest('#modal'))e.preventDefault();});
-document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&'sSpP'.includes(e.key)){e.preventDefault();}});
-document.addEventListener('dragstart',e=>{if(e.target.closest('#modal'))e.preventDefault();});
-
-// ══════════════════════════════════════════
+// ══════════════════════════════════════
 //  INIT
-// ══════════════════════════════════════════
-renderPublic();
-const savedLang = localStorage.getItem('dhankaLang');
-if(savedLang && savedLang!=='hi') setTimeout(()=>setLang(savedLang),1500);
+// ══════════════════════════════════════
+applySite();
+applySlider();
+applyAdSlider();
+applyRightSidebar();
+applyFooter();
+renderSidebarMenu();
+renderDocs();
+protectGotra();
+const sl=localStorage.getItem('dhankaLang');
+if(sl&&sl!=='hi') setTimeout(()=>setLang(sl),1500);
 </script>
 
-<!-- Google Translate -->
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<style>
-.goog-te-banner-frame,.skiptranslate iframe{display:none!important;height:0!important;}
-body{top:0!important;}
-.goog-te-gadget{display:none!important;}
-</style>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
