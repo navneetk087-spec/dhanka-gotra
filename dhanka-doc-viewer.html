@@ -282,14 +282,23 @@ nav a:hover,nav a.active{background:var(--saffron);color:var(--deep);}
 .notranslate,.gotra-fix{font-family:'Tiro Devanagari Hindi',serif!important;}
 
 /* RESPONSIVE */
-@media(max-width:900px){
-  #main-layout{grid-template-columns:var(--sidebar-w) 1fr;}
-  #right-sidebar{display:none;}
+@media(max-width:1100px){
+  :root{--sidebar-w:180px;--right-w:200px;}
 }
-@media(max-width:600px){
+@media(max-width:850px){
   #main-layout{grid-template-columns:1fr;}
   #left-sidebar{display:none;}
+  #right-sidebar{
+    display:block;
+    border-left:none;
+    border-top:2px solid var(--sand);
+    padding:.8rem 1rem;
+  }
   .slider-frame{flex:0 0 calc(50% - .4rem);}
+}
+@media(min-width:851px){
+  #right-sidebar{display:block!important;}
+  #left-sidebar{display:block!important;}
 }
 /* Google translate hide */
 .goog-te-banner-frame,.skiptranslate iframe{display:none!important;height:0!important;}
@@ -345,7 +354,7 @@ body{top:0!important;}
     <a href="#" class="active" onclick="showSection('docs',this)">📂 दस्तावेज़</a>
     <a href="#" onclick="showSection('books',this)">📚 पुस्तकें</a>
     <a href="#" onclick="showSection('main-text',this)">📝 जानकारी</a>
-    <button class="admin-nav-btn" onclick="toggleAdminPanel()">⚙️ Admin</button>
+    <button class="admin-nav-btn" onclick="navAdminClick()">⚙️ Admin</button>
   </nav>
 </div>
 
@@ -358,6 +367,27 @@ body{top:0!important;}
   <button onclick="setLang('mr')"  class="lang-btn" data-lang="mr">मराठी</button>
   <button onclick="setLang('gu')"  class="lang-btn" data-lang="gu">ગુજરાતી</button>
   <div id="google_translate_element"></div>
+</div>
+
+<!-- ADMIN LOGIN POPUP -->
+<div id="admin-login-popup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:8000;align-items:center;justify-content:center;">
+  <div style="background:var(--deep);border:1px solid rgba(201,146,42,.4);border-radius:14px;padding:2rem 1.8rem;width:300px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.5);">
+    <div style="font-size:2.5rem;margin-bottom:.5rem;">🔐</div>
+    <h3 style="font-family:'Tiro Devanagari Hindi',serif;color:var(--gold);font-size:1.3rem;margin-bottom:.3rem;">Admin Login</h3>
+    <p style="color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;">धानका इतिहास एवं गोत्र</p>
+    <input type="password" id="popup-pass" placeholder="Password डालें..."
+      style="width:100%;padding:.6rem .8rem;background:rgba(255,255,255,.08);border:1px solid rgba(201,146,42,.3);color:var(--cream);font-size:.88rem;border-radius:6px;outline:none;margin-bottom:.6rem;font-family:'DM Sans',sans-serif;"
+      onkeydown="if(event.key==='Enter')popupLogin()"/>
+    <button onclick="popupLogin()"
+      style="width:100%;padding:.6rem;background:var(--saffron);color:white;border:none;border-radius:6px;font-size:.88rem;font-weight:500;cursor:pointer;margin-bottom:.5rem;">
+      🔐 Login करें
+    </button>
+    <button onclick="document.getElementById('admin-login-popup').style.display='none'"
+      style="width:100%;padding:.5rem;background:transparent;color:var(--muted);border:1px solid rgba(201,146,42,.2);border-radius:6px;font-size:.82rem;cursor:pointer;">
+      ✕ Cancel
+    </button>
+    <div id="popup-err" style="color:#ff8a80;font-size:.78rem;margin-top:.4rem;display:none;">❌ गलत password!</div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -894,7 +924,34 @@ function uid(){return 'id'+Date.now()+Math.random().toString(36).slice(2,5);}
 // ══════════════════════════════════════
 let isAdmin = false;
 
-function rwLogin(){
+function navAdminClick(){
+  if(isAdmin){
+    toggleAdminPanel();
+  } else {
+    const popup = document.getElementById('admin-login-popup');
+    popup.style.display='flex';
+    document.getElementById('popup-pass').value='';
+    document.getElementById('popup-err').style.display='none';
+    setTimeout(()=>document.getElementById('popup-pass').focus(),100);
+  }
+}
+
+function popupLogin(){
+  const p = document.getElementById('popup-pass').value;
+  if(p===store.pass){
+    isAdmin=true;
+    document.getElementById('admin-login-popup').style.display='none';
+    // Also update right sidebar widget
+    document.getElementById('admin-login-widget').style.display='none';
+    document.getElementById('admin-logged-widget').style.display='block';
+    showToast('✅ Admin Login हो गए!');
+    toggleAdminPanel();
+  } else {
+    document.getElementById('popup-err').style.display='block';
+  }
+}
+
+function navAdminClick_dummy(){} // placeholder
   const p = document.getElementById('rw-pass').value;
   if(p===store.pass){
     isAdmin=true;
@@ -919,7 +976,7 @@ function doLogout(){
 }
 
 function toggleAdminPanel(){
-  if(!isAdmin){showToast('❗ पहले Login करें');return;}
+  if(!isAdmin){ navAdminClick(); return; }
   const ap = document.getElementById('page-admin');
   const showing = ap.style.display==='block';
   ap.style.display = showing?'none':'block';
@@ -1171,11 +1228,91 @@ function renderSidebarMenu(){
     const isGotra = item.name.includes('गोत्र')||item.name.toLowerCase().includes('gotra');
     if(item.action==='link'){
       li.innerHTML=`<a href="${item.link||'#'}" target="_blank" class="${isGotra?'notranslate gotra-fix':''}"><span class="menu-icon">${item.icon}</span>${item.name}</a>`;
+    } else if(item.action==='section-docs'){
+      // Show all doc categories
+      li.innerHTML=`<button onclick="showSection('section-docs',null);highlightMenu(this);" class="${isGotra?'notranslate gotra-fix':''}"><span class="menu-icon">${item.icon}</span>${item.name}</button>`;
+    } else if(item.action==='section-books'){
+      li.innerHTML=`<button onclick="showSection('section-books',null);highlightMenu(this);" class="${isGotra?'notranslate gotra-fix':''}"><span class="menu-icon">${item.icon}</span>${item.name}</button>`;
+    } else if(item.action==='section-main-text'){
+      li.innerHTML=`<button onclick="showSection('section-main-text',null);highlightMenu(this);" class="${isGotra?'notranslate gotra-fix':''}"><span class="menu-icon">${item.icon}</span>${item.name}</button>`;
+    } else if(item.catId){
+      // Direct category click — opens that category's docs directly
+      li.innerHTML=`<button onclick="openCategoryDirect('${item.catId}');highlightMenu(this);" class="${isGotra?'notranslate gotra-fix':''}"><span class="menu-icon">${item.icon}</span>${item.name}</button>`;
     } else {
-      li.innerHTML=`<button onclick="showSection('${item.action}',null)" class="${isGotra?'notranslate gotra-fix':''}"><span class="menu-icon">${item.icon}</span>${item.name}</button>`;
+      li.innerHTML=`<button onclick="showSection('section-docs',null);highlightMenu(this);" class="${isGotra?'notranslate gotra-fix':''}"><span class="menu-icon">${item.icon}</span>${item.name}</button>`;
     }
     ul.appendChild(li);
   });
+
+  // Also add imgCats as direct links below menu items
+  const sep = document.createElement('li');
+  sep.innerHTML=`<div style="padding:.3rem .8rem;font-size:.7rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;border-top:1px solid var(--sand);margin-top:.3rem;padding-top:.5rem;">📂 Documents</div>`;
+  ul.appendChild(sep);
+  store.imgCats.forEach(cat=>{
+    const li2 = document.createElement('li');
+    const isG = cat.name.includes('गोत्र')||cat.name.toLowerCase().includes('gotra');
+    li2.innerHTML=`<button onclick="openCategoryDirect('${cat.id}');highlightMenu(this);" class="${isG?'notranslate gotra-fix':''}">
+      <span class="menu-icon">${cat.icon}</span>${cat.name}
+    </button>`;
+    ul.appendChild(li2);
+  });
+}
+
+function highlightMenu(el){
+  document.querySelectorAll('.sidebar-menu button,.sidebar-menu a').forEach(b=>b.classList.remove('active-menu'));
+  el.classList.add('active-menu');
+}
+
+// Opens a specific category directly in main content area
+function openCategoryDirect(catId){
+  // Show docs section
+  ['section-docs','section-books','section-main-text'].forEach(s=>{
+    document.getElementById(s).style.display = s==='section-docs'?'block':'none';
+  });
+  const cat = store.imgCats.find(c=>c.id===catId);
+  if(!cat) return;
+  const imgs = store.images.filter(i=>i.catId===catId);
+  const isG  = cat.name.includes('गोत्र')||cat.name.toLowerCase().includes('gotra');
+  const grid = document.getElementById('doc-grid');
+  // Show back button + category documents
+  grid.innerHTML = `
+    <div style="grid-column:1/-1;margin-bottom:.8rem;display:flex;align-items:center;gap:.8rem;">
+      <button onclick="renderDocs();highlightMenu(document.querySelector('.sidebar-menu button'));" 
+        style="background:var(--sand);border:1px solid var(--gold);padding:.3rem .7rem;font-size:.78rem;cursor:pointer;border-radius:3px;">
+        ← वापस जाएँ
+      </button>
+      <span style="font-family:'Tiro Devanagari Hindi',serif;font-size:1rem;color:var(--rust);">${cat.icon} ${cat.name} — ${cat.sub}</span>
+    </div>
+    ${imgs.length===0
+      ? `<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted);">
+           <div style="font-size:2.5rem;margin-bottom:.5rem;">📭</div>
+           <p style="font-family:'Tiro Devanagari Hindi',serif;">इस category में अभी कोई document नहीं है।<br>Admin Panel से image add करें।</p>
+         </div>`
+      : imgs.map(img=>`
+          <div style="background:white;border-radius:10px;padding:.8rem;box-shadow:0 2px 12px rgba(26,10,0,.08);cursor:pointer;" onclick="openSingleImg('${img.id}')">
+            <img src="${img.data}" alt="${img.title||cat.name}" 
+              style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;display:block;pointer-events:none;-webkit-user-drag:none;"
+              draggable="false"/>
+            ${img.title?`<p style="font-family:'Tiro Devanagari Hindi',serif;font-size:.8rem;color:var(--rust);margin-top:.4rem;text-align:center;" class="${isG?'notranslate':''}">${img.title}</p>`:''}
+          </div>`).join('')
+    }
+  `;
+}
+
+function openSingleImg(imgId){
+  const img = store.images.find(i=>i.id===imgId);
+  if(!img) return;
+  const cat = store.imgCats.find(c=>c.id===img.catId)||{name:'',icon:''};
+  const isG = cat.name.includes('गोत्र')||cat.name.toLowerCase().includes('gotra');
+  const mt = document.getElementById('modal-title');
+  mt.textContent = cat.icon+' '+img.title;
+  if(isG){mt.classList.add('notranslate');mt.setAttribute('translate','no');}
+  document.getElementById('modal-body').innerHTML=`
+    <div style="margin-bottom:.5rem;">
+      ${img.title?`<p style="font-family:'Tiro Devanagari Hindi',serif;font-size:.9rem;color:var(--rust);margin-bottom:.5rem;" class="${isG?'notranslate':''}">📌 ${img.title}</p>`:''}
+      <img src="${img.data}" alt="${img.title}" draggable="false" style="width:100%;border:1px solid var(--sand);"/>
+    </div>`;
+  document.getElementById('modal').classList.add('open');
 }
 
 function renderMenuAdmin(){
