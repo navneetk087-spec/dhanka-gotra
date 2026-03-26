@@ -327,7 +327,50 @@ body{top:0!important;}
 <div class="top-border"></div>
 
 <!-- ══════════════════════════════════════
-     NO.7 — HEADER SLIDER
+     LOGO + HEADING (सबसे ऊपर)
+══════════════════════════════════════ -->
+<div id="logo-area" style="background:var(--deep);text-align:center;padding:.8rem 1rem;border-bottom:1px solid rgba(201,146,42,.2);">
+  <!-- Logo -->
+  <div id="logo-wrap" style="margin-bottom:.4rem;">
+    <img id="site-logo" src="" alt="Logo" style="max-height:80px;max-width:200px;display:none;object-fit:contain;"/>
+    <div id="logo-placeholder" style="display:inline-block;width:70px;height:70px;border:2px dashed rgba(201,146,42,.3);border-radius:50%;line-height:70px;color:rgba(201,146,42,.4);font-size:1.8rem;">🏹</div>
+  </div>
+  <!-- Heading — Admin editable -->
+  <h1 id="site-heading"
+    style="font-family:'Tiro Devanagari Hindi',serif;font-size:clamp(1.3rem,3vw,2rem);color:var(--gold);margin-bottom:.2rem;">
+    धानका इतिहास एवं गोत्र पुस्तकालय
+  </h1>
+  <p id="site-heading-sub"
+    style="font-family:'Playfair Display',serif;font-size:.9rem;color:var(--sand);font-weight:400;">
+    Dhanka History &amp; Gotra Document Library
+  </p>
+</div>
+
+<!-- ══════════════════════════════════════
+     NO.6 — NAV BAR
+══════════════════════════════════════ -->
+<div id="topbar">
+  <nav>
+    <a href="#" class="active" onclick="showSection('docs',this)">📂 दस्तावेज़</a>
+    <a href="#" onclick="showSection('books',this)">📚 पुस्तकें</a>
+    <a href="#" onclick="showSection('main-text',this)">📝 जानकारी</a>
+    <button class="admin-nav-btn" onclick="navAdminClick()">⚙️ Admin</button>
+  </nav>
+</div>
+
+<!-- LANGUAGE BAR -->
+<div id="lang-bar">
+  <span>🌐 भाषा:</span>
+  <button onclick="setLang('hi')"  class="lang-btn active-lang" data-lang="hi">हिंदी</button>
+  <button onclick="setLang('en')"  class="lang-btn" data-lang="en">English</button>
+  <button onclick="setLang('pa')"  class="lang-btn" data-lang="pa">ਪੰਜਾਬੀ</button>
+  <button onclick="setLang('mr')"  class="lang-btn" data-lang="mr">मराठी</button>
+  <button onclick="setLang('gu')"  class="lang-btn" data-lang="gu">ગુજરાતી</button>
+  <div id="google_translate_element"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     NO.7 — HEADER SLIDER (Language के नीचे)
 ══════════════════════════════════════ -->
 <div id="header-slider">
   <div class="slider-track" id="slider-track">
@@ -356,33 +399,6 @@ body{top:0!important;}
     <button class="slider-arrow" onclick="slideHeader(-1)">&#8592;</button>
     <button class="slider-arrow" onclick="slideHeader(1)">&#8594;</button>
   </div>
-</div>
-
-<!-- ══════════════════════════════════════
-     NO.6 — NAV BAR
-══════════════════════════════════════ -->
-<div id="topbar">
-  <div class="topbar-title">
-    <span id="nav-blog-title">धानका इतिहास एवं गोत्र</span>
-    <small id="nav-blog-sub">— Document Library</small>
-  </div>
-  <nav>
-    <a href="#" class="active" onclick="showSection('docs',this)">📂 दस्तावेज़</a>
-    <a href="#" onclick="showSection('books',this)">📚 पुस्तकें</a>
-    <a href="#" onclick="showSection('main-text',this)">📝 जानकारी</a>
-    <button class="admin-nav-btn" onclick="navAdminClick()">⚙️ Admin</button>
-  </nav>
-</div>
-
-<!-- LANGUAGE BAR -->
-<div id="lang-bar">
-  <span>🌐 भाषा:</span>
-  <button onclick="setLang('hi')"  class="lang-btn active-lang" data-lang="hi">हिंदी</button>
-  <button onclick="setLang('en')"  class="lang-btn" data-lang="en">English</button>
-  <button onclick="setLang('pa')"  class="lang-btn" data-lang="pa">ਪੰਜਾਬੀ</button>
-  <button onclick="setLang('mr')"  class="lang-btn" data-lang="mr">मराठी</button>
-  <button onclick="setLang('gu')"  class="lang-btn" data-lang="gu">ગુજરાતી</button>
-  <div id="google_translate_element"></div>
 </div>
 
 <!-- ADMIN LOGIN POPUP -->
@@ -578,8 +594,57 @@ body{top:0!important;}
 
   <!-- ① BLOG SETTINGS -->
   <div id="tab-blog" class="adm-panel active-panel">
+    <div class="acard" style="border-top-color:var(--gold);">
+      <h3>🖼️ Logo Upload करें</h3>
+      <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:.6rem;">
+        <div id="logo-preview-admin" style="width:80px;height:80px;border:2px dashed var(--sand);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--muted);">🏹</div>
+        <div style="flex:1;">
+          <div class="upload-zone" style="padding:.6rem;">
+            <input type="file" id="logo-file-inp" accept="image/*" onchange="handleLogoUpload(this.files)"/>
+            📷 Logo upload करें (PNG, JPG, SVG)
+          </div>
+          <button class="btn-d" style="margin-top:.4rem;font-size:.75rem;padding:.3rem .6rem;" onclick="removeLogo()">🗑️ Logo हटाएँ</button>
+        </div>
+      </div>
+
+      <h3 style="margin-top:.8rem;">✍️ Heading Settings</h3>
+      <div class="row2">
+        <div class="fg"><label>मुख्य Heading</label><input type="text" id="s-heading" placeholder="धानका इतिहास एवं गोत्र पुस्तकालय"/></div>
+        <div class="fg"><label>Sub Heading</label><input type="text" id="s-heading-sub" placeholder="Dhanka History &amp; Gotra Library"/></div>
+      </div>
+      <!-- Heading style controls -->
+      <div style="background:var(--cream);padding:.7rem;border-radius:6px;margin-top:.4rem;">
+        <label style="font-size:.75rem;color:var(--muted);font-weight:500;">🎨 Heading Style</label>
+        <div class="style-row" style="margin-top:.4rem;">
+          <label>Color</label>
+          <input type="color" id="heading-color" value="#C9922A" onchange="applyHeadingStyle()"/>
+          <label>Size</label>
+          <select id="heading-size" onchange="applyHeadingStyle()">
+            <option value="1.3rem">Small</option>
+            <option value="1.7rem">Medium</option>
+            <option value="2rem" selected>Large</option>
+            <option value="2.4rem">XLarge</option>
+          </select>
+          <label>Font</label>
+          <select id="heading-font" onchange="applyHeadingStyle()">
+            <option value="'Tiro Devanagari Hindi',serif" selected>Tiro Hindi</option>
+            <option value="'Playfair Display',serif">Playfair</option>
+            <option value="'DM Sans',sans-serif">DM Sans</option>
+          </select>
+        </div>
+        <div style="margin-top:.5rem;">
+          <label style="font-size:.75rem;color:var(--muted);font-weight:500;">📐 Alignment</label>
+          <div class="align-btns" style="margin-top:.3rem;">
+            <button class="aln-btn" onclick="setHeadingAlign('left')">◀ Left</button>
+            <button class="aln-btn act" onclick="setHeadingAlign('center')">▬ Center</button>
+            <button class="aln-btn" onclick="setHeadingAlign('right')">Right ▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="acard">
-      <h3>Blog का नाम और जानकारी</h3>
+      <h3>🖊️ Blog Settings</h3>
       <div class="row2">
         <div class="fg"><label>Header Icon</label><input type="text" id="s-emblem" maxlength="4" placeholder="🏹"/></div>
         <div class="fg"><label>Browser Tab Title</label><input type="text" id="s-tabTitle"/></div>
@@ -1040,8 +1105,75 @@ function showSection(id, el){
 }
 
 // ══════════════════════════════════════
-//  APPLY SITE SETTINGS
+//  LOGO + HEADING
 // ══════════════════════════════════════
+function handleLogoUpload(files){
+  const file = files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e=>{
+    store.site.logo = e.target.result;
+    sv(); applyLogo();
+    document.getElementById('logo-preview-admin').innerHTML=`<img src="${e.target.result}" style="max-width:76px;max-height:76px;object-fit:contain;border-radius:6px;"/>`;
+    showToast('✅ Logo upload हो गया!');
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeLogo(){
+  store.site.logo=''; sv(); applyLogo();
+  document.getElementById('logo-preview-admin').innerHTML='🏹';
+  showToast('🗑️ Logo हटाया');
+}
+
+function applyLogo(){
+  const logo = document.getElementById('site-logo');
+  const ph   = document.getElementById('logo-placeholder');
+  if(store.site.logo){
+    logo.src = store.site.logo;
+    logo.style.display='inline-block';
+    ph.style.display='none';
+  } else {
+    logo.style.display='none';
+    ph.style.display='inline-block';
+  }
+}
+
+function applyHeadingStyle(){
+  const color = document.getElementById('heading-color').value;
+  const size  = document.getElementById('heading-size').value;
+  const font  = document.getElementById('heading-font').value;
+  const h = document.getElementById('site-heading');
+  h.style.color      = color;
+  h.style.fontSize   = size;
+  h.style.fontFamily = font;
+  store.site.headingColor = color;
+  store.site.headingSize  = size;
+  store.site.headingFont  = font;
+  sv();
+}
+
+function setHeadingAlign(a){
+  document.getElementById('logo-area').style.textAlign = a;
+  store.site.headingAlign = a; sv();
+  document.querySelectorAll('.aln-btn').forEach(b=>{
+    if(b.getAttribute('onclick') && b.getAttribute('onclick').includes('setHeadingAlign'))
+      b.classList.toggle('act', b.getAttribute('onclick').includes("'"+a+"'"));
+  });
+  showToast('✅ Alignment: '+a);
+}
+
+function applyHeadingFromStore(){
+  const s = store.site;
+  const h = document.getElementById('site-heading');
+  const hs= document.getElementById('site-heading-sub');
+  if(s.heading)    h.textContent    = s.heading;
+  if(s.headingSub) hs.textContent   = s.headingSub;
+  if(s.headingColor) h.style.color      = s.headingColor;
+  if(s.headingSize)  h.style.fontSize   = s.headingSize;
+  if(s.headingFont)  h.style.fontFamily = s.headingFont;
+  if(s.headingAlign) document.getElementById('logo-area').style.textAlign = s.headingAlign;
+  applyLogo();
+}
 function applySite(){
   const s = store.site;
   document.title = s.tabTitle;
@@ -1090,7 +1222,9 @@ function saveBlogSettings(){
   s.pageSub   = document.getElementById('s-pageSub').value.trim();
   s.mtTitle   = document.getElementById('mt-title-inp').value.trim();
   s.mtContent = document.getElementById('mt-content-inp').value;
-  sv(); applySite(); showToast('✅ Blog Settings save!');
+  s.heading    = document.getElementById('s-heading').value.trim();
+  s.headingSub = document.getElementById('s-heading-sub').value.trim();
+  sv(); applySite(); applyHeadingFromStore(); showToast('✅ Blog Settings save!');
 }
 
 function saveSeo(){
@@ -1373,6 +1507,9 @@ function delMenuItem(id){
 // ══════════════════════════════════════
 function renderDocs(){
   const grid = document.getElementById('doc-grid');
+  // Show title/sub again
+  document.getElementById('pg-title').style.display='block';
+  document.getElementById('pg-sub').style.display='block';
   grid.innerHTML='';
   store.imgCats.forEach(cat=>{
     const imgs = store.images.filter(i=>i.catId===cat.id);
@@ -1384,7 +1521,7 @@ function renderDocs(){
       <div class="dc-title ${isG?'notranslate gotra-fix':''}" ${isG?'translate="no"':''}>${cat.name}</div>
       <div class="dc-sub ${isG?'notranslate gotra-fix':''}">${cat.sub}</div>
       <div class="dc-count">${imgs.length>0?'📄 '+imgs.length+' doc':'कोई doc नहीं'}</div>`;
-    card.onclick=()=>openImgModal(cat);
+    card.onclick=()=>openCategoryDirect(cat.id);
     grid.appendChild(card);
   });
 }
@@ -1774,6 +1911,9 @@ function saveFooter(){
 // ══════════════════════════════════════
 function renderAdminAll(){
   const s=store.site;
+  document.getElementById('s-heading').value    = s.heading||'धानका इतिहास एवं गोत्र पुस्तकालय';
+  document.getElementById('s-heading-sub').value= s.headingSub||'Dhanka History & Gotra Document Library';
+  if(s.logo) document.getElementById('logo-preview-admin').innerHTML=`<img src="${s.logo}" style="max-width:76px;max-height:76px;object-fit:contain;border-radius:6px;"/>`;
   document.getElementById('s-tabTitle').value =s.tabTitle||'';
   document.getElementById('s-navTitle').value =s.navTitle||'';
   document.getElementById('s-navSub').value   =s.navSub||'';
@@ -1853,6 +1993,7 @@ function showToast(msg){
 //  INIT
 // ══════════════════════════════════════
 applySite();
+applyHeadingFromStore();
 applySlider();
 applyAdSlider();
 applyRightSidebar();
