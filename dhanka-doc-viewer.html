@@ -921,6 +921,11 @@ body{top:0!important;}
       <div class="fg"><label>Confirm Password</label><input type="password" id="conf-pass"/></div>
       <button class="btn-d" onclick="resetPass()">🔑 Password बदलें</button>
     </div>
+    <div class="acard" style="border-top-color:var(--muted);">
+      <h3>🔄 Data Reset</h3>
+      <p style="font-size:.82rem;color:var(--muted);margin-bottom:.8rem;">अगर कोई problem हो तो सारा data reset करें। ⚠️ सब images/PDFs भी हट जाएँगी।</p>
+      <button class="btn-d" onclick="hardReset()">⚠️ सब कुछ Reset करें</button>
+    </div>
   </div>
 
 </div><!-- /page-admin -->
@@ -940,7 +945,10 @@ body{top:0!important;}
 //  DEFAULT STORE
 // ══════════════════════════════════════
 const DEF_PASS = 'dhanka2024';
-let store = JSON.parse(localStorage.getItem('dhankaFull')||'null') || {
+let store = JSON.parse(localStorage.getItem('dhankaFull')||'null') || {};
+
+// Ensure all required fields exist (handles old/empty localStorage)
+const defaults = {
   pass: DEF_PASS,
   site:{
     emblem:'🏹', tabTitle:'धानका इतिहास एवं गोत्र',
@@ -951,20 +959,20 @@ let store = JSON.parse(localStorage.getItem('dhankaFull')||'null') || {
     titleColor:'#8B2500', subColor:'#7A5C40',
     titleFont:"'Tiro Devanagari Hindi',serif", titleSize:'1.4rem',
     mtTitle:'धानका समाज — जानकारी', mtContent:'यहाँ Admin Panel से content add करें।',
-    seoDesc:'', seoKeys:''
+    seoDesc:'', seoKeys:'',
+    heading:'धानका इतिहास एवं गोत्र पुस्तकालय',
+    headingSub:'Dhanka History & Gotra Document Library',
+    headingColor:'#C9922A', headingSize:'2rem',
+    headingFont:"'Tiro Devanagari Hindi',serif", headingAlign:'center'
   },
   slider:[
-    {img:'',caption:'फ्रेम 1',show:true},
-    {img:'',caption:'फ्रेम 2',show:true},
-    {img:'',caption:'फ्रेम 3',show:true},
-    {img:'',caption:'फ्रेम 4',show:true},
+    {img:'',caption:'फ्रेम 1',show:true},{img:'',caption:'फ्रेम 2',show:true},
+    {img:'',caption:'फ्रेम 3',show:true},{img:'',caption:'फ्रेम 4',show:true},
     {img:'',caption:'फ्रेम 5',show:true}
   ],
   adSlider:[
-    {img:'',caption:'Ad 1',show:true},
-    {img:'',caption:'Ad 2',show:true},
-    {img:'',caption:'Ad 3',show:true},
-    {img:'',caption:'Ad 4',show:true},
+    {img:'',caption:'Ad 1',show:true},{img:'',caption:'Ad 2',show:true},
+    {img:'',caption:'Ad 3',show:true},{img:'',caption:'Ad 4',show:true},
     {img:'',caption:'Ad 5',show:true}
   ],
   menuItems:[
@@ -997,6 +1005,27 @@ let store = JSON.parse(localStorage.getItem('dhankaFull')||'null') || {
     copyrightText:'© 2026 धानका इतिहास एवं गोत्र', contactUrl:'#'
   }
 };
+
+// Merge defaults with stored data
+if(!store.pass)       store.pass       = defaults.pass;
+if(!store.site)       store.site       = defaults.site;
+if(!store.slider)     store.slider     = defaults.slider;
+if(!store.adSlider)   store.adSlider   = defaults.adSlider;
+if(!store.menuItems || store.menuItems.length===0) store.menuItems = defaults.menuItems;
+if(!store.imgCats  || store.imgCats.length===0)    store.imgCats   = defaults.imgCats;
+if(!store.pdfCats  || store.pdfCats.length===0)    store.pdfCats   = defaults.pdfCats;
+if(!store.images)     store.images     = [];
+if(!store.pdfs)       store.pdfs       = [];
+if(!store.right)      store.right      = defaults.right;
+if(!store.footer)     store.footer     = defaults.footer;
+
+function hardReset(){
+  if(!confirm('⚠️ सब कुछ delete हो जाएगा — images, PDFs, settings। क्या sure हैं?')) return;
+  localStorage.removeItem('dhankaFull');
+  showToast('✅ Reset हो गया! Page reload होगा...');
+  setTimeout(()=>location.reload(), 1500);
+}
+
 function sv(){localStorage.setItem('dhankaFull',JSON.stringify(store));}
 function uid(){return 'id'+Date.now()+Math.random().toString(36).slice(2,5);}
 
@@ -1033,6 +1062,8 @@ function popupLogin(){
 }
 
 function navAdminClick_dummy(){} // placeholder
+
+function rwLogin(){
   const p = document.getElementById('rw-pass').value;
   if(p===store.pass){
     isAdmin=true;
