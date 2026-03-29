@@ -708,14 +708,75 @@ if(saved){
     if(s.menu&&s.menu.length) D.menu=s.menu;
     if(s.iCats&&s.iCats.length) D.iCats=s.iCats;
     if(s.pCats&&s.pCats.length) D.pCats=s.pCats;
-    if(s.imgs) D.imgs=s.imgs;
-    if(s.pdfs) D.pdfs=s.pdfs;
     if(s.right) D.right={...D.right,...s.right};
     if(s.footer) D.footer={...D.footer,...s.footer};
   }catch(e){}
 }
 
-function sv(){localStorage.setItem('dhankaV3',JSON.stringify(D));}
+// ══════════════════════════════════════════════
+//  IndexedDB — Images & PDFs के लिए (500MB+)
+// ══════════════════════════════════════════════
+let idb = null;
+const IDB_NAME = 'dhankaDB';
+const IDB_VER  = 1;
+
+function openIDB(){
+  return new Promise((res,rej)=>{
+    const req = indexedDB.open(IDB_NAME, IDB_VER);
+    req.onupgradeneeded = e=>{
+      const db = e.target.result;
+      if(!db.objectStoreNames.contains('imgs')) db.createObjectStore('imgs',{keyPath:'id'});
+      if(!db.objectStoreNames.contains('pdfs')) db.createObjectStore('pdfs',{keyPath:'id'});
+    };
+    req.onsuccess = e=>{ idb=e.target.result; res(idb); };
+    req.onerror   = e=>rej(e);
+  });
+}
+
+function idbPut(store, obj){
+  return new Promise((res,rej)=>{
+    const tx = idb.transaction(store,'readwrite');
+    tx.objectStore(store).put(obj).onsuccess=()=>res();
+    tx.onerror=e=>rej(e);
+  });
+}
+
+function idbGetAll(store){
+  return new Promise((res,rej)=>{
+    const tx  = idb.transaction(store,'readonly');
+    const req = tx.objectStore(store).getAll();
+    req.onsuccess = e=>res(e.target.result||[]);
+    req.onerror   = e=>rej(e);
+  });
+}
+
+function idbDel(store, id){
+  return new Promise((res,rej)=>{
+    const tx = idb.transaction(store,'readwrite');
+    tx.objectStore(store).delete(id).onsuccess=()=>res();
+    tx.onerror=e=>rej(e);
+  });
+}
+
+function idbClear(store){
+  return new Promise((res,rej)=>{
+    const tx = idb.transaction(store,'readwrite');
+    tx.objectStore(store).clear().onsuccess=()=>res();
+    tx.onerror=e=>rej(e);
+  });
+}
+
+// Settings save (localStorage — no images)
+function sv(){
+  const toSave = {
+    pass:D.pass, site:D.site, slider:D.slider, ads:D.ads,
+    menu:D.menu, iCats:D.iCats, pCats:D.pCats,
+    right:D.right, footer:D.footer
+    // imgs & pdfs NOT here — they go to IndexedDB
+  };
+  try{ localStorage.setItem('dhankaV3', JSON.stringify(toSave)); }catch(e){ console.warn('localStorage full',e); }
+}
+
 function uid(){return 'x'+Date.now()+Math.random().toString(36).slice(2,5);}
 function toast(m){const t=document.getElementById('toast-el');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3000);}
 
@@ -774,6 +835,11 @@ function resetPass(){
 function hardReset(){
   if(!confirm('⚠️ सब delete होगा — images, PDFs, settings?'))return;
   localStorage.removeItem('dhankaV3');
+  // Clear IndexedDB too
+  if(idb){
+    idbClear('imgs').catch(()=>{});
+    idbClear('pdfs').catch(()=>{});
+  }
   toast('Reset हो गया...');
   setTimeout(()=>location.reload(),1500);
 }
@@ -1148,10 +1214,16 @@ function saveImgs(){
   if(!pendImgs.length){toast('❗ Image select करें');return;}
   const catId=document.getElementById('up-img-cat').value;
   const title=document.getElementById('up-img-title').value.trim();
-  pendImgs.forEach((f,i)=>{
-    D.imgs.push({id:uid(),catId,title:title+(pendImgs.length>1?` (${i+1})`:''),data:f.data});
+  const saveAll = pendImgs.map((f,i)=>{
+    const obj={id:uid(),catId,title:title+(pendImgs.length>1?` (${i+1})`:''),data:f.data};
+    D.imgs.push(obj);
+    return idbPut('imgs',obj);
   });
-  sv();pendImgs=[];clearImgUp();renderImgEntries();renderDocs();toast('✅ Images save!');
+  Promise.all(saveAll).then(()=>{
+    sv();pendImgs=[];clearImgUp();renderImgEntries();renderDocs();toast('✅ Images save!');
+  }).catch(()=>{
+    sv();pendImgs=[];clearImgUp();renderImgEntries();renderDocs();toast('✅ Images save!');
+  });
 }
 
 function clearImgUp(){
@@ -1173,7 +1245,12 @@ function renderImgEntries(){
   }).join('');
 }
 
-function delImg(id){if(!confirm('Delete?'))return;D.imgs=D.imgs.filter(i=>i.id!==id);sv();renderImgEntries();renderDocs();toast('🗑️ Deleted');}
+function delImg(id){
+  if(!confirm('Delete?'))return;
+  D.imgs=D.imgs.filter(i=>i.id!==id);
+  idbDel('imgs',id).catch(()=>{});
+  sv();renderImgEntries();renderDocs();toast('🗑️ Deleted');
+}
 
 // ══════════════════════ PDF CATS ══════════════════════
 function renderPdfCatsAdm(){
@@ -1215,14 +1292,16 @@ function handlePdf(files){
 
 function savePdf(){
   if(!pendPdf){toast('❗ PDF select करें');return;}
-  D.pdfs.push({
+  const obj={
     id:uid(),catId:document.getElementById('up-pdf-cat').value,
     title:document.getElementById('up-pdf-title').value.trim(),
     author:document.getElementById('up-pdf-author').value.trim(),
     desc:document.getElementById('up-pdf-desc').value.trim(),
     dlOn:document.getElementById('pdf-dl-tog').checked,
     data:pendPdf.data
-  });
+  };
+  D.pdfs.push(obj);
+  idbPut('pdfs',obj).catch(()=>{});
   sv();pendPdf=null;clearPdfUp();renderPdfEntries();renderBooks();toast('✅ PDF save!');
 }
 
@@ -1248,8 +1327,18 @@ function renderPdfEntries(){
   }).join('');
 }
 
-function togPdfDl(id){const p=D.pdfs.find(x=>x.id===id);if(!p)return;p.dlOn=!p.dlOn;sv();renderPdfEntries();toast(p.dlOn?'📥 Download ON':'🔒 Download OFF');}
-function delPdf(id){if(!confirm('Delete?'))return;D.pdfs=D.pdfs.filter(p=>p.id!==id);sv();renderPdfEntries();renderBooks();toast('🗑️ Deleted');}
+function togPdfDl(id){
+  const p=D.pdfs.find(x=>x.id===id);if(!p)return;
+  p.dlOn=!p.dlOn;
+  idbPut('pdfs',p).catch(()=>{});
+  sv();renderPdfEntries();toast(p.dlOn?'📥 Download ON':'🔒 Download OFF');
+}
+function delPdf(id){
+  if(!confirm('Delete?'))return;
+  D.pdfs=D.pdfs.filter(p=>p.id!==id);
+  idbDel('pdfs',id).catch(()=>{});
+  sv();renderPdfEntries();renderBooks();toast('🗑️ Deleted');
+}
 
 // ══════════════════════ RIGHT SIDEBAR ══════════════════════
 function applyRight(){
@@ -1417,15 +1506,34 @@ function setLang(lang){
 }
 
 // ══════════════════════ INIT ══════════════════════
-applySite();
-applySlider();
-applyAds();
-applyRight();
-applyFooter();
-renderMenu();
-renderDocs();
-const sl=localStorage.getItem('dLang');
-if(sl&&sl!=='hi')setTimeout(()=>setLang(sl),1500);
+openIDB().then(()=>{
+  // Load images and PDFs from IndexedDB
+  return Promise.all([idbGetAll('imgs'), idbGetAll('pdfs')]);
+}).then(([imgs, pdfs])=>{
+  D.imgs = imgs||[];
+  D.pdfs = pdfs||[];
+  // Now apply everything
+  applySite();
+  applySlider();
+  applyAds();
+  applyRight();
+  applyFooter();
+  renderMenu();
+  renderDocs();
+  // Language restore
+  const sl=localStorage.getItem('dLang');
+  if(sl&&sl!=='hi')setTimeout(()=>setLang(sl),1500);
+  toast('✅ Data load हो गया!');
+}).catch(()=>{
+  // Fallback if IndexedDB fails
+  applySite();
+  applySlider();
+  applyAds();
+  applyRight();
+  applyFooter();
+  renderMenu();
+  renderDocs();
+});
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
