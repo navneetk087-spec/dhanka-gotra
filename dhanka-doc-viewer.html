@@ -21,7 +21,7 @@ body{background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;
 .top-border{height:5px;background:linear-gradient(90deg,var(--rust),var(--saffron),var(--gold),var(--saffron),var(--rust));}
 
 /* LOGO AREA */
-#logo-area{background:var(--deep);text-align:center;padding:.8rem 1rem;position:relative;}
+#logo-area{background:var(--deep);text-align:center;padding:.8rem 1rem;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 #logo-area::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 100% at 50% 0%,rgba(232,101,26,.12),transparent 70%);pointer-events:none;}
 #site-logo{max-height:80px;max-width:220px;display:none;object-fit:contain;margin-bottom:.3rem;}
 #logo-ph{font-size:2.5rem;display:block;margin-bottom:.2rem;}
@@ -577,7 +577,20 @@ body{top:0!important;}
     <div class="acard"><h3>🔗 Social Media</h3><div id="social-list-adm"></div>
       <div style="background:var(--cream);padding:.6rem;border-radius:5px;margin-top:.6rem;">
         <div class="r3">
-          <div class="fg"><label>Icon</label><input type="text" id="ns-icon" placeholder="📘" maxlength="4"/></div>
+          <div class="fg">
+            <label>Icon (click करके चुनें)</label>
+            <input type="text" id="ns-icon" placeholder="icon" maxlength="4" readonly style="cursor:pointer;background:white;"/>
+            <div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.3rem;">
+              <button type="button" onclick="pickIcon('ns-icon','📘')" style="font-size:1.2rem;background:none;border:1px solid var(--sand);border-radius:3px;cursor:pointer;padding:.1rem .3rem;">📘</button>
+              <button type="button" onclick="pickIcon('ns-icon','📸')" style="font-size:1.2rem;background:none;border:1px solid var(--sand);border-radius:3px;cursor:pointer;padding:.1rem .3rem;">📸</button>
+              <button type="button" onclick="pickIcon('ns-icon','▶')" style="font-size:1.2rem;background:none;border:1px solid var(--sand);border-radius:3px;cursor:pointer;padding:.1rem .3rem;">▶</button>
+              <button type="button" onclick="pickIcon('ns-icon','🐦')" style="font-size:1.2rem;background:none;border:1px solid var(--sand);border-radius:3px;cursor:pointer;padding:.1rem .3rem;">🐦</button>
+              <button type="button" onclick="pickIcon('ns-icon','💬')" style="font-size:1.2rem;background:none;border:1px solid var(--sand);border-radius:3px;cursor:pointer;padding:.1rem .3rem;">💬</button>
+              <button type="button" onclick="pickIcon('ns-icon','🌐')" style="font-size:1.2rem;background:none;border:1px solid var(--sand);border-radius:3px;cursor:pointer;padding:.1rem .3rem;">🌐</button>
+              <button type="button" onclick="pickIcon('ns-icon','📱')" style="font-size:1.2rem;background:none;border:1px solid var(--sand);border-radius:3px;cursor:pointer;padding:.1rem .3rem;">📱</button>
+              <button type="button" onclick="pickIcon('ns-icon','🔗')" style="font-size:1.2rem;background:none;border:1px solid var(--sand);border-radius:3px;cursor:pointer;padding:.1rem .3rem;">🔗</button>
+            </div>
+          </div>
           <div class="fg"><label>नाम</label><input type="text" id="ns-name" placeholder="Facebook"/></div>
           <div class="fg"><label>URL</label><input type="text" id="ns-url" placeholder="https://..."/></div>
         </div>
@@ -780,6 +793,10 @@ function sv(){
 function uid(){return 'x'+Date.now()+Math.random().toString(36).slice(2,5);}
 function toast(m){const t=document.getElementById('toast-el');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3000);}
 
+function pickIcon(inputId, emoji){
+  document.getElementById(inputId).value = emoji;
+}
+
 // ══════════════════════ AUTH ══════════════════════
 let isAdm=false;
 
@@ -878,7 +895,9 @@ function applySite(){
   h.style.color=s.hColor||'#C9922A';
   h.style.fontSize=s.hSize||'2rem';
   h.style.fontFamily=s.hFont||"'Tiro Devanagari Hindi',serif";
-  document.getElementById('logo-area').style.textAlign=s.hAlign||'center';
+  const la = document.getElementById('logo-area');
+  la.style.textAlign = s.hAlign||'center';
+  la.style.alignItems = (s.hAlign==='left')?'flex-start':(s.hAlign==='right')?'flex-end':'center';
   document.getElementById('site-heading-sub').textContent=s.headingSub||'';
   // Page title
   const pt=document.getElementById('pg-title');
@@ -906,7 +925,10 @@ function applyHeading(){
 }
 
 function setHA(a){
-  D.site.hAlign=a;sv();applySite();
+  D.site.hAlign=a; sv();
+  const la = document.getElementById('logo-area');
+  la.style.textAlign = a;
+  la.style.alignItems = a==='left'?'flex-start': a==='right'?'flex-end':'center';
   document.querySelectorAll('.aln-b').forEach(b=>{
     if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes('setHA'))
       b.classList.toggle('aln-act',b.getAttribute('onclick').includes("'"+a+"'"));
