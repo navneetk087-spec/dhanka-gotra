@@ -1267,15 +1267,18 @@ function saveImgs(){
   if(!pendImgs.length){toast('❗ Image select करें');return;}
   const catId=document.getElementById('up-img-cat').value;
   const title=document.getElementById('up-img-title').value.trim();
+  toast('⏳ Saving...');
   const saveAll = pendImgs.map((f,i)=>{
     const obj={id:uid(),catId,title:title+(pendImgs.length>1?` (${i+1})`:''),data:f.data};
     D.imgs.push(obj);
+    // Save to both IndexedDB and Firebase
+    if(window.fbSaveImg) window.fbSaveImg(obj);
     return idbPut('imgs',obj);
   });
   Promise.all(saveAll).then(()=>{
-    sv();pendImgs=[];clearImgUp();renderImgEntries();renderDocs();toast('✅ Images save!');
+    sv();pendImgs=[];clearImgUp();renderImgEntries();renderDocs();toast('✅ Images save हो गईं!');
   }).catch(()=>{
-    sv();pendImgs=[];clearImgUp();renderImgEntries();renderDocs();toast('✅ Images save!');
+    sv();pendImgs=[];clearImgUp();renderImgEntries();renderDocs();toast('✅ Images save हो गईं!');
   });
 }
 
@@ -1355,7 +1358,8 @@ function savePdf(){
   };
   D.pdfs.push(obj);
   idbPut('pdfs',obj).catch(()=>{});
-  sv();pendPdf=null;clearPdfUp();renderPdfEntries();renderBooks();toast('✅ PDF save!');
+  if(window.fbSavePdf) window.fbSavePdf(obj);
+  sv();pendPdf=null;clearPdfUp();renderPdfEntries();renderBooks();toast('✅ PDF save हो गई!');
 }
 
 function clearPdfUp(){
@@ -1532,7 +1536,9 @@ function saveAll(){
   saveFooter();
   saveSeo();
   sv();
-  toast('✅ सब कुछ Save हो गया!');
+  // Cloud save
+  if(window.svCloud) window.svCloud();
+  toast('✅ सब कुछ Cloud में Save हो गया!');
 }
 
 // ══════════════════════ MODAL ══════════════════════
@@ -1560,33 +1566,113 @@ function setLang(lang){
 
 // ══════════════════════ INIT ══════════════════════
 openIDB().then(()=>{
-  // Load images and PDFs from IndexedDB
   return Promise.all([idbGetAll('imgs'), idbGetAll('pdfs')]);
 }).then(([imgs, pdfs])=>{
   D.imgs = imgs||[];
   D.pdfs = pdfs||[];
-  // Now apply everything
-  applySite();
-  applySlider();
-  applyAds();
-  applyRight();
-  applyFooter();
-  renderMenu();
-  renderDocs();
-  // Language restore
+  applySite();applySlider();applyAds();applyRight();applyFooter();renderMenu();renderDocs();
   const sl=localStorage.getItem('dLang');
   if(sl&&sl!=='hi')setTimeout(()=>setLang(sl),1500);
-  toast('✅ Data load हो गया!');
+  // Load from Firebase after local render
+  setTimeout(()=>{ if(window.loadFromFirebase) window.loadFromFirebase(); }, 1000);
 }).catch(()=>{
-  // Fallback if IndexedDB fails
-  applySite();
-  applySlider();
-  applyAds();
-  applyRight();
-  applyFooter();
-  renderMenu();
-  renderDocs();
+  applySite();applySlider();applyAds();applyRight();applyFooter();renderMenu();renderDocs();
+  setTimeout(()=>{ if(window.loadFromFirebase) window.loadFromFirebase(); }, 1000);
 });
+</script>
+
+<!-- Firebase -->
+<!-- Firebase CDN — iframe compatible -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+// Wait for Firebase to be ready
+window.fbReady = false;
+var db;
+
+try {
+  firebase.initializeApp({
+    apiKey: "AIzaSyCRYlsrL4VnGQksmMqh09aZFcGqwXkhZwI",
+    authDomain: "dhanka-gotra.firebaseapp.com",
+    projectId: "dhanka-gotra",
+    storageBucket: "dhanka-gotra.firebasestorage.app",
+    messagingSenderId: "263072204148",
+    appId: "1:263072204148:web:778d0314faf3625e6a5821"
+  });
+  db = firebase.firestore();
+  window.fbReady = true;
+} catch(e) {
+  console.warn('Firebase init failed:', e);
+}
+
+window.fbSaveImg = async function(obj){
+  if(!window.fbReady) return;
+  try{ await db.collection('dhanka_imgs').doc(obj.id).set(obj); }
+  catch(e){ console.warn('FB img fail',e); }
+};
+
+window.fbDelImg = async function(id){
+  if(!window.fbReady) return;
+  try{ await db.collection('dhanka_imgs').doc(id).delete(); }catch(e){}
+};
+
+window.fbSavePdf = async function(obj){
+  if(!window.fbReady) return;
+  try{ await db.collection('dhanka_pdfs').doc(obj.id).set(obj); }
+  catch(e){ console.warn('FB pdf fail',e); }
+};
+
+window.fbDelPdf = async function(id){
+  if(!window.fbReady) return;
+  try{ await db.collection('dhanka_pdfs').doc(id).delete(); }catch(e){}
+};
+
+window.fbSaveSettings = async function(data){
+  if(!window.fbReady) return;
+  try{ await db.collection('dhanka_settings').doc('main').set(data); }
+  catch(e){ console.warn('FB settings fail',e); }
+};
+
+window.loadFromFirebase = async function(){
+  if(!window.fbReady){ console.warn('Firebase not ready'); return; }
+  try{
+    const [imgSnap, pdfSnap, settSnap] = await Promise.all([
+      db.collection('dhanka_imgs').get(),
+      db.collection('dhanka_pdfs').get(),
+      db.collection('dhanka_settings').doc('main').get()
+    ]);
+
+    const fbImgs = imgSnap.docs.map(d=>d.data());
+    const fbPdfs = pdfSnap.docs.map(d=>d.data());
+
+    if(settSnap.exists){
+      const s = settSnap.data();
+      if(s.pass)   D.pass=s.pass;
+      if(s.site)   D.site={...D.site,...s.site};
+      if(s.slider&&s.slider.length) D.slider=s.slider;
+      if(s.ads&&s.ads.length)       D.ads=s.ads;
+      if(s.menu&&s.menu.length)     D.menu=s.menu;
+      if(s.iCats&&s.iCats.length)   D.iCats=s.iCats;
+      if(s.pCats&&s.pCats.length)   D.pCats=s.pCats;
+      if(s.right)  D.right={...D.right,...s.right};
+      if(s.footer) D.footer={...D.footer,...s.footer};
+    }
+
+    if(fbImgs.length) D.imgs=fbImgs;
+    if(fbPdfs.length) D.pdfs=fbPdfs;
+
+    applySite();applySlider();applyAds();applyRight();applyFooter();renderMenu();renderDocs();
+    toast('☁️ Cloud data load हो गया!');
+  }catch(e){
+    console.warn('Firebase load failed',e);
+  }
+};
+
+window.svCloud = async function(){
+  const toSave={pass:D.pass,site:D.site,slider:D.slider,ads:D.ads,menu:D.menu,iCats:D.iCats,pCats:D.pCats,right:D.right,footer:D.footer};
+  try{ localStorage.setItem('dhankaV3',JSON.stringify(toSave)); }catch(e){}
+  if(window.fbReady) await window.fbSaveSettings(toSave);
+};
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
